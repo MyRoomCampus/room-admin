@@ -1,7 +1,7 @@
 # MyRoom
 MyRoom经纪人子系统仓库
 
-## ✨Features
+## ✨ Features
 待补充．．．
 ## :rocket: Technologies
 - React
@@ -11,8 +11,8 @@ MyRoom经纪人子系统仓库
 - Husky + lint-staged
 - css方案？
 - UI组件库？
-## 📦Quick start
-本项目使用pnpm作为包管理工具，需要先全局安装pnpm:
+## 📦 Quick start
+本项目使用 pnpm 作为包管理工具，需要先全局安装 pnpm:
 ```bash
 npm install -g pnpm
 ```
@@ -28,7 +28,7 @@ pnpm run lint
 ```
 ## :white_check_mark: Commit standards
 使用Husky + lint-staged 的 Git 提交工作流集成
-commit由两部分组成,o结构如下：
+commit由两部分组成, 结构如下：
 ```
 // type 指提交的类型
 // subject 指提交的摘要信息
