@@ -13,6 +13,11 @@ module.exports = {
     'plugin:prettier/recommended'
   ],
   parser: '@typescript-eslint/parser',
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   parserOptions: {
     ecmaFeatures: {
       jsx: true
