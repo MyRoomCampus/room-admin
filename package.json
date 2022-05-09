@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "room-admin",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -21,9 +21,11 @@
     ]
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "postcss": "^8.3.3",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "rollup": "^2.60.0"
   },
   "devDependencies": {
     "@amatlash/vite-plugin-stylelint": "^1.2.0",
