@@ -26,6 +26,25 @@ pnpm build
 # Run lint
 pnpm run lint
 ```
+## Project directory
+```
+├── README.md	文档
+├── src
+│   ├── assets			静态资源
+│   ├── hooks				通用hooks
+│   ├── layouts			布局
+│   ├── main.tsx
+│   ├── styles			通用样式
+│   │   └── index.css
+│   ├── utils				工具函数
+│   │   └── token.ts
+│   ├── views				页面
+│   ├── components 	通用组件
+│   └── vite-env.d.ts
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+```
 ## :white_check_mark: Commit standards
 使用Husky + lint-staged 的 Git 提交工作流集成
 commit由两部分组成, 结构如下：

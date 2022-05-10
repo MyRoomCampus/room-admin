@@ -14,16 +14,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js '16'
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm run lint
+        node-version: '16'
+    - run: npm install -g pnpm
+    - run: pnpm install
+    - run: pnpm run lint
