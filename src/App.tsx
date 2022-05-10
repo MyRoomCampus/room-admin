@@ -1,10 +1,7 @@
-import { useState } from 'react'
-import logo from './logo.svg'
+import TodoList from './views/Example'
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return <div className="App">Hello, world!</div>
+  return <TodoList />
 }
 
 export default App
