@@ -1,7 +1,11 @@
-import TodoList from './views/Example'
+import LoginPage from './views/Login'
 
 function App() {
-  return <TodoList />
+  return (
+    <>
+      <LoginPage someProps={123} />
+    </>
+  )
 }
 
 export default App

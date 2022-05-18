@@ -13,7 +13,7 @@ export default defineConfig({
   resolve: {
     // 别名配置，可以使用绝地路径引入src文件夹下面的文件
     alias: {
-      '@/': path.join(__dirname, 'src/')
+      '@': path.resolve(__dirname, './src')
     }
   }
 })
