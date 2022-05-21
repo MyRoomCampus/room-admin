@@ -1,0 +1,16 @@
+name: Deploy Master
+
+on:
+  push:
+    branches: [ master ]
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Deploy on server
+        run: |
+          cd ~/code/room-admin
+          git fetch --all
+          git reset --hard origin/main
+          pnpm install
+          pnpm run build
