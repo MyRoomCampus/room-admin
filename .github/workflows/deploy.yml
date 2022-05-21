@@ -1,15 +1,16 @@
-name: Deploy Master
+name: Deploy Main
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 jobs:
   deploy:
     runs-on: self-hosted
     steps:
       - name: Deploy on server
         run: |
-          cd ~/code/room-admin
+          cd ~/code
+          git clone https://github.com/MyRoomCampus/room-admin.git
           git fetch --all
           git reset --hard origin/main
           pnpm install
