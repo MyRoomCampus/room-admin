@@ -10,6 +10,16 @@ export default defineConfig({
     viteEslint(),
     viteStylelint({ exclude: /windicss|node_modules/ })
   ],
+  css: {
+    modules: {
+      localsConvention: 'camelCase'
+    },
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true
+      }
+    }
+  },
   resolve: {
     // 别名配置，可以使用绝地路径引入src文件夹下面的文件
     alias: {

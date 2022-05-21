@@ -1,11 +1,6 @@
-import LoginPage from './views/Login'
-
-function App() {
-  return (
-    <>
-      <LoginPage someProps={123} />
-    </>
-  )
-}
+import { useRoutes } from 'react-router-dom'
+import router from './router'
+import 'reset-css';
+const App = () => useRoutes(router)
 
 export default App

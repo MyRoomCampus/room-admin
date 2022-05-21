@@ -4,7 +4,7 @@ import { setToken } from '@//utils/token'
 import LoginApi from '@//api/login'
 import styles from './index.module.less'
 interface IProps {
-  someProps: number
+  someProps?: number
 }
 
 const LoginPage: React.FC<IProps> = (props) => {
