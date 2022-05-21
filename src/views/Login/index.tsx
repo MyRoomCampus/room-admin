@@ -3,8 +3,11 @@ import { Input, Button, Toast } from '@douyinfe/semi-ui'
 import { setToken } from '@//utils/token'
 import LoginApi from '@//api/login'
 import styles from './index.module.less'
+import { useNavigate } from 'react-router'
 
 const LoginPage: React.FC = () => {
+  const navigator = useNavigate();
+
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
   const [errMsg, setErrMsg] = useState('')
@@ -37,6 +40,8 @@ const LoginPage: React.FC = () => {
     } catch (e) {
       console.log(e)
     }
+    navigator('/dashboard')
+
   }
 
   return (
