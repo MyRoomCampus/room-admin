@@ -4,49 +4,47 @@ import { Layout } from '@douyinfe/semi-ui'
 import { Outlet } from 'react-router-dom'
 import { Nav } from '@douyinfe/semi-ui'
 import { IconUser, IconStar } from '@douyinfe/semi-icons'
-import { NavLink } from 'react-router-dom'
+import {
+  NavItemPropsWithItems,
+  NavItems
+} from '@douyinfe/semi-ui/lib/es/navigation'
+import { useNavigate } from 'react-router-dom'
+
+const menuItem: NavItems = [
+  {
+    itemKey: '/dashboard',
+    text: <span className={styles['layout-sider_item']}>房源卡片</span>,
+    icon: <IconStar />
+  },
+  {
+    itemKey: '/dashboard/user-info',
+    text: <span className={styles['layout-sider_item']}>个人信息</span>,
+    icon: <IconUser />
+  }
+]
 
 const LayOut: React.FC = () => {
+  const navigator = useNavigate()
+
   const { Header, Sider, Content } = Layout
   return (
     <Layout>
-      <Header className={styles['layout-header_container']}>1112222</Header>
+      <Header className={styles['layout-header_container']}>
+        MYROOM麦荣经纪人子系统
+      </Header>
       <Layout>
         <Sider className={styles['layout-sider_container']}>
           <Nav
-            bodyStyle={{
-              height: 'calc(100vh - 49px)'
-            }}
-            defaultSelectedKeys={['house']}
-            items={[
-              {
-                itemKey: 'house',
-                text: (
-                  <NavLink
-                    // className={styles['layout-sider_item']}
-                    to="/dashboard"
-                  >
-                    房源卡片
-                  </NavLink>
-                ),
-                icon: <IconStar />
-              },
-              {
-                itemKey: 'user',
-                text: (
-                  <NavLink
-                    to="/dashboard/user-info"
-                    // className={styles['layout-sider_item']}
-                  >
-                    个人信息
-                  </NavLink>
-                ),
-                icon: <IconUser />
-              }
+            mode="vertical"
+            className={styles['layout-sider_container']}
+            defaultSelectedKeys={[
+              (menuItem[0] as NavItemPropsWithItems).itemKey!
             ]}
+            items={menuItem}
+            onClick={(item) => navigator(item.itemKey as string)}
           />
         </Sider>
-        <Content>
+        <Content className={styles['layout-content_container']}>
           <Outlet />
         </Content>
       </Layout>

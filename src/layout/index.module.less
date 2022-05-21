@@ -1,21 +1,33 @@
 .layout-header_container {
-  height: 49px;
+  height: 60px;
   width: 100vw;
-  background-color: rebeccapurple;
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-weight: 600;
+  font-size: 20px;
+  border-bottom: 1px solid rgb(18 18 18 / 10%);
 }
 
 .layout-sider {
   &_container {
-    height: calc(100vh - 49px);
-
+    height: calc(100vh - 60px);
   }
 
   &_item {
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
+    width: 100%;
   }
-
 }
 
+.layout-content {
+  &_container {
+    height: calc(100vh - 60px);
+    width: 100%;
+    background-color: #F5F6FA;
+    padding: 20px;
+  }
+}
