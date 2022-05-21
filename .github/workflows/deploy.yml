@@ -2,13 +2,16 @@ name: Deploy Main
 
 on:
   push:
-    branches: [ main ]
+    branches: [ feat/ci ]
 jobs:
   deploy:
     runs-on: self-hosted
     steps:
       - name: Deploy on server
         run: |
+          cd ~/code
+          rm -rf room-admin
+          git clone https://github.com/MyRoomCampus/room-admin.git
           cd ~/code/room-admin
           git fetch --all
           git reset --hard origin/main
