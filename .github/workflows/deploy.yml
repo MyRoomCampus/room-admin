@@ -13,5 +13,6 @@ jobs:
         uses: actions/checkout@master
       - name: Deploy on server
         run: |
+          npm install -g pnpm
           pnpm install
           pnpm run build
