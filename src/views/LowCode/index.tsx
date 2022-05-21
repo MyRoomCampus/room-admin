@@ -1,10 +1,6 @@
 import React from 'react'
 
-interface IProps {
-
-}
-
-const LowCodePlatform: React.FC<IProps> = (props)=> {
+const LowCodePlatform: React.FC = ()=> {
   return (
     <>LowCodePlatform</>
   )
