@@ -8,7 +8,8 @@
     "preview": "vite preview",
     "lint:script": "eslint --ext .js,.jsx,.ts,.tsx --fix --quiet ./src",
     "lint:style": "stylelint --fix \"src/**/*.{css,scss}\"",
-    "lint": "npm run lint:script && npm run lint:style"
+    "lint": "npm run lint:script && npm run lint:style",
+    "postinstall": "husky install"
   },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts}": [
