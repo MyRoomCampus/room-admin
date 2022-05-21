@@ -9,8 +9,7 @@ jobs:
     steps:
       - name: Deploy on server
         run: |
-          cd ~/code
-          git clone https://github.com/MyRoomCampus/room-admin.git
+          cd ~/code/room-admin
           git fetch --all
           git reset --hard origin/main
           pnpm install
