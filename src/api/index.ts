@@ -7,13 +7,14 @@ import { getToken } from '../utils/token'
 //   data: T
 // }
 
-const baseURL = import.meta.env.VITE_BASE_URL
+// const baseURL = import.meta.env.VITE_BASE_URL
+const baseURL = '/api'
 const timeout = 5000
 
 const request = axios.create({
   baseURL,
   timeout,
-  withCredentials: false
+  withCredentials: true
 })
 
 /** 请求拦截器 */
@@ -22,7 +23,7 @@ function resquestSuccessInterceptors(config: any) {
   if(!config.headers.Authorization) {
     const token = getToken('access')
     token && (config.headers.Authorization = `Bearer ${token}`)
-  }
+  }  
   return config
 }
 function requestFailInterceports(error: any) {
@@ -85,7 +86,7 @@ const baseRequest = {
     config: AxiosRequestConfig = {}
   ) {
     return request.post<T, T>(url, data, {
-      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      headers: { 'Content-Type': 'application/json' },
       ...config
     })
   }

@@ -38,6 +38,14 @@ export default defineConfig(({mode}) => {
       alias: {
         '@': path.resolve(__dirname, './src')
       }
+    },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://180.184.74.73',
+          changeOrigin: true,
+        } 
+      }
     }
   }
 })

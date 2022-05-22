@@ -28,7 +28,7 @@ export const setToken = (value: string, type: TokenType) => {
 }
 
 // 获取token
-export const getToken = async (type: TokenType = 'access') => {
+export const getToken = (type: TokenType = 'access'): string | null => {
   const itemKey =
     type === 'access' ? JWT_ACCESS_TOKEN_KEY : JWT_REFRESH_TOKEN_KEY
   const tokenStorage = localStorage.getItem(itemKey)
@@ -39,8 +39,15 @@ export const getToken = async (type: TokenType = 'access') => {
 
   // accessToken 过期判断
   if (type === 'access' && token.expire < Date.now() / 1000) {
-    const res = await LoginApi.refreshTokenRequest(await getToken('refresh'));
-    setToken(res.accessToken, 'access');
+    const refreshToken = getToken('refresh')
+    if (refreshToken) {
+      LoginApi.refreshTokenRequest(refreshToken).then((res) => {
+        setToken(res.accessToken, 'access')
+        return res.accessToken
+      })
+    } else {
+      return null
+    }
   }
   return token.value
 }
