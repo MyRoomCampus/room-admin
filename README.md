@@ -9,8 +9,11 @@ MyRoom经纪人子系统仓库
 - [Vite](https://cn.vitejs.dev/)
 - ESlint + prettier
 - husky + lint-staged
-- [less](https://lesscss.org/)                                              )
+- [less](https://lesscss.org)                                              )
 - [semi ui](https://semi.design/zh-CN/start/getting-started)
+- plop
+- github actions
+- nginx
 ## 📦 Quick start
 本项目使用 pnpm 作为包管理工具，需要先全局安装 pnpm:
 ```bash
@@ -25,6 +28,10 @@ pnpm dev
 pnpm build
 # Run lint
 pnpm run lint
+```
+您可以使用plop创建模板文件
+```bash
+npm run plop
 ```
 ## Project directory
 ```
