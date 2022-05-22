@@ -11,6 +11,7 @@ MyRoom经纪人子系统仓库
 - husky + lint-staged
 - [less](https://lesscss.org)                                              )
 - [semi ui](https://semi.design/zh-CN/start/getting-started)
+- plop
 - github actions
 - nginx
 ## 📦 Quick start
@@ -27,6 +28,10 @@ pnpm dev
 pnpm build
 # Run lint
 pnpm run lint
+```
+您可以使用plop创建模板文件
+```bash
+npm run plop
 ```
 ## Project directory
 ```

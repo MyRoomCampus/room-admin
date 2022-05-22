@@ -9,7 +9,8 @@
     "lint:script": "eslint --ext .js,.jsx,.ts,.tsx --fix --quiet ./src",
     "lint:style": "stylelint --fix \"src/**/*.{css,scss}\"",
     "lint": "npm run lint:script && npm run lint:style",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "plop": "plop"
   },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts}": [
@@ -44,6 +45,7 @@
     "eslint-plugin-react": "^7.29.4",
     "husky": "^8.0.1",
     "lint-staged": "^12.4.1",
+    "plop": "^3.1.0",
     "prettier": "^2.6.2",
     "stylelint": "^14.8.2",
     "stylelint-config-prettier": "^9.0.3",
