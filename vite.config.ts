@@ -11,9 +11,9 @@ export default defineConfig({
     viteStylelint({ exclude: /windicss|node_modules/ })
   ],
   resolve: {
-    // 别名配置，可以使用绝地路径引入src文件夹下面的文件
+    // 别名配置，可以使用绝对路径引入src文件夹下面的文件
     alias: {
-      '@/': path.join(__dirname, 'src/')
+      '@': path.join(__dirname, './src')
     }
   }
 })
