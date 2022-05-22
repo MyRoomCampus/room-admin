@@ -1,4 +1,4 @@
-# 一个workflow，名为deploy to tengxunyun
+# 一个workflow，名为deploy
 name: deploy
 
 on: # 此CI/CD触发时的事件
@@ -10,7 +10,7 @@ on: # 此CI/CD触发时的事件
 jobs: 
   build: # 构建job
     runs-on: ubuntu-latest # 跑workflow的服务器系统
-    steps: # job的一系列动作
+    steps: # job的一系列动作，每个步骤按顺序进行，相互依赖
       # 切换分支获取源码
       - name: Checkout # step的名称，将会在 github action 的控制台中显示
         # 选择一个action，可以理解为若干 steps.run，有利于代码复用
