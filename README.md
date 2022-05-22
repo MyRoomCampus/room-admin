@@ -6,11 +6,11 @@ MyRoom经纪人子系统仓库
 ## :rocket: Technologies
 - React
 - Typescript
-- Vite
+- [Vite](https://cn.vitejs.dev/)
 - ESlint + prettier
-- Husky + lint-staged
-- css方案？
-- UI组件库？
+- husky + lint-staged
+- [less](https://lesscss.org/)                                              )
+- [semi ui](https://semi.design/zh-CN/start/getting-started)
 ## 📦 Quick start
 本项目使用 pnpm 作为包管理工具，需要先全局安装 pnpm:
 ```bash
@@ -31,15 +31,15 @@ pnpm run lint
 ├── README.md	文档
 ├── src
 │   ├── assets			静态资源
-│   ├── hooks				通用hooks
+│   ├── hooks			通用hooks
 │   ├── layouts			布局
 │   ├── main.tsx
 │   ├── styles			通用样式
 │   │   └── index.css
-│   ├── utils				工具函数
+│   ├── utils			工具函数
 │   │   └── token.ts
-│   ├── views				页面
-│   ├── components 	通用组件
+│   ├── views			页面
+│   ├── components 	    通用组件
 │   └── vite-env.d.ts
 ├── tsconfig.json
 ├── tsconfig.node.json
