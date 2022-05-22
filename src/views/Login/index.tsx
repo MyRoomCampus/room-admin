@@ -37,39 +37,39 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className={styles['login-page_container']}>
-      <div className={styles['login-form_container']}>
-        <div className={styles['login-form_title']}>欢迎进入MYROOM麦荣系统</div>
+    <div className={styles['login-page-container']}>
+      <div className={styles['login-form-container']}>
+        <div className={styles['login-form-title']}>欢迎进入MYROOM麦荣系统</div>
 
-        <div className={styles['login-form_input']}>
-          <div className={styles['login-form_input__label']}>Username：</div>
+        <div className={styles['login-form-input']}>
+          <div className={styles['login-form-input--label']}>Username：</div>
           <Input type="text" size="large" onChange={(v) => setUsername(v)} />
         </div>
 
-        <div className={styles['login-form_input']}>
-          <div className={styles['login-form_input__label']}>Password：</div>
+        <div className={styles['login-form-input']}>
+          <div className={styles['login-form-input--label']}>Password：</div>
           <Input
             type="password"
             size="large"
             onChange={(v) => setPassword(v)}
           />
-          <div className={styles['login-form_input__error']}>
+          <div className={styles['login-form-input--error']}>
             {Boolean(errMsg) && `*${errMsg}`}
           </div>
         </div>
 
-        <div className={styles['login-form_submit']}>
+        <div className={styles['login-form-submit']}>
           <Button
             onClick={onRegister}
             size="large"
-            className={styles['login-form_submit__btn']}
+            className={styles['login-form-submit--btn']}
           >
             注册
           </Button>
           <Button
             onClick={onLogin}
             size="large"
-            className={styles['login-form_submit__btn']}
+            className={styles['login-form-submit--btn']}
           >
             登录
           </Button>

@@ -49,7 +49,3 @@ export const getToken = async (type: TokenType = 'access') => {
 export const clearToken = () => {
   localStorage.removeItem(JWT_ACCESS_TOKEN_KEY)
 }
-
-export const updateAccessToken = (accessToken: string) => {
-  localStorage.setItem(JWT_ACCESS_TOKEN_KEY, accessToken)
-}

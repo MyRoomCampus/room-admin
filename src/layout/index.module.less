@@ -1,33 +1,33 @@
-.layout-header_container {
-  height: 60px;
-  width: 100vw;
+.layout-header-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100vw;
+  height: 60px;
   padding: 0 20px;
-  font-weight: 600;
   font-size: 20px;
+  font-weight: 600;
   border-bottom: 1px solid rgb(18 18 18 / 10%);
 }
 
 .layout-sider {
-  &_container {
+  &-container {
     height: calc(100vh - 60px);
   }
 
-  &_item {
-    text-decoration: none;
+  &-item {
+    width: 100%;
     font-size: 16px;
     font-weight: 600;
-    width: 100%;
+    text-decoration: none;
   }
 }
 
 .layout-content {
-  &_container {
-    height: calc(100vh - 60px);
+  &-container {
     width: 100%;
-    background-color: #F5F6FA;
+    height: calc(100vh - 60px);
     padding: 20px;
+    background-color: #f5f6fa;
   }
 }
