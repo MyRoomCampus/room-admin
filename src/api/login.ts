@@ -1,25 +1,39 @@
 import baseRequest from '.'
-import { type ILoginParam, type IUserInfo } from '../types/userInfo.types'
+interface ILoginParam {
+  username: string
+  password: string
+}
+
+interface ILoginToken {
+  accessToken: string
+  refreshToken: string
+}
+
+
 const LOGIN_URL = {
-  register: '/register',
-  login: '/login'
+  register: '/auth/register',
+  login: '/auth/login',
+  refresh: '/auth/refresh'
 }
 
 class LoginApi {
   static async loginRequest(data: ILoginParam) {
-    return await baseRequest.post<{token: string}>(LOGIN_URL.login, data)
+    return await baseRequest.post<ILoginToken>(LOGIN_URL.login, data)
   }
 
   static async registerRequest(data: ILoginParam) {
-    return await baseRequest.post<IUserInfo>(LOGIN_URL.register, data)
+    return await baseRequest.post<Record<never, never>>(
+      LOGIN_URL.register,
+      data
+    )
   }
 
-  static async testGetBadRequest(data: Record<string, unknown> = {}) {
-    return await baseRequest.get<IUserInfo>('/abcd', data)
-  }
-
-  static async testPostBadRequest(data: Record<string, unknown> = {}) {
-    return await baseRequest.post<IUserInfo>('/fghi', data)
+  static async refreshTokenRequest(refreshToken: string) {
+    return await baseRequest.get<{ accessToken: string }>(LOGIN_URL.refresh, {}, {
+      headers: {
+        Authorization: `Bearer ${refreshToken}`
+      }
+    })
   }
 }
 

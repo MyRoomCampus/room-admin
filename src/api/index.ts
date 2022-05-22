@@ -1,14 +1,13 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { Toast } from '@douyinfe/semi-ui'
-interface IBaseReqStruct<T = any> {
-  code: number
-  errorCode: string
-  data: T
-}
+import { getToken } from '../utils/token'
+// interface IBaseReqStruct<T = any> {
+//   code: number
+//   errorCode: string
+//   data: T
+// }
 
-const port = 3333
-const prefix = '/'
-const baseURL = `http://localhost:${port}${prefix}`
+const baseURL = import.meta.env.VITE_BASE_URL
 const timeout = 5000
 
 const request = axios.create({
@@ -20,8 +19,10 @@ const request = axios.create({
 /** 请求拦截器 */
 function resquestSuccessInterceptors(config: any) {
   // 携带上token
-  const token = localStorage.getItem('room_jwt')
-  token && (config.headers.Authorization = `Bearer ${token}`)
+  if(!config.headers.Authorization) {
+    const token = getToken('access')
+    token && (config.headers.Authorization = `Bearer ${token}`)
+  }
   return config
 }
 function requestFailInterceports(error: any) {
@@ -36,7 +37,7 @@ request.interceptors.request.use(
 
 /** 响应拦截器 */
 function responseSuccessInterceptors<T>(
-  response: AxiosResponse<IBaseReqStruct<T>>
+  response: AxiosResponse<T>
 ) {
   // 响应成功的拦截器
   return Promise.resolve(response.data)
@@ -58,9 +59,8 @@ function responseFailInterceptors(error: AxiosError) {
       Toast.error('Ooops, something went wrong...')
       break
   }
-  return Promise.reject(
-    `${error.config.baseURL ?? baseURL}${error.config.url ?? ''}`
-  )
+  console.error(`http请求错误，请求路径: ${error.config.url || ''}`);
+  return Promise.resolve(undefined)
 }
 request.interceptors.response.use(
   responseSuccessInterceptors,
@@ -73,7 +73,7 @@ const baseRequest = {
     params?: Record<string, any>,
     config: AxiosRequestConfig = {}
   ) {
-    return request.get<T, IBaseReqStruct<T>>(url, {
+    return request.get<T, T>(url, {
       params,
       ...config
     })
@@ -84,7 +84,7 @@ const baseRequest = {
     data?: Record<string, any>,
     config: AxiosRequestConfig = {}
   ) {
-    return request.post<T, IBaseReqStruct<T>>(url, data, {
+    return request.post<T, T>(url, data, {
       headers: { 'Content-Type': 'application/json;charset=UTF-8' },
       ...config
     })

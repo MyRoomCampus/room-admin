@@ -1,6 +1,6 @@
 import { useRoutes } from 'react-router-dom'
 import router from './router'
-import './assets/css/common.less'
+import './assets/styles/common.less'
 import 'reset-css';
 import AppContext, {initialStore} from './store'
 import { useReducer } from 'react';

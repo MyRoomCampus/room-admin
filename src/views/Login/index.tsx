@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router'
 const LoginPage: React.FC = () => {
   const navigator = useNavigate();
 
-  const [account, setAccount] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errMsg, setErrMsg] = useState('')
 
@@ -18,30 +18,22 @@ const LoginPage: React.FC = () => {
     }, 2000)
   }, [])
   const onRegister = () => {
-    LoginApi.registerRequest({ account, password })
+    LoginApi.registerRequest({ username, password })
       .then((res) => {
         console.log(res)
-      })
-      .catch((e) => {
-        console.log(e)
       })
   }
 
   const onLogin = async () => {
-    try {
-      const res = await LoginApi.loginRequest({ account, password })
-      if (res.code === 200) {
-        const { data } = res
-        setToken(data.token)
-        Toast.success('登录成功')
-      } else {
-        Toast.error('登录失败')
-      }
-    } catch (e) {
-      console.log(e)
+    const res = await LoginApi.loginRequest({ username, password })
+    if (res) {
+      setToken(res.accessToken, 'access');
+      setToken(res.refreshToken, 'refresh');
+      Toast.success('登录成功')
+    } else {
+      Toast.error('登录失败')
     }
     navigator('/dashboard')
-
   }
 
   return (
@@ -50,8 +42,8 @@ const LoginPage: React.FC = () => {
         <div className={styles['login-form_title']}>欢迎进入MYROOM麦荣系统</div>
 
         <div className={styles['login-form_input']}>
-          <div className={styles['login-form_input__label']}>Account：</div>
-          <Input type="text" size="large" onChange={(v) => setAccount(v)} />
+          <div className={styles['login-form_input__label']}>Username：</div>
+          <Input type="text" size="large" onChange={(v) => setUsername(v)} />
         </div>
 
         <div className={styles['login-form_input']}>

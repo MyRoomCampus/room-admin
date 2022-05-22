@@ -1,37 +1,55 @@
-// 30天后过期
-const TOKEN_EXPIRE_DAY = 30
-const JWT_TOKEN_KEY = 'room_jwt'
+import LoginApi from '../api/login'
+
+const JWT_ACCESS_TOKEN_KEY = 'room_jwt_access'
+const JWT_REFRESH_TOKEN_KEY = 'room_jwt_refresh'
+
 export type Token = {
   value: string
   expire?: number
 }
 
+type TokenType = 'access' | 'refresh'
+
+interface IPayLoad {
+  exp: number
+  [key: string]: any
+}
+
 // 设置token
-export const setToken = (value: string, expire: number | null = null) => {
-  const time = new Date()
-  // Token过期时间
-  time.setDate(time.getDate() + (expire ?? TOKEN_EXPIRE_DAY))
+export const setToken = (value: string, type: TokenType) => {
+  // 根据type判断token种类
+  const itemKey =
+    type === 'access' ? JWT_ACCESS_TOKEN_KEY : JWT_REFRESH_TOKEN_KEY
   const token = {
-    expire: time.getTime(),
+    expire: (JSON.parse(atob(value.split('.')[1])) as IPayLoad).exp,
     value: value
   }
-  localStorage.setItem(JWT_TOKEN_KEY, JSON.stringify(token))
+  localStorage.setItem(itemKey, JSON.stringify(token))
 }
 
 // 获取token
-export const getToken = () => {
-  const tokenStorage = localStorage.getItem(JWT_TOKEN_KEY)
+export const getToken = async (type: TokenType = 'access') => {
+  const itemKey =
+    type === 'access' ? JWT_ACCESS_TOKEN_KEY : JWT_REFRESH_TOKEN_KEY
+  const tokenStorage = localStorage.getItem(itemKey)
   if (!tokenStorage) {
     return null
   }
   const token = JSON.parse(tokenStorage)
-  if (token.expire < Date.now()) {
-    return null
+
+  // accessToken 过期判断
+  if (type === 'access' && token.expire < Date.now() / 1000) {
+    const res = await LoginApi.refreshTokenRequest(await getToken('refresh'));
+    setToken(res.accessToken, 'access');
   }
   return token.value
 }
 
 // 移除token
 export const clearToken = () => {
-  localStorage.removeItem(JWT_TOKEN_KEY)
+  localStorage.removeItem(JWT_ACCESS_TOKEN_KEY)
+}
+
+export const updateAccessToken = (accessToken: string) => {
+  localStorage.setItem(JWT_ACCESS_TOKEN_KEY, accessToken)
 }
