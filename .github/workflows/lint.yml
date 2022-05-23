@@ -5,15 +5,13 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ * ]
   pull_request:
-    branches: [ main, dev ]
+    branches: [ main ]
 
 jobs:
-  build:
-
+  lint:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js '16'
