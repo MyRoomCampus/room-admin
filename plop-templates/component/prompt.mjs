@@ -49,7 +49,7 @@ export default {
     if (data.isGlobal) {
       path = 'src/components/{{properCase name}}'
     } else {
-      path = `${data.path}/components/{{properCase name}}`
+      path = `${data.path}/{{properCase name}}`
     }
     const actions = [
       {

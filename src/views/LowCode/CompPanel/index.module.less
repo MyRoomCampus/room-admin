@@ -1,0 +1,21 @@
+@body-heigh: calc(100vh - 50px);
+
+.left-panel {
+  &-container {
+    display: flex;
+    width: 460px;
+    height: @body-heigh;
+  }
+
+  &-nav {
+    height: @body-heigh;
+  }
+
+  &-detail {
+    width: 400px;
+    height: @body-heigh;
+    padding: 12px;
+    overflow-y: auto;
+    background-color: #fefefe;
+  }
+}
