@@ -32,6 +32,7 @@ const LayOut: React.FC = () => {
           <Nav
             mode="vertical"
             className={styles['layout-sider-container']}
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             defaultSelectedKeys={[(menuItem[0] as NavItemPropsWithItems).itemKey!]}
             items={menuItem}
             onClick={(item) => navigator(item.itemKey as string)}
