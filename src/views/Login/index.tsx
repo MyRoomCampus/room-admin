@@ -53,29 +53,15 @@ const LoginPage: React.FC = () => {
 
         <div className={styles['login-form-input']}>
           <div className={styles['login-form-input--label']}>Password：</div>
-          <Input
-            type="password"
-            size="large"
-            onChange={(v) => setPassword(v)}
-          />
-          <div className={styles['login-form-input--error']}>
-            {Boolean(errMsg) && `*${errMsg}`}
-          </div>
+          <Input type="password" size="large" onChange={(v) => setPassword(v)} />
+          <div className={styles['login-form-input--error']}>{Boolean(errMsg) && `*${errMsg}`}</div>
         </div>
 
         <div className={styles['login-form-submit']}>
-          <Button
-            onClick={onRegister}
-            size="large"
-            className={styles['login-form-submit--btn']}
-          >
+          <Button onClick={onRegister} size="large" className={styles['login-form-submit--btn']}>
             注册
           </Button>
-          <Button
-            onClick={onLogin}
-            size="large"
-            className={styles['login-form-submit--btn']}
-          >
+          <Button onClick={onLogin} size="large" className={styles['login-form-submit--btn']}>
             登录
           </Button>
         </div>

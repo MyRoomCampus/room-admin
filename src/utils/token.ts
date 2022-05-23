@@ -18,8 +18,7 @@ interface IPayLoad {
 // 设置token
 export const setToken = (value: string, type: TokenType) => {
   // 根据type判断token种类
-  const itemKey =
-    type === 'access' ? JWT_ACCESS_TOKEN_KEY : JWT_REFRESH_TOKEN_KEY
+  const itemKey = type === 'access' ? JWT_ACCESS_TOKEN_KEY : JWT_REFRESH_TOKEN_KEY
   const token = {
     expire: (JSON.parse(atob(value.split('.')[1])) as IPayLoad).exp,
     value: value
