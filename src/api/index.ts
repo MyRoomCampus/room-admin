@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { Toast } from '@douyinfe/semi-ui'
-import { getToken } from '../utils/token'
+import { getAccessToken } from '../utils/token'
 // interface IBaseReqStruct<T = any> {
 //   code: number
 //   errorCode: string
@@ -18,12 +18,12 @@ const request = axios.create({
 })
 
 /** 请求拦截器 */
-function resquestSuccessInterceptors(config: any) {
+async function resquestSuccessInterceptors(config: any) {
   // 携带上token
-  if(!config.headers.Authorization) {
-    const token = getToken('access')
+  if (!config.headers.Authorization) {
+    const token = await getAccessToken();
     token && (config.headers.Authorization = `Bearer ${token}`)
-  }  
+  }
   return config
 }
 function requestFailInterceports(error: any) {
@@ -37,9 +37,7 @@ request.interceptors.request.use(
 )
 
 /** 响应拦截器 */
-function responseSuccessInterceptors<T>(
-  response: AxiosResponse<T>
-) {
+function responseSuccessInterceptors<T>(response: AxiosResponse<T>) {
   // 响应成功的拦截器
   return Promise.resolve(response.data)
 }
@@ -60,7 +58,7 @@ function responseFailInterceptors(error: AxiosError) {
       Toast.error('Ooops, something went wrong...')
       break
   }
-  console.error(`http请求错误，请求路径: ${error.config.url || ''}`);
+  console.error(`http请求错误，请求路径: ${error.config.url || ''}`)
   return Promise.resolve(undefined)
 }
 request.interceptors.response.use(
@@ -86,7 +84,7 @@ const baseRequest = {
     config: AxiosRequestConfig = {}
   ) {
     return request.post<T, T>(url, data, {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'multipart/form-data' },
       ...config
     })
   }

@@ -1,39 +1,44 @@
 import { useEffect, useState } from 'react'
 import { Input, Button, Toast } from '@douyinfe/semi-ui'
-import { setToken } from '@//utils/token'
+import { getAccessToken, setToken } from '@//utils/token'
 import LoginApi from '@//api/login'
 import styles from './index.module.less'
 import { useNavigate } from 'react-router'
 
 const LoginPage: React.FC = () => {
-  const navigator = useNavigate();
+  const navigator = useNavigate()
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errMsg, setErrMsg] = useState('')
 
   useEffect(() => {
-    setTimeout(() => {
-      setErrMsg('Account Error')
-    }, 2000)
+    getAccessToken().then((res) => {
+      if (res) {
+        navigator('/dashboard')
+      }
+    })
   }, [])
-  const onRegister = () => {
-    LoginApi.registerRequest({ username, password })
-      .then((res) => {
-        console.log(res)
-      })
+
+  const onRegister = async () => {
+    const res = await LoginApi.registerRequest({ username, password })
+    if (res) {
+      Toast.success(res.msg)
+    } else {
+      Toast.error('注册失败')
+    }
   }
 
   const onLogin = async () => {
     const res = await LoginApi.loginRequest({ username, password })
     if (res) {
-      setToken(res.accessToken, 'access');
-      setToken(res.refreshToken, 'refresh');
+      setToken(res.accessToken, 'access')
+      setToken(res.refreshToken, 'refresh')
+      navigator('/dashboard')
       Toast.success('登录成功')
     } else {
       Toast.error('登录失败')
     }
-    navigator('/dashboard')
   }
 
   return (
