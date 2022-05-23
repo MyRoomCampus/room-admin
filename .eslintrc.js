@@ -30,6 +30,13 @@ module.exports = {
     'prettier/prettier': 'error',
     quotes: ['error', 'single'],
     'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 0
+    'react/prop-types': 'off',
+    '@typescript-eslint/no-empty-function': 'error',
+    '@typescript-eslint/no-empty-interface': 'error',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-inferrable-types': 'error',
+    '@typescript-eslint/no-misused-new': 'error',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-unused-vars': 'error'
   }
 }

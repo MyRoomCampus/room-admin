@@ -10,7 +10,7 @@ const LoginPage: React.FC = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [errMsg, setErrMsg] = useState('')
+  const [errMsg] = useState('')
 
   useEffect(() => {
     getAccessToken().then((res) => {

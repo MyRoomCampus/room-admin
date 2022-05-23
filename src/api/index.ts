@@ -1,13 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { Toast } from '@douyinfe/semi-ui'
 import { getAccessToken } from '../utils/token'
-// interface IBaseReqStruct<T = any> {
-//   code: number
-//   errorCode: string
-//   data: T
-// }
 
-// const baseURL = import.meta.env.VITE_BASE_URL
 const baseURL = '/api'
 const timeout = 5000
 
@@ -18,6 +12,7 @@ const request = axios.create({
 })
 
 /** 请求拦截器 */
+// eslint-disable-next-line
 async function resquestSuccessInterceptors(config: any) {
   // 携带上token
   if (!config.headers.Authorization) {
@@ -26,6 +21,7 @@ async function resquestSuccessInterceptors(config: any) {
   }
   return config
 }
+// eslint-disable-next-line
 function requestFailInterceports(error: any) {
   return Promise.reject(error)
 }
@@ -64,6 +60,7 @@ function responseFailInterceptors(error: AxiosError) {
 request.interceptors.response.use(responseSuccessInterceptors, responseFailInterceptors)
 
 const baseRequest = {
+  // eslint-disable-next-line
   get<T>(url: string, params?: Record<string, any>, config: AxiosRequestConfig = {}) {
     return request.get<T, T>(url, {
       params,
@@ -71,6 +68,7 @@ const baseRequest = {
     })
   },
 
+  // eslint-disable-next-line
   post<T>(url: string, data?: Record<string, any>, config: AxiosRequestConfig = {}) {
     return request.post<T, T>(url, data, {
       headers: { 'Content-Type': 'multipart/form-data' },
