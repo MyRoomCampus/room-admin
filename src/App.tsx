@@ -8,11 +8,7 @@ import reducer from './reducer'
 const App = () => {
   const [store, dispatch] = useReducer(reducer, initialStore)
 
-  return (
-    <AppContext.Provider value={{ store, dispatch }}>
-      {useRoutes(router)}
-    </AppContext.Provider>
-  )
+  return <AppContext.Provider value={{ store, dispatch }}>{useRoutes(router)}</AppContext.Provider>
 }
 
 export default App

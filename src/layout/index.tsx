@@ -4,10 +4,7 @@ import { Layout } from '@douyinfe/semi-ui'
 import { Outlet } from 'react-router-dom'
 import { Nav } from '@douyinfe/semi-ui'
 import { IconUser, IconStar } from '@douyinfe/semi-icons'
-import {
-  NavItemPropsWithItems,
-  NavItems
-} from '@douyinfe/semi-ui/lib/es/navigation'
+import { NavItemPropsWithItems, NavItems } from '@douyinfe/semi-ui/lib/es/navigation'
 import { useNavigate } from 'react-router-dom'
 
 const menuItem: NavItems = [
@@ -29,17 +26,14 @@ const LayOut: React.FC = () => {
   const { Header, Sider, Content } = Layout
   return (
     <Layout>
-      <Header className={styles['layout-header-container']}>
-        MYROOM麦荣经纪人子系统
-      </Header>
+      <Header className={styles['layout-header-container']}>MYROOM麦荣经纪人子系统</Header>
       <Layout>
         <Sider className={styles['layout-sider-container']}>
           <Nav
             mode="vertical"
             className={styles['layout-sider-container']}
-            defaultSelectedKeys={[
-              (menuItem[0] as NavItemPropsWithItems).itemKey!
-            ]}
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            defaultSelectedKeys={[(menuItem[0] as NavItemPropsWithItems).itemKey!]}
             items={menuItem}
             onClick={(item) => navigator(item.itemKey as string)}
           />
