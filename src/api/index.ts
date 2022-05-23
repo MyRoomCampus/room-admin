@@ -21,7 +21,7 @@ const request = axios.create({
 async function resquestSuccessInterceptors(config: any) {
   // 携带上token
   if (!config.headers.Authorization) {
-    const token = await getAccessToken();
+    const token = await getAccessToken()
     token && (config.headers.Authorization = `Bearer ${token}`)
   }
   return config

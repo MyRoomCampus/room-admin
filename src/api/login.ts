@@ -25,7 +25,10 @@ class LoginApi {
   }
 
   static async refreshTokenRequest(refreshToken: string) {
-    return await baseRequest.get<{ accessToken: string, refreshToken?: string }>(
+    return await baseRequest.get<{
+      accessToken: string
+      refreshToken?: string
+    }>(
       LOGIN_URL.refresh,
       {},
       {
