@@ -9,7 +9,6 @@ interface ILoginToken {
   refreshToken: string
 }
 
-
 const LOGIN_URL = {
   register: '/auth/register',
   login: '/auth/login',
@@ -22,18 +21,19 @@ class LoginApi {
   }
 
   static async registerRequest(data: ILoginParam) {
-    return await baseRequest.post<Record<never, never>>(
-      LOGIN_URL.register,
-      data
-    )
+    return await baseRequest.post<{ msg: string }>(LOGIN_URL.register, data)
   }
 
   static async refreshTokenRequest(refreshToken: string) {
-    return await baseRequest.get<{ accessToken: string }>(LOGIN_URL.refresh, {}, {
-      headers: {
-        Authorization: `Bearer ${refreshToken}`
+    return await baseRequest.get<{ accessToken: string, refreshToken?: string }>(
+      LOGIN_URL.refresh,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${refreshToken}`
+        }
       }
-    })
+    )
   }
 }
 
