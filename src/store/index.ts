@@ -13,7 +13,7 @@ const initialStore: IStore = {
     nickname: ''
   }
 }
-
+// eslint-disable-next-line
 const AppContext = React.createContext<IContext>({} as any)
 
 export default AppContext
