@@ -30,6 +30,6 @@ module.exports = {
     'prettier/prettier': 'warn',
     quotes: ['error', 'single'],
     'react/react-in-jsx-scope': 'off',
-    "react/prop-types": 0
+    'react/prop-types': 0
   }
 }
