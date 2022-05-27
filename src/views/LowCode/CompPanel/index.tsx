@@ -3,6 +3,8 @@ import styles from './index.module.less'
 import { Nav } from '@douyinfe/semi-ui'
 import { IconAppCenter, IconAscend, IconComponent } from '@douyinfe/semi-icons'
 import { NavItems, NavItemPropsWithItems } from '@douyinfe/semi-ui/lib/es/navigation'
+import { BASE_COMPS, HIGHER_COMPS } from '@//constants/lowCodeCompents'
+import CompCard from '@//components/CompCard'
 const menuItem: NavItems = [
   {
     itemKey: 'baseComp',
@@ -11,7 +13,7 @@ const menuItem: NavItems = [
   },
   {
     itemKey: 'complexComp',
-    text: '高级组件',
+    text: '容器组件',
     icon: <IconComponent />
   },
   {
@@ -27,6 +29,33 @@ const CompPanel: React.FC = () => {
     setCurItem(item.itemKey as string)
   }
 
+  const renderCompList = () => {
+    const compsList = curItem === 'baseComp' ? BASE_COMPS : HIGHER_COMPS
+
+    return (
+      <>
+        {compsList.map((comp, i) => {
+          return <CompCard icon={comp.icon} text={comp.text} key={i} />
+        })}
+      </>
+    )
+  }
+
+  const renderLayerContent = () => {
+    return <>layer</>
+  }
+  const renderMenuContent = () => {
+    switch (curItem) {
+      case 'baseComp':
+      case 'complexComp':
+        return renderCompList()
+      case 'layInspect':
+        return renderLayerContent()
+      default:
+        return <>...</>
+    }
+  }
+
   return (
     <div className={styles['left-panel-container']}>
       <Nav
@@ -36,7 +65,7 @@ const CompPanel: React.FC = () => {
         items={menuItem}
         onClick={onMenuClick}
       />
-      <div className={styles['left-panel-detail']}>{curItem}</div>
+      <div className={styles['left-panel-detail']}>{renderMenuContent()}</div>
     </div>
   )
 }
