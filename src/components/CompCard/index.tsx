@@ -1,17 +1,17 @@
 import React from 'react'
 import styles from './index.module.less'
+import { ILowCodeComp } from '@//types/lowCodeComp.type'
+import { useDrag } from 'react-dnd'
 
-type CompCardProps = {
-  icon: React.ReactNode
-  text: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  schema?: any
-}
+const CompCard: React.FC<ILowCodeComp> = (props) => {
+  const { icon, text, compKey } = props
+  const [, drag] = useDrag(() => ({
+    type: compKey,
+    item: { compKey }
+  }))
 
-const CompCard: React.FC<CompCardProps> = (props) => {
-  const { icon, text } = props
   return (
-    <div className={styles['card-container']}>
+    <div className={styles['card-container']} ref={drag}>
       <div className={styles['card-container-icon']}>{icon}</div>
       <div className={styles['card-container-text']}>{text}</div>
     </div>

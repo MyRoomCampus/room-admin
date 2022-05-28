@@ -1,39 +1,28 @@
-export type ComponentName = 'BoxComponent' | 'TextComponent' | 'ImageComponent' | 'VideoComponent'
+import { DraggableItemKey } from '../constants/lowCodeComp'
 
-//容器组件属性，高级组件？
-export interface BoxComponent {
-  id: string
-  name: 'BoxComponent'
-  type: string
-  //data: string
-  parentid: string
-  style: {
-    left: string
-    top: string
-    width: string
-    height: string
-
-    border: string
-    backgroundColor: string
-    padding: string
-  }
+export enum ComponentName {
+  BoxComponent = 'BoxComponent',
+  TextComponent = 'TextComponent',
+  ImageComponent = 'ImageComponent',
+  VideoComponent = 'VideoComponent',
+  AudioComponent = 'AudioComponent'
 }
-
 //文本组件属性
 export interface TextComponent {
   id: string
-  name: 'TextComponent'
+  name: ComponentName.TextComponent
   type: string
   data: string
-  parentid: string
 
   style: {
+    position: string
     left: string
     top: string
     width: string
     height: string
 
     border: string
+    borderRadius: string
     backgroundColor: string
     padding: string
     color: string
@@ -45,11 +34,12 @@ export interface TextComponent {
 //图片组件属性
 export interface ImageComponent {
   id: string
-  name: 'ImageComponent'
+  name: ComponentName.ImageComponent
   type: string
   data: string
   parentid: string
   style: {
+    position: string
     left: string
     top: string
     width: string
@@ -57,56 +47,83 @@ export interface ImageComponent {
     border: string
     backgroundColor: string
     padding: string
-    // color: string
-    textAlign: string //图片位置，居中等等
   }
 }
 
 //视频组件属性
 export interface VideoComponent {
   id: string
-  name: 'VideoComponent'
+  name: ComponentName.VideoComponent
   type: string
   data: string
 
   style: {
+    position: string
     left: string
     top: string
     width: string
     height: string
-
     border: string
     backgroundColor: string
     padding: string
-    // color: string
-    textAlign: string
   }
 }
 
 //音频组件属性
 export interface AudioComponent {
   id: string
-  name: 'AudioComponent'
+  name: ComponentName.AudioComponent
   type: string
   data: string
 
+  style: {
+    position: string
+    left: string
+    top: string
+    width: string
+    height: string
+    padding: string
+  }
+}
+
+export interface BoxComponent {
+  id: string
+  name: ComponentName.BoxComponent
+  type: string
+  data: string
   style: {
     left: string
     top: string
     width: string
     height: string
-    // backgroundColor: string
+    border: string
+    borderRadius: string
+    backgroundColor: string
     padding: string
-    // color: string
-    // textAlign: string
   }
+  children: ComponentSchema[]
 }
 
-type ComponentSchema = BoxComponent | TextComponent | ImageComponent | VideoComponent | AudioComponent
+export type ComponentSchema = BoxComponent | TextComponent | ImageComponent | VideoComponent | AudioComponent
+
+export interface IPageSchema {
+  projectId: string
+  projectName: string
+  author: string
+  data: ComponentSchema[]
+}
 
 export interface ILowCodeComp {
   icon: React.ReactNode
   text: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  schema?: ComponentSchema
+  compKey: DraggableItemKey
+}
+
+/** store中lowCodeInfo的数据结构 */
+export interface ILowCodeInfo {
+  JSONSchema: IPageSchema
+  scale: number
+  curTotalHeight: number
+  curSelectCompId: string
+  curSelectLayerId: string
 }

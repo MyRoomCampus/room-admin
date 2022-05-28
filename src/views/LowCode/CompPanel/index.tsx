@@ -3,7 +3,7 @@ import styles from './index.module.less'
 import { Nav } from '@douyinfe/semi-ui'
 import { IconAppCenter, IconAscend, IconComponent } from '@douyinfe/semi-icons'
 import { NavItems, NavItemPropsWithItems } from '@douyinfe/semi-ui/lib/es/navigation'
-import { BASE_COMPS, HIGHER_COMPS } from '@//constants/lowCodeCompents'
+import { BASE_COMPS, HIGHER_COMPS } from '@//constants/lowCodeComp'
 import CompCard from '@//components/CompCard'
 const menuItem: NavItems = [
   {
@@ -35,7 +35,7 @@ const CompPanel: React.FC = () => {
     return (
       <>
         {compsList.map((comp, i) => {
-          return <CompCard icon={comp.icon} text={comp.text} key={i} />
+          return <CompCard icon={comp.icon} text={comp.text} compKey={comp.compKey} key={i} />
         })}
       </>
     )

@@ -1,0 +1,23 @@
+.canvas {
+  &-container {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-width: 400px;
+    overflow: auto;
+  }
+
+  &-preview {
+    position: relative;
+    width: 340px;
+    height: 690px;
+    overflow: scroll;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 5%) 0 6px 24px 0, rgb(0 0 0 / 8%) 0 0 0 1px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

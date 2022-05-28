@@ -1,13 +1,36 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from './index.module.less'
 import ToolkitBar from './ToolkitBar'
 import CompPanel from './CompPanel'
+import MidCanvas from './MidCanvas'
+import RightForm from './RightForm'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import ACTIONS from '@//reducer/actions'
+import AppContext from '@//store'
 const LowCodePlatform: React.FC = () => {
+  // initialize schema data
+  const { store, dispatch } = useContext(AppContext)
+
+  if (!store.lowCodeInfo) {
+    dispatch({
+      type: ACTIONS.INITIAL_LOW_CODE,
+      payload: {
+        projectName: 'xxx',
+        author: 'yyy'
+      }
+    })
+  }
+
   return (
     <div className={styles['low-platform-container']}>
       <ToolkitBar />
       <div className={styles['low-platform-body']}>
-        <CompPanel />
+        <DndProvider backend={HTML5Backend}>
+          <CompPanel />
+          <MidCanvas />
+          <RightForm />
+        </DndProvider>
       </div>
     </div>
   )

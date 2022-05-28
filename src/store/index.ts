@@ -7,11 +7,8 @@ interface IContext {
 }
 
 const initialStore: IStore = {
-  userInfo: {
-    uid: 0,
-    account: '',
-    nickname: ''
-  }
+  userInfo: undefined,
+  lowCodeInfo: undefined
 }
 // eslint-disable-next-line
 const AppContext = React.createContext<IContext>({} as any)
