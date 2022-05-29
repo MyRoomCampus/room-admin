@@ -4,6 +4,7 @@ import { IconCode, IconSave, IconMinusCircle, IconPlusCircle } from '@douyinfe/s
 import { Tooltip } from '@douyinfe/semi-ui'
 import { Modal } from '@douyinfe/semi-ui'
 import AppContext from '@//store'
+import ACTIONS from '@//reducer/actions'
 
 type ToolType = {
   el: React.ReactNode
@@ -12,15 +13,28 @@ type ToolType = {
 }
 
 const ToolkitBar: React.FC = () => {
-  const { store } = useContext(AppContext)
+  const { store, dispatch } = useContext(AppContext)
   const [codeModalVisibel, setCodeModalVisibel] = useState(false)
+  const gap = 0.1
 
   const size = 'extra-large'
   const onMinusClick = () => {
-    console.log('onMinusClick')
+    const curScale = store.lowCodeInfo?.scale
+    if (curScale && curScale >= 0.2) {
+      dispatch({
+        type: ACTIONS.UPDATE_PREVIEW_SCALE,
+        payload: curScale - gap
+      })
+    }
   }
   const onPlusClick = () => {
-    console.log('onPlusClick')
+    const curScale = store.lowCodeInfo?.scale
+    if (curScale && curScale < 2) {
+      dispatch({
+        type: ACTIONS.UPDATE_PREVIEW_SCALE,
+        payload: curScale + gap
+      })
+    }
   }
   const onCodeClick = () => {
     !codeModalVisibel && setCodeModalVisibel(true)
