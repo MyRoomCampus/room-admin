@@ -31,19 +31,10 @@ const lowCodeReducer = {
       const parentComp = findCompFromJson(curSelectLayerId, JSONSchema.data) as BoxComponent
       if (parentComp) {
         payload.parentid = parentComp.id
-        payload.style.top = parentComp.contentHeight + 'px'
-        const contentHeight =
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          parseInt(parentComp.contentHeight) + parseInt(payload.style.height.match(/[0-9]+/g)![0])
-        parentComp.contentHeight = contentHeight.toString()
         parentComp.children.push(payload)
       }
     } else {
       JSONSchema.data.push(payload)
-      const elHeight = payload.style.height.match(/[0-9]+/g)
-      if (elHeight?.length) {
-        lowCodeInfo.curTotalHeight += parseInt(elHeight[0])
-      }
     }
     return {
       ...store,
@@ -76,6 +67,27 @@ const lowCodeReducer = {
       ...store,
       lowCodeInfo
     }
+  },
+
+  updateComponent(store: IStore, payload: ComponentSchema): IStore {
+    const lowCodeInfo = Object.assign({}, store.lowCodeInfo)
+    const iterateSchema = (schemas: ComponentSchema[] | BoxComponent): ComponentSchema[] => {
+      if (!Array.isArray(schemas)) {
+        return iterateSchema(schemas.children)
+      }
+      return schemas.map((schema) => {
+        if (schema.id === payload.id) {
+          schema = payload
+        }
+        return schema
+      })
+    }
+    lowCodeInfo.JSONSchema.data = iterateSchema(lowCodeInfo.JSONSchema.data)
+    console.log(lowCodeInfo.JSONSchema.data)
+    return {
+      ...store,
+      lowCodeInfo
+    }
   }
 }
 
@@ -98,6 +110,8 @@ const reducer = (state: IStore, action: IAction): IStore => {
       return lowCodeReducer.updateCurSelectedComp(state, payload)
     case ACTIONS.UPDATE_SELECTED_LAYWER:
       return lowCodeReducer.updateCurSelectedLayer(state, payload)
+    case ACTIONS.UPDATE_COMPONENT:
+      return lowCodeReducer.updateComponent(state, payload)
     default:
       return state
   }
