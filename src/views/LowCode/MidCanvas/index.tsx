@@ -22,6 +22,8 @@ const MidCanvas: React.FC = () => {
       accept: acceptableItems,
       drop: (item: { compKey: DraggableItemKey }) => {
         const schema = getComponentSchema(item.compKey)
+        console.log(schema)
+
         if (schema) {
           schema.style.top = (store.lowCodeInfo?.curTotalHeight || '0') + 'px'
           dispatch({

@@ -19,13 +19,13 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.AudioComponent,
-        type: '0',
-        data: '',
+        type: '',
+        data: 'http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3',
         style: {
           position: 'absolute',
           left: '0',
           top: '0',
-          width: '100%',
+          width: '340px',
           height: '100px',
           padding: '0'
         }
@@ -34,15 +34,15 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.BoxComponent,
-        type: '0',
+        type: '',
         data: '',
         style: {
           left: '0',
           top: '0',
-          width: '100%',
+          width: '340px',
           height: '100px',
 
-          border: '0',
+          border: '1px dashed #e5e5e5',
           borderRadius: '0',
           backgroundColor: '0',
           padding: '0'
@@ -53,16 +53,15 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.ImageComponent,
-        type: '0',
-        data: '0',
-        parentid: '0',
+        type: '',
+        data: 'https://lf3-xfl.bytescm.com/obj/xfl-static/xfl_site/img/608b2b5.jpeg',
         style: {
           position: 'absolute',
           left: '0',
           top: '0',
-          width: '100%',
+          width: '340px',
           height: '100px',
-          border: '0',
+          border: '1px dashed #e5e5e5',
           backgroundColor: '0',
           padding: '0'
         }
@@ -71,13 +70,13 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.TextComponent,
-        type: '0',
+        type: '',
         data: '文字组件',
         style: {
           position: 'absolute',
           left: '0',
           top: '0',
-          width: '100%',
+          width: '340px',
           height: '100px',
 
           border: '1px dashed #e5e5e5',
@@ -93,16 +92,16 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.VideoComponent,
-        type: '0',
-        data: '0',
+        type: '',
+        data: 'https://p1.haoduofangs.com/obj/ttfe/fproject/website/out_1577182578172.mp4',
 
         style: {
           position: 'absolute',
           left: '0',
           top: '0',
-          width: '100%',
+          width: '340px',
           height: '100px',
-          border: '0',
+          border: '1px dashed #e5e5e5',
           backgroundColor: '0',
           padding: '0'
         }

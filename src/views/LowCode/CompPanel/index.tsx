@@ -34,8 +34,8 @@ const CompPanel: React.FC = () => {
 
     return (
       <>
-        {compsList.map((comp, i) => {
-          return <CompCard icon={comp.icon} text={comp.text} compKey={comp.compKey} key={i} />
+        {compsList.map((comp) => {
+          return <CompCard icon={comp.icon} text={comp.text} compKey={comp.compKey} key={comp.compKey} />
         })}
       </>
     )

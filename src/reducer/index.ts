@@ -4,8 +4,6 @@ import ACTIONS from './actions'
 
 const lowCodeReducer = {
   initializeInfo(store: IStore, payload: { projectName: string; author: string }): IStore {
-    console.log('aaaa')
-
     const { projectName, author } = payload
     const JSONSchema = {
       projectId: 'bytetance',

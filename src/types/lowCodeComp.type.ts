@@ -37,7 +37,6 @@ export interface ImageComponent {
   name: ComponentName.ImageComponent
   type: string
   data: string
-  parentid: string
   style: {
     position: string
     left: string
