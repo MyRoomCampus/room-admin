@@ -22,10 +22,11 @@ const MidCanvas: React.FC = () => {
       accept: acceptableItems,
       drop: (item: { compKey: DraggableItemKey }) => {
         const schema = getComponentSchema(item.compKey)
-        console.log(schema)
 
         if (schema) {
-          schema.style.top = (store.lowCodeInfo?.curTotalHeight || '0') + 'px'
+          schema.style.top = store.lowCodeInfo?.curSelectLayerId
+            ? '0px'
+            : (store.lowCodeInfo?.curTotalHeight || '0') + 'px'
           dispatch({
             type: ACTIONS.UPDATE_SCHEMA,
             payload: schema

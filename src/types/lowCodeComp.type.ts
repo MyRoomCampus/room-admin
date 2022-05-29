@@ -13,6 +13,7 @@ export interface TextComponent {
   name: ComponentName.TextComponent
   type: string
   data: string
+  parentid: string
 
   style: {
     position: string
@@ -37,6 +38,8 @@ export interface ImageComponent {
   name: ComponentName.ImageComponent
   type: string
   data: string
+  parentid: string
+
   style: {
     position: string
     left: string
@@ -55,6 +58,7 @@ export interface VideoComponent {
   name: ComponentName.VideoComponent
   type: string
   data: string
+  parentid: string
 
   style: {
     position: string
@@ -74,6 +78,7 @@ export interface AudioComponent {
   name: ComponentName.AudioComponent
   type: string
   data: string
+  parentid: string
 
   style: {
     position: string
@@ -90,6 +95,8 @@ export interface BoxComponent {
   name: ComponentName.BoxComponent
   type: string
   data: string
+  parentid: string
+  contentHeight: string
   style: {
     position: string
     left: string

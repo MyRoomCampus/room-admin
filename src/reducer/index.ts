@@ -1,5 +1,6 @@
-import { BoxComponent, ComponentName, ComponentSchema } from '../types/lowCodeComp.type'
+import { BoxComponent, ComponentSchema } from '../types/lowCodeComp.type'
 import { IStore, IAction } from '../types/store.types'
+import { findCompFromJson } from '../utils/jsonSchemaUtils'
 import ACTIONS from './actions'
 
 const lowCodeReducer = {
@@ -27,32 +28,15 @@ const lowCodeReducer = {
     const lowCodeInfo = Object.assign({}, store.lowCodeInfo)
     const { curSelectLayerId, JSONSchema } = lowCodeInfo
     if (curSelectLayerId) {
-      let flag = 0
-      for (const item of JSONSchema.data) {
-        console.log(item)
-        if (flag) {
-          break
-        }
-        if (item.name === ComponentName.BoxComponent) {
-          const s: BoxComponent[] = []
-          s.push(item)
-          while (s.length !== 0) {
-            if (flag) break
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const boxComp = s.pop()!
-            if (boxComp.id === curSelectLayerId) {
-              boxComp.children.push(payload)
-              flag = 1
-              break
-            } else {
-              boxComp.children.forEach((ch) => {
-                if (ch.name === ComponentName.BoxComponent) {
-                  s.push(ch)
-                }
-              })
-            }
-          }
-        }
+      const parentComp = findCompFromJson(curSelectLayerId, JSONSchema.data) as BoxComponent
+      if (parentComp) {
+        payload.parentid = parentComp.id
+        payload.style.top = parentComp.contentHeight + 'px'
+        const contentHeight =
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          parseInt(parentComp.contentHeight) + parseInt(payload.style.height.match(/[0-9]+/g)![0])
+        parentComp.contentHeight = contentHeight.toString()
+        parentComp.children.push(payload)
       }
     } else {
       JSONSchema.data.push(payload)
