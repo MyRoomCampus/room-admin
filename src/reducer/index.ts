@@ -92,6 +92,27 @@ const lowCodeReducer = {
       ...store,
       lowCodeInfo
     }
+  },
+
+  updateComponent(store: IStore, payload: ComponentSchema): IStore {
+    const lowCodeInfo = Object.assign({}, store.lowCodeInfo)
+    const iterateSchema = (schemas: ComponentSchema[] | BoxComponent): ComponentSchema[] => {
+      if (!Array.isArray(schemas)) {
+        return iterateSchema(schemas.children)
+      }
+      return schemas.map((schema) => {
+        if (schema.id === payload.id) {
+          schema = payload
+        }
+        return schema
+      })
+    }
+    lowCodeInfo.JSONSchema.data = iterateSchema(lowCodeInfo.JSONSchema.data)
+    console.log(lowCodeInfo.JSONSchema.data)
+    return {
+      ...store,
+      lowCodeInfo
+    }
   }
 }
 
@@ -114,6 +135,8 @@ const reducer = (state: IStore, action: IAction): IStore => {
       return lowCodeReducer.updateCurSelectedComp(state, payload)
     case ACTIONS.UPDATE_SELECTED_LAYWER:
       return lowCodeReducer.updateCurSelectedLayer(state, payload)
+    case ACTIONS.UPDATE_COMPONENT:
+      return lowCodeReducer.updateComponent(state, payload)
     default:
       return state
   }

@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react'
+import { useDrag } from 'react-dnd'
 // import { useDrag } from 'react-dnd'
-import { ComponentSchema } from '../types/lowCodeComp.type'
+import { ComponentName, ComponentSchema } from '../types/lowCodeComp.type'
 
 // TODO: split components into seperated files
 type ComponentProps = {
@@ -29,33 +30,37 @@ const VideoComponent: React.FC<ComponentProps> = ({ data, style, id }) => {
   return <video src={data} style={style as CSSProperties} key={id} controls={true} />
 }
 
-const BoxComponent: React.FC<ComponentProps> = ({ data, style, id }) => {
-  return <video src={data} style={style as CSSProperties} key={id} controls={true} />
-}
-
-const renderJsonSchema = (schema: ComponentSchema): React.ReactNode => {
+const RenderJsonSchema: React.FC<{ schema: ComponentSchema }> = ({ schema }) => {
   const { name, data, style, id } = schema
-  // const [, drag] = useDrag(() => ({
-  //   type: name
-  // }))
-  // if (name === ComponentName.BoxComponent) {
-  //   return (
-  //     <div style={style as CSSProperties} key={id}>
-  //       {schema.children?.map((ch) => {
-  //         return renderJsonSchema(ch)
-  //       })}
-  //     </div>
-  //   )
-  // }
+  const [, drag] = useDrag(
+    () => ({
+      type: name.toLowerCase().slice(0, name.length - 9),
+      item: { schema }
+    }),
+    [schema]
+  )
+
+  if (name === ComponentName.BoxComponent) {
+    return (
+      <div ref={drag} style={style as CSSProperties} key={id}>
+        {schema.children?.map((ch) => {
+          return <RenderJsonSchema schema={ch} key={ch.id} />
+        })}
+      </div>
+    )
+  }
   const components = {
     TextComponent,
     ImageComponent,
     VideoComponent,
-    AudioComponent,
-    BoxComponent
+    AudioComponent
   }
   const RenderComponent = components[name]
-  return <RenderComponent style={style} id={id} data={data ?? null} />
+  return (
+    <div ref={drag}>
+      <RenderComponent style={style} id={id} data={data ?? null} />
+    </div>
+  )
 }
 
-export default renderJsonSchema
+export default RenderJsonSchema
