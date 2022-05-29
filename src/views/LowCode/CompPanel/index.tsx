@@ -34,9 +34,17 @@ const CompPanel: React.FC = () => {
     setCurItem(item.itemKey as string)
   }
 
+  // 层级目录下点击每个tree节点所发生的回调
   const onSelectLayer = (key: string) => {
-    const { id, name } = JSON.parse(key)
+    if (key === 'root') {
+      dispatch({
+        type: ACTIONS.UPDATE_SELECTED_LAYWER,
+        payload: ''
+      })
+      return
+    }
 
+    const { id, name } = JSON.parse(key)
     const { lowCodeInfo } = store
     if (lowCodeInfo) {
       const { JSONSchema, curSelectCompId, curSelectLayerId } = lowCodeInfo
@@ -93,7 +101,14 @@ const CompPanel: React.FC = () => {
     const { lowCodeInfo } = store
     if (lowCodeInfo) {
       const { data } = lowCodeInfo.JSONSchema
-      const treeData = genTreeFromJson(data)
+      const treeData = [
+        {
+          label: 'root',
+          key: 'root',
+          value: 'root',
+          children: genTreeFromJson(data)
+        }
+      ]
 
       return (
         <Tree
