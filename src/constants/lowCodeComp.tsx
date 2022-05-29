@@ -37,6 +37,7 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
         type: '',
         data: '',
         style: {
+          position: 'absolute',
           left: '0',
           top: '0',
           width: '340px',

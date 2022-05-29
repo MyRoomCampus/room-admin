@@ -91,6 +91,7 @@ export interface BoxComponent {
   type: string
   data: string
   style: {
+    position: string
     left: string
     top: string
     width: string
