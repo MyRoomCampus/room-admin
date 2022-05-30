@@ -9,7 +9,7 @@ MyRoom经纪人子系统仓库
 - [Vite](https://cn.vitejs.dev/)
 - ESlint + prettier
 - husky + lint-staged
-- [less](https://lesscss.org)                                            )
+- [less](https://lesscss.org)
 - [semi ui](https://semi.design/zh-CN/start/getting-started)
 - plop
 - GitHub actions

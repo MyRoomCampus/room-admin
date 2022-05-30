@@ -6,6 +6,7 @@ import { useContext, useMemo } from 'react'
 import { useDrop } from 'react-dnd'
 import styles from './index.module.less'
 import { ComponentSchema } from '../../../types/lowCodeComp.type'
+import iphoneImage from '@//assets/images/iPhone.svg'
 import _ from 'lodash'
 
 const MidCanvas: React.FC = () => {
@@ -59,10 +60,17 @@ const MidCanvas: React.FC = () => {
 
   return (
     <div className={styles['canvas-container']}>
-      <div className={styles['canvas-preview']} ref={drop} style={{ transform: `scale(${store.lowCodeInfo?.scale})` }}>
-        {store.lowCodeInfo?.JSONSchema.data.map((s) => {
-          return <RenderJsonSchema schema={s} key={s.id} />
-        })}
+      <div
+        className={styles['canvas-image']}
+        style={{ backgroundImage: `url(${iphoneImage})`, transform: `scale(${store.lowCodeInfo?.scale})` }}
+      >
+        <div className={styles['canvas-preview']} ref={drop}>
+          <div className={styles['canvas-scroll']}>
+            {store.lowCodeInfo?.JSONSchema.data.map((s) => {
+              return <RenderJsonSchema schema={s} key={s.id} />
+            })}
+          </div>
+        </div>
       </div>
     </div>
   )

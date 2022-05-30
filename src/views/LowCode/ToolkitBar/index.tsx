@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import styles from './index.module.less'
 import { IconCode, IconSave, IconMinusCircle, IconPlusCircle } from '@douyinfe/semi-icons'
-import { Tooltip } from '@douyinfe/semi-ui'
+import { Tooltip, Button } from '@douyinfe/semi-ui'
 import { Modal } from '@douyinfe/semi-ui'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
@@ -17,7 +17,7 @@ const ToolkitBar: React.FC = () => {
   const [codeModalVisibel, setCodeModalVisibel] = useState(false)
   const gap = 0.1
 
-  const size = 'extra-large'
+  const size = 'large'
   const onMinusClick = () => {
     const curScale = store.lowCodeInfo?.scale
     if (curScale && curScale >= 0.2) {
@@ -67,6 +67,14 @@ const ToolkitBar: React.FC = () => {
     }
   ]
 
+  const switchMode = () => {
+    const body = document.body
+    if (body.hasAttribute('theme-mode')) {
+      body.removeAttribute('theme-mode')
+    } else {
+      body.setAttribute('theme-mode', 'dark')
+    }
+  }
   return (
     <div className={styles['low-platform-header']}>
       {tools.map((item, i) => {
@@ -78,6 +86,9 @@ const ToolkitBar: React.FC = () => {
           </Tooltip>
         )
       })}
+      <Button onClick={switchMode} style={{ position: 'fixed', right: 20 }}>
+        Switch Mode
+      </Button>
       <Modal
         title="页面源代码"
         visible={codeModalVisibel}
@@ -87,10 +98,11 @@ const ToolkitBar: React.FC = () => {
         maskClosable={false}
         bodyStyle={{
           height: '100%',
-          overflow: 'auto'
+          overflow: 'auto',
+          whiteSpace: 'pre'
         }}
       >
-        {JSON.stringify(store.lowCodeInfo?.JSONSchema)}
+        {JSON.stringify(store.lowCodeInfo?.JSONSchema, null, 2)}
       </Modal>
     </div>
   )

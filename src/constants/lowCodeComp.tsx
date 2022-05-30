@@ -9,7 +9,7 @@ enum DraggableItemKey {
 }
 
 const iconStyle = {
-  fontSize: 32
+  fontSize: 28
 }
 
 export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | null => {
@@ -66,7 +66,7 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
           left: '0',
           top: '0',
           width: '340px',
-          height: '50px',
+          height: '300px',
           border: '1px dashed #e5e5e5',
           backgroundColor: '0',
           padding: '0'
@@ -84,15 +84,15 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
           position: 'absolute',
           left: '0',
           top: '0',
-          width: '340px',
-          height: '20px',
+          width: '100px',
+          height: '30px',
 
           border: '1px dashed #e5e5e5',
           borderRadius: '0',
           backgroundColor: '0',
           padding: '0',
           color: '0',
-          textAlign: '0',
+          textAlign: 'center',
           fontSize: '14'
         }
       }
@@ -110,7 +110,7 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
           left: '0',
           top: '0',
           width: '340px',
-          height: '100px',
+          height: '300px',
           border: '1px dashed #e5e5e5',
           backgroundColor: '0',
           padding: '0'

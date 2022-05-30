@@ -3,36 +3,10 @@ import { useDrag } from 'react-dnd'
 import { ComponentName, ComponentSchema } from '../types/lowCodeComp.type'
 import AppContext from '@//store'
 import actions from '@//reducer/actions'
-
-// TODO: split components into seperated files
-type ComponentProps = {
-  data?: string
-  style: Record<string, unknown>
-  id: string
-}
-
-const AudioComponent: React.FC<ComponentProps> = ({ data, style, id }) => {
-  return <audio src={data} style={style as CSSProperties} key={id} controls={true} />
-}
-
-const ImageComponent: React.FC<ComponentProps> = ({ data, style, id }) => {
-  return <img src={data} style={style as CSSProperties} key={id} />
-}
-
-const TextComponent: React.FC<ComponentProps> = ({ data, style, id }) => {
-  return (
-    <div style={style as CSSProperties} key={id}>
-      {data}
-    </div>
-  )
-}
-
-const VideoComponent: React.FC<ComponentProps> = ({ data, style, id }) => {
-  return <video src={data} style={style as CSSProperties} key={id} controls={true} />
-}
+import components from '@//views/LowCode/components'
 
 const RenderJsonSchema: React.FC<{ schema: ComponentSchema }> = ({ schema }) => {
-  const { name, data, style, id } = schema
+  const { name, style, id } = schema
   const { dispatch } = useContext(AppContext)
   const [, drag] = useDrag(
     () => ({
@@ -69,16 +43,10 @@ const RenderJsonSchema: React.FC<{ schema: ComponentSchema }> = ({ schema }) => 
       </div>
     )
   }
-  const components = {
-    TextComponent,
-    ImageComponent,
-    VideoComponent,
-    AudioComponent
-  }
   const RenderComponent = components[name]
   return (
     <div ref={drag} onClick={() => handleComponentClick(id)}>
-      <RenderComponent style={style} id={id} data={data ?? null} />
+      <RenderComponent schema={schema} />
     </div>
   )
 }
