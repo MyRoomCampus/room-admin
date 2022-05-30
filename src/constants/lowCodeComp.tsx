@@ -1,11 +1,12 @@
-import { IconBox, IconImage, IconTextRectangle, IconVideo, IconVolume2 } from '@douyinfe/semi-icons'
+import { IconBox, IconHome, IconImage, IconTextRectangle, IconVideo, IconVolume2 } from '@douyinfe/semi-icons'
 import { ComponentName, ComponentSchema, ILowCodeComp } from '../types/lowCodeComp.type'
 enum DraggableItemKey {
   BOX = 'container',
   TEXT = 'text',
   IMAGE = 'image',
   VIDEO = 'video',
-  AUDIO = 'audio'
+  AUDIO = 'audio',
+  HOUSE = 'house'
 }
 
 const iconStyle = {
@@ -38,7 +39,6 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
         type: '',
         data: '',
         parentid: '',
-        contentHeight: '0',
         style: {
           position: 'absolute',
           left: '0',
@@ -116,6 +116,19 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
           padding: '0'
         }
       }
+    case DraggableItemKey.HOUSE:
+      return {
+        id,
+        name: ComponentName.HouseComponent,
+        type: '',
+        data: '',
+        parentid: '',
+        style: {
+          position: 'absolute',
+          left: '0',
+          top: '0'
+        }
+      }
     default:
       return null
   }
@@ -141,11 +154,16 @@ const AudioComponent: ILowCodeComp = {
   text: '音频',
   compKey: DraggableItemKey.AUDIO
 }
+const HouseCardComponent: ILowCodeComp = {
+  icon: <IconHome style={iconStyle} />,
+  text: '房源卡片',
+  compKey: DraggableItemKey.HOUSE
+}
 const BoxComponent: ILowCodeComp = {
   icon: <IconBox style={iconStyle} />,
   text: '容器',
   compKey: DraggableItemKey.BOX
 }
-const BASE_COMPS: ILowCodeComp[] = [TextComponent, ImageComponent, VideoComponent, AudioComponent]
+const BASE_COMPS: ILowCodeComp[] = [TextComponent, ImageComponent, VideoComponent, AudioComponent, HouseCardComponent]
 const HIGHER_COMPS: ILowCodeComp[] = [BoxComponent]
 export { BASE_COMPS, HIGHER_COMPS, DraggableItemKey }

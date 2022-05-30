@@ -3,6 +3,7 @@ import { useDrag } from 'react-dnd'
 import { ComponentName, ComponentSchema } from '../types/lowCodeComp.type'
 import AppContext from '@//store'
 import actions from '@//reducer/actions'
+import HouseCard from '../components/HouseCard'
 
 // TODO: split components into seperated files
 type ComponentProps = {
@@ -29,6 +30,10 @@ const TextComponent: React.FC<ComponentProps> = ({ data, style, id }) => {
 
 const VideoComponent: React.FC<ComponentProps> = ({ data, style, id }) => {
   return <video src={data} style={style as CSSProperties} key={id} controls={true} />
+}
+
+const HouseComponent: React.FC<ComponentProps> = ({ style, id }) => {
+  return <HouseCard key={id} style={style as CSSProperties} />
 }
 
 const RenderJsonSchema: React.FC<{ schema: ComponentSchema }> = ({ schema }) => {
@@ -73,7 +78,8 @@ const RenderJsonSchema: React.FC<{ schema: ComponentSchema }> = ({ schema }) => 
     TextComponent,
     ImageComponent,
     VideoComponent,
-    AudioComponent
+    AudioComponent,
+    HouseComponent
   }
   const RenderComponent = components[name]
   return (

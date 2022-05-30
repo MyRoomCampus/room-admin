@@ -1,11 +1,14 @@
-import { BoxComponent, ComponentName, ComponentSchema } from '../types/lowCodeComp.type'
+import { BoxComponent, ComponentName, ComponentSchema, IHouseCardData } from '../types/lowCodeComp.type'
 import { IStore, IAction } from '../types/store.types'
 import { findCompFromJson } from '../utils/jsonSchemaUtils'
 import ACTIONS from './actions'
 
 const lowCodeReducer = {
-  initializeInfo(store: IStore, payload: { projectName: string; author: string }): IStore {
-    const { projectName, author } = payload
+  initializeInfo(
+    store: IStore,
+    payload: { projectName: string; author: string; houseCardData: IHouseCardData }
+  ): IStore {
+    const { projectName, author, houseCardData } = payload
     const JSONSchema = {
       projectId: 'bytetance',
       projectName,
@@ -19,7 +22,8 @@ const lowCodeReducer = {
         scale: 1,
         curTotalHeight: 0,
         curSelectCompId: '',
-        curSelectLayerId: ''
+        curSelectLayerId: '',
+        houseCardData
       }
     }
   },
