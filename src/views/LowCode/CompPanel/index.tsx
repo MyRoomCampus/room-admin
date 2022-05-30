@@ -115,6 +115,7 @@ const CompPanel: React.FC = () => {
           treeData={treeData}
           defaultExpandAll
           onSelect={onSelectLayer}
+          value={store.lowCodeInfo?.curSelectCompId || 'root'}
           style={{
             width: '100%',
             height: '100%'

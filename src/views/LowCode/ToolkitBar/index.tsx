@@ -5,6 +5,7 @@ import { Tooltip, Button } from '@douyinfe/semi-ui'
 import { Modal } from '@douyinfe/semi-ui'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
+import ReactJson from 'react-json-view'
 
 type ToolType = {
   el: React.ReactNode
@@ -93,6 +94,7 @@ const ToolkitBar: React.FC = () => {
         title="页面源代码"
         visible={codeModalVisibel}
         footer={null}
+        width={'80vw'}
         height={'80vh'}
         onCancel={() => setCodeModalVisibel(false)}
         maskClosable={false}
@@ -102,7 +104,7 @@ const ToolkitBar: React.FC = () => {
           whiteSpace: 'pre'
         }}
       >
-        {JSON.stringify(store.lowCodeInfo?.JSONSchema, null, 2)}
+        <ReactJson src={store.lowCodeInfo?.JSONSchema as object} />
       </Modal>
     </div>
   )

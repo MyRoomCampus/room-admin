@@ -5,13 +5,13 @@ export enum ComponentName {
   TextComponent = 'TextComponent',
   ImageComponent = 'ImageComponent',
   VideoComponent = 'VideoComponent',
-  AudioComponent = 'AudioComponent'
+  AudioComponent = 'AudioComponent',
+  HouseComponent = 'HouseComponent'
 }
 //文本组件属性
 export interface TextComponent {
   id: string
   name: ComponentName.TextComponent
-  type: string
   data: string
   parentid: string
 
@@ -36,7 +36,6 @@ export interface TextComponent {
 export interface ImageComponent {
   id: string
   name: ComponentName.ImageComponent
-  type: string
   data: string
   parentid: string
 
@@ -56,7 +55,6 @@ export interface ImageComponent {
 export interface VideoComponent {
   id: string
   name: ComponentName.VideoComponent
-  type: string
   data: string
   parentid: string
 
@@ -76,7 +74,6 @@ export interface VideoComponent {
 export interface AudioComponent {
   id: string
   name: ComponentName.AudioComponent
-  type: string
   data: string
   parentid: string
 
@@ -93,10 +90,8 @@ export interface AudioComponent {
 export interface BoxComponent {
   id: string
   name: ComponentName.BoxComponent
-  type: string
   data: string
   parentid: string
-  contentHeight: string
   style: {
     position: string
     left: string
@@ -110,8 +105,24 @@ export interface BoxComponent {
   }
   children: ComponentSchema[]
 }
-
-export type ComponentSchema = BoxComponent | TextComponent | ImageComponent | VideoComponent | AudioComponent
+export interface HouseComponent {
+  id: string
+  name: ComponentName.HouseComponent
+  data: string
+  parentid: string
+  style: {
+    position: string
+    left: string
+    top: string
+  }
+}
+export type ComponentSchema =
+  | BoxComponent
+  | TextComponent
+  | ImageComponent
+  | VideoComponent
+  | AudioComponent
+  | HouseComponent
 
 export interface IPageSchema {
   projectId: string
@@ -126,6 +137,16 @@ export interface ILowCodeComp {
   compKey: DraggableItemKey
 }
 
+export interface IHouseCardData {
+  image: string
+  listingName: string
+  cityName: string
+  neighborhoodName: string
+  squaremeter: number
+  tags: string[]
+  pricing: number
+}
+
 /** store中lowCodeInfo的数据结构 */
 export interface ILowCodeInfo {
   JSONSchema: IPageSchema
@@ -133,4 +154,5 @@ export interface ILowCodeInfo {
   curTotalHeight: number
   curSelectCompId: string
   curSelectLayerId: string
+  houseCardData: IHouseCardData
 }
