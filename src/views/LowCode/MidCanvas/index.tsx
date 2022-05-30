@@ -6,7 +6,7 @@ import { useContext, useMemo } from 'react'
 import { useDrop } from 'react-dnd'
 import styles from './index.module.less'
 import { ComponentSchema } from '../../../types/lowCodeComp.type'
-import * as _ from 'lodash'
+import _ from 'lodash'
 
 const MidCanvas: React.FC = () => {
   const { store, dispatch } = useContext(AppContext)
@@ -32,10 +32,10 @@ const MidCanvas: React.FC = () => {
         // 从左边移动到中间和中间的移动分开处理
         if (item.schema) {
           const newSchema = _.cloneDeep(item.schema)
-          console.log(x, y, initialX, initialY)
           newSchema.style.top = `${-initialY + y + parseInt(newSchema.style.top)}px`
           newSchema.style.left = `${-initialX + x + parseInt(newSchema.style.left)}px`
-          console.log(item.schema, newSchema)
+          console.log('newSchema')
+          console.log(newSchema)
           dispatch({
             type: ACTIONS.UPDATE_COMPONENT,
             payload: newSchema
