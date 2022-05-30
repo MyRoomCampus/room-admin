@@ -34,8 +34,6 @@ const MidCanvas: React.FC = () => {
           const newSchema = _.cloneDeep(item.schema)
           newSchema.style.top = `${-initialY + y + parseInt(newSchema.style.top)}px`
           newSchema.style.left = `${-initialX + x + parseInt(newSchema.style.left)}px`
-          console.log('newSchema')
-          console.log(newSchema)
           dispatch({
             type: ACTIONS.UPDATE_COMPONENT,
             payload: newSchema

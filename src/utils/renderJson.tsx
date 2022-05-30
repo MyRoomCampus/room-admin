@@ -48,7 +48,10 @@ const RenderJsonSchema: React.FC<{ schema: ComponentSchema }> = ({ schema }) => 
   )
 
   // 点击容器组件，更新层级id和curSelectedId
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleBoxClick = (id: string) => {
+    console.log(id)
+
     dispatch({
       type: actions.UPDATE_SELECTED_COMP,
       payload: id
@@ -67,7 +70,15 @@ const RenderJsonSchema: React.FC<{ schema: ComponentSchema }> = ({ schema }) => 
   }
   if (name === ComponentName.BoxComponent) {
     return (
-      <div onClick={() => handleBoxClick(id)} ref={drag} style={style as CSSProperties} key={id}>
+      <div
+        onMouseDown={(e) => {
+          e.stopPropagation()
+          handleComponentClick(id)
+        }}
+        ref={drag}
+        style={style as CSSProperties}
+        key={id}
+      >
         {schema.children?.map((ch) => {
           return <RenderJsonSchema schema={ch} key={ch.id} />
         })}
@@ -83,7 +94,13 @@ const RenderJsonSchema: React.FC<{ schema: ComponentSchema }> = ({ schema }) => 
   }
   const RenderComponent = components[name]
   return (
-    <div ref={drag} onClick={() => handleComponentClick(id)}>
+    <div
+      ref={drag}
+      onMouseDown={(e) => {
+        e.stopPropagation()
+        handleComponentClick(id)
+      }}
+    >
       <RenderComponent style={style} id={id} data={data ?? null} />
     </div>
   )
