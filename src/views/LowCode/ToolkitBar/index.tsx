@@ -104,7 +104,7 @@ const ToolkitBar: React.FC = () => {
           whiteSpace: 'pre'
         }}
       >
-        <ReactJson src={store.lowCodeInfo?.JSONSchema as object} />
+        <ReactJson theme="twilight" src={store.lowCodeInfo?.JSONSchema as object} />
       </Modal>
     </div>
   )
