@@ -21,7 +21,6 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
         id,
         name: ComponentName.AudioComponent,
         parentid: '',
-        type: '',
         data: 'http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3',
         style: {
           position: 'absolute',
@@ -36,7 +35,6 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.BoxComponent,
-        type: '',
         data: '',
         parentid: '',
         style: {
@@ -57,7 +55,6 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.ImageComponent,
-        type: '',
         data: 'https://lf3-xfl.bytescm.com/obj/xfl-static/xfl_site/img/608b2b5.jpeg',
         parentid: '',
 
@@ -76,7 +73,6 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.TextComponent,
-        type: '',
         data: '文字组件',
         parentid: '',
 
@@ -102,7 +98,6 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
         name: ComponentName.VideoComponent,
         parentid: '',
 
-        type: '',
         data: 'https://p1.haoduofangs.com/obj/ttfe/fproject/website/out_1577182578172.mp4',
 
         style: {
@@ -120,7 +115,6 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.HouseComponent,
-        type: '',
         data: '',
         parentid: '',
         style: {

@@ -12,7 +12,6 @@ export enum ComponentName {
 export interface TextComponent {
   id: string
   name: ComponentName.TextComponent
-  type: string
   data: string
   parentid: string
 
@@ -37,7 +36,6 @@ export interface TextComponent {
 export interface ImageComponent {
   id: string
   name: ComponentName.ImageComponent
-  type: string
   data: string
   parentid: string
 
@@ -57,7 +55,6 @@ export interface ImageComponent {
 export interface VideoComponent {
   id: string
   name: ComponentName.VideoComponent
-  type: string
   data: string
   parentid: string
 
@@ -77,7 +74,6 @@ export interface VideoComponent {
 export interface AudioComponent {
   id: string
   name: ComponentName.AudioComponent
-  type: string
   data: string
   parentid: string
 
@@ -94,7 +90,6 @@ export interface AudioComponent {
 export interface BoxComponent {
   id: string
   name: ComponentName.BoxComponent
-  type: string
   data: string
   parentid: string
   style: {
@@ -113,7 +108,6 @@ export interface BoxComponent {
 export interface HouseComponent {
   id: string
   name: ComponentName.HouseComponent
-  type: string
   data: string
   parentid: string
   style: {
