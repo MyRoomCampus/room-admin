@@ -26,7 +26,7 @@ const RightForm: React.FC = () => {
     <div className={styles['right-panel-container']}>
       <Form
         key={selectedSchema?.id}
-        onValueChange={handleValueChange}
+        onValueChange={_.debounce(handleValueChange, 500)}
         labelPosition="left"
         labelAlign="right"
         labelWidth={120}
@@ -37,7 +37,7 @@ const RightForm: React.FC = () => {
           if (numberStyles.includes(style)) {
             return (
               <Form.InputNumber
-                key={`${selectedSchema?.id + style}`}
+                key={`${style + value}`}
                 innerButtons={true}
                 suffix={'px'}
                 initValue={parseInt(value)}
