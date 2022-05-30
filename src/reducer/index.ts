@@ -36,6 +36,7 @@ const lowCodeReducer = {
     } else {
       JSONSchema.data.push(payload)
     }
+    lowCodeInfo && (lowCodeInfo.curSelectCompId = payload.id)
     return {
       ...store,
       lowCodeInfo

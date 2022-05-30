@@ -41,3 +41,17 @@ export const findCompFromJson = (id: string, json: ComponentSchema[]): Component
   }
   return undefined
 }
+
+export const findSchemaById = (schemas?: ComponentSchema[], id?: string): ComponentSchema | undefined => {
+  if (!schemas || !id) {
+    return
+  }
+  for (const schema of schemas) {
+    if (schema.id === id) {
+      return schema
+    }
+    if (schema.name === ComponentName.BoxComponent) {
+      return findSchemaById(schema.children, id)
+    }
+  }
+}

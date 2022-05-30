@@ -7,6 +7,7 @@ import { useDrop } from 'react-dnd'
 import styles from './index.module.less'
 import { ComponentSchema } from '../../../types/lowCodeComp.type'
 import * as _ from 'lodash'
+
 const MidCanvas: React.FC = () => {
   const { store, dispatch } = useContext(AppContext)
   // react drop
@@ -19,6 +20,7 @@ const MidCanvas: React.FC = () => {
     () => ({
       accept: acceptableItems,
       drop: (item: { compKey: DraggableItemKey; schema: ComponentSchema }, monitor) => {
+        console.log('drop')
         const clientOffset = monitor.getClientOffset()
         const initialClientOffset = monitor.getInitialClientOffset()
         // 移动后的距离
