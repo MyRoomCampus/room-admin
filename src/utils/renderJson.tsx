@@ -41,7 +41,7 @@ const RenderJsonSchema: React.FC<{ schema: ComponentSchema }> = ({ schema }) => 
 
   if (name === ComponentName.BoxComponent) {
     return (
-      <div ref={drag}>
+      <div ref={drag} style={style as CSSProperties} key={id}>
         {schema.children?.map((ch) => {
           return <RenderJsonSchema schema={ch} key={ch.id} />
         })}
