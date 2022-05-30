@@ -9,10 +9,10 @@ MyRoom经纪人子系统仓库
 - [Vite](https://cn.vitejs.dev/)
 - ESlint + prettier
 - husky + lint-staged
-- [less](https://lesscss.org)                                              )
+- [less](https://lesscss.org)                                            )
 - [semi ui](https://semi.design/zh-CN/start/getting-started)
 - plop
-- github actions
+- GitHub actions
 - nginx
 ## 📦 Quick start
 本项目使用 pnpm 作为包管理工具，需要先全局安装 pnpm:
