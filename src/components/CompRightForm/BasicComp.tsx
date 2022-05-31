@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
 // import './index.css'
-import { ComponentSchema } from '@//types/lowCodeComp.type'
+import { AudioComponent, BoxComponent, ImageComponent, TextComponent, VideoComponent } from '@//types/lowCodeComp.type'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
 import _ from 'lodash'
 import { Form, Row, Col, Input } from '@douyinfe/semi-ui'
 
 interface TextProps {
-  comp: ComponentSchema
+  comp: BoxComponent | TextComponent | ImageComponent | VideoComponent | AudioComponent
 }
 export const BasicComponent: React.FC<TextProps> = (props) => {
   const { dispatch } = useContext(AppContext)

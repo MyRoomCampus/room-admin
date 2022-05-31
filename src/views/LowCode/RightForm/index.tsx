@@ -4,7 +4,15 @@ import styles from './index.module.less'
 import AppContext from '@//store'
 import { findCompFromJson } from '@//utils/jsonSchemaUtils'
 import { ComponentName } from '@//types/lowCodeComp.type'
-import { ImageFormComponent, TextFormComponent } from '@//components/CompRightForm'
+import {
+  AudioFormComponent,
+  BoxFormComponent,
+  HouseFormComponent,
+  ImageFormComponent,
+  TextFormComponent,
+  VideoFormComponent,
+  UnSelectIdComponent
+} from '@//components/CompRightForm'
 const RightForm: React.FC = () => {
   const { store } = useContext(AppContext)
   const { lowCodeInfo } = store
@@ -24,11 +32,43 @@ const RightForm: React.FC = () => {
           <ImageFormComponent comp={curSelectComp}></ImageFormComponent>
         </div>
       )
+    } else if (curSelectComp?.name === ComponentName.VideoComponent) {
+      return (
+        <div className={styles['right-panel-container']}>
+          <VideoFormComponent comp={curSelectComp}></VideoFormComponent>
+        </div>
+      )
+    } else if (curSelectComp?.name === ComponentName.AudioComponent) {
+      return (
+        <div className={styles['right-panel-container']}>
+          <AudioFormComponent comp={curSelectComp}></AudioFormComponent>
+        </div>
+      )
+    } else if (curSelectComp?.name === ComponentName.BoxComponent) {
+      return (
+        <div className={styles['right-panel-container']}>
+          <BoxFormComponent comp={curSelectComp}></BoxFormComponent>
+        </div>
+      )
+    } else if (curSelectComp?.name === ComponentName.HouseComponent) {
+      return (
+        <div className={styles['right-panel-container']}>
+          <HouseFormComponent comp={curSelectComp}></HouseFormComponent>
+        </div>
+      )
     } else {
-      return <div className={styles['right-panel-container']}>未选中元素</div>
+      return (
+        <div className={styles['right-panel-container']}>
+          <UnSelectIdComponent />
+        </div>
+      )
     }
   } else {
-    return <div className={styles['right-panel-container']}>未选中元素</div>
+    return (
+      <div className={styles['right-panel-container']}>
+        <UnSelectIdComponent />
+      </div>
+    )
   }
   // =======
   // import { Form } from '@douyinfe/semi-ui'
