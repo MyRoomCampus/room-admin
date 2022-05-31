@@ -5,17 +5,18 @@ import { useNavigate } from 'react-router'
 import { getAccessToken } from '@//utils/token'
 export default function AddProject() {
   const navigator = useNavigate()
-  const [visible, setvisible] = useState(false)
+  const [visible, setVisible] = useState(false)
   const message = '该项为必填项'
-  const api: object = useRef()
+  const api = useRef()
   const showDialog = () => {
-    setvisible(true)
+    setVisible(true)
   }
   const handleAddProject = () => {
+    if (!api) return
     api.current
       .validate()
-      .then(async (value: object) => {
-        const name = value['projectName']
+      .then(async (value) => {
+        const name = value.projectName
         let accessToken: string | null = ''
         await getAccessToken().then((result) => {
           console.log(result)
@@ -35,7 +36,7 @@ export default function AddProject() {
       })
   }
   const handleCancel = () => {
-    setvisible(false)
+    setVisible(false)
   }
 
   return (
@@ -45,8 +46,8 @@ export default function AddProject() {
       </Button>
       <Modal title="新建项目" visible={visible} onOk={handleAddProject} style={{ width: 600 }} onCancel={handleCancel}>
         <Form
-          getFormApi={(formApi: object) => {
-            api.current = formApi
+          getFormApi={(formApi) => {
+            api && (api.current = formApi)
           }}
         >
           <Row>

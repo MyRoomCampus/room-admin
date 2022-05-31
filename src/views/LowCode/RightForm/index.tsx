@@ -9,7 +9,7 @@ const RightForm: React.FC = () => {
   const { store } = useContext(AppContext)
   const { lowCodeInfo } = store
   console.log('curId:', lowCodeInfo?.curSelectCompId)
-  if (lowCodeInfo) {
+  if (lowCodeInfo != null) {
     const { JSONSchema, curSelectCompId } = lowCodeInfo
     const curSelectComp = findCompFromJson(curSelectCompId, JSONSchema.data)
     if (curSelectComp?.name === ComponentName.TextComponent) {

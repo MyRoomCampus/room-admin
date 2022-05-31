@@ -13,7 +13,7 @@ const request = axios.create({
 
 /** 请求拦截器 */
 // eslint-disable-next-line
-async function resquestSuccessInterceptors(config: any) {
+async function requestSuccessInterceptors(config: any) {
   // 携带上token
   if (!config.headers.Authorization) {
     const token = await getAccessToken()
@@ -22,22 +22,22 @@ async function resquestSuccessInterceptors(config: any) {
   return config
 }
 // eslint-disable-next-line
-function requestFailInterceports(error: any) {
+function requestFailInterceptors(error: any) {
   return Promise.reject(error)
 }
 request.interceptors.request.use(
   // request success
-  resquestSuccessInterceptors,
+  requestSuccessInterceptors,
   // request fail
-  requestFailInterceports
+  requestFailInterceptors
 )
 
 /** 响应拦截器 */
-function responseSuccessInterceptors<T>(response: AxiosResponse<T>) {
+async function responseSuccessInterceptors<T>(response: AxiosResponse<T>) {
   // 响应成功的拦截器
-  return Promise.resolve(response.data)
+  return response.data
 }
-function responseFailInterceptors(error: AxiosError) {
+async function responseFailInterceptors(error: AxiosError) {
   const response = error.response
   const status = response?.status
   switch (status) {
@@ -54,8 +54,8 @@ function responseFailInterceptors(error: AxiosError) {
       Toast.error('Ooops, something went wrong...')
       break
   }
-  console.error(`http请求错误，请求路径: ${error.config.url || ''}`)
-  return Promise.resolve(undefined)
+  console.error(`http请求错误，请求路径: ${error.config.url ?? ''}`)
+  return undefined
 }
 request.interceptors.response.use(responseSuccessInterceptors, responseFailInterceptors)
 

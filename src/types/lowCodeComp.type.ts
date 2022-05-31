@@ -8,7 +8,7 @@ export enum ComponentName {
   AudioComponent = 'AudioComponent',
   HouseComponent = 'HouseComponent'
 }
-//文本组件属性
+// 文本组件属性
 export interface TextComponent {
   id: string
   name: ComponentName.TextComponent
@@ -32,7 +32,7 @@ export interface TextComponent {
   }
 }
 
-//图片组件属性
+// 图片组件属性
 export interface ImageComponent {
   id: string
   name: ComponentName.ImageComponent
@@ -51,7 +51,7 @@ export interface ImageComponent {
   }
 }
 
-//视频组件属性
+// 视频组件属性
 export interface VideoComponent {
   id: string
   name: ComponentName.VideoComponent
@@ -70,7 +70,7 @@ export interface VideoComponent {
   }
 }
 
-//音频组件属性
+// 音频组件属性
 export interface AudioComponent {
   id: string
   name: ComponentName.AudioComponent

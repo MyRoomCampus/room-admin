@@ -46,7 +46,7 @@ const CompPanel: React.FC = () => {
 
     const { id, name } = JSON.parse(key)
     const { lowCodeInfo } = store
-    if (lowCodeInfo) {
+    if (lowCodeInfo != null) {
       const { JSONSchema, curSelectCompId, curSelectLayerId } = lowCodeInfo
 
       // 更新目前选择的层级， 如果是容器组件，直接更新，如果不是，查找parentId
@@ -60,7 +60,7 @@ const CompPanel: React.FC = () => {
         const comp = findCompFromJson(id, JSONSchema.data)!
         const parentComp = findCompFromJson(comp.parentid, JSONSchema.data)
 
-        if (!parentComp) {
+        if (parentComp == null) {
           dispatch({
             type: ACTIONS.UPDATE_SELECTED_LAYWER,
             payload: ''
@@ -99,7 +99,7 @@ const CompPanel: React.FC = () => {
 
   const renderLayerContent = () => {
     const { lowCodeInfo } = store
-    if (lowCodeInfo) {
+    if (lowCodeInfo != null) {
       const { data } = lowCodeInfo.JSONSchema
       const treeData = [
         {
@@ -115,7 +115,7 @@ const CompPanel: React.FC = () => {
           treeData={treeData}
           defaultExpandAll
           onSelect={onSelectLayer}
-          value={store.lowCodeInfo?.curSelectCompId || 'root'}
+          value={store.lowCodeInfo?.curSelectCompId ?? 'root'}
           style={{
             width: '100%',
             height: '100%'

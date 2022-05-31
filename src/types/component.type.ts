@@ -1,5 +1,5 @@
 import { ComponentSchema } from '@//types/lowCodeComp.type'
 
-export type ComponentProps = {
+export interface ComponentProps {
   schema: ComponentSchema
 }

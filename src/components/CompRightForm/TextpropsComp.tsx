@@ -31,14 +31,14 @@ export const TextPropsComponent: React.FC<Props> = (props) => {
   const [color, setColor] = useState(textcolor)
   console.log('arr:', arr)
   // const style = { width: '100%' }
-  //console.log('comp:', comp)
+  // console.log('comp:', comp)
   const { Section, Label } = Form
   return (
     <Section text="字体">
       <Label>字体颜色</Label>
       <Row>
         <Col span={4}>
-          <span className={styles['span']} style={{ backgroundColor: `${color}` }}></span>
+          <span className={styles.span} style={{ backgroundColor: `${color}` }}></span>
         </Col>
 
         {borderColor.map((value, index) => {
@@ -46,7 +46,7 @@ export const TextPropsComponent: React.FC<Props> = (props) => {
             <Col key={index} span={2}>
               <div>
                 <span
-                  className={styles['span']}
+                  className={styles.span}
                   style={{ backgroundColor: value }}
                   onClick={() => {
                     setColor(value)

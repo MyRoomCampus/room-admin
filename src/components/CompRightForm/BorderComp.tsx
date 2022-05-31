@@ -33,14 +33,14 @@ export const BorderComponent: React.FC<Props> = (props) => {
   const [color, setColor] = useState(arr[arr.length - 1])
   console.log('arr:', arr)
   // const style = { width: '100%' }
-  //console.log('comp:', comp)
+  // console.log('comp:', comp)
   const { Section, Label } = Form
   return (
     <Section text="边框">
       <Label>边框颜色</Label>
       <Row>
         <Col span={4}>
-          <span className={styles['span']} style={{ backgroundColor: `${color}` }}></span>
+          <span className={styles.span} style={{ backgroundColor: `${color}` }}></span>
         </Col>
 
         {borderColor.map((value, index) => {
@@ -48,7 +48,7 @@ export const BorderComponent: React.FC<Props> = (props) => {
             <Col key={index} span={2}>
               <div>
                 <span
-                  className={styles['span']}
+                  className={styles.span}
                   style={{ backgroundColor: value }}
                   onClick={() => {
                     setColor(value)
@@ -96,14 +96,14 @@ export const ExtraBorderComponent: React.FC<extraProps> = (props) => {
   const [color, setColor] = useState(arr[arr.length - 1])
   console.log('arr:', arr)
   // const style = { width: '100%' }
-  //console.log('comp:', comp)
+  // console.log('comp:', comp)
   const { Section, Label } = Form
   return (
     <Section text="边框">
       <Label>边框颜色</Label>
       <Row>
         <Col span={4}>
-          <span className={styles['span']} style={{ backgroundColor: `${color}` }}></span>
+          <span className={styles.span} style={{ backgroundColor: `${color}` }}></span>
         </Col>
 
         {borderColor.map((value, index) => {
@@ -111,7 +111,7 @@ export const ExtraBorderComponent: React.FC<extraProps> = (props) => {
             <Col key={index} span={2}>
               <div>
                 <span
-                  className={styles['span']}
+                  className={styles.span}
                   style={{ backgroundColor: value }}
                   onClick={() => {
                     setColor(value)

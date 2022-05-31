@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react'
 import styles from './index.module.less'
 import { IconCode, IconSave, IconMinusCircle, IconPlusCircle } from '@douyinfe/semi-icons'
-import { Tooltip } from '@douyinfe/semi-ui'
-import { Modal } from '@douyinfe/semi-ui'
+import { Tooltip, Modal } from '@douyinfe/semi-ui'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
 import ReactJson from 'react-json-view'
 import ModeSwitch from '@//components/ModeSwitch'
 
-type ToolType = {
+interface ToolType {
   el: React.ReactNode
   tip: string
   onClick: () => void
@@ -22,7 +21,7 @@ const ToolkitBar: React.FC = () => {
   const size = 'large'
   const onMinusClick = () => {
     const curScale = store.lowCodeInfo?.scale
-    if (curScale && curScale >= 0.2) {
+    if (curScale !== undefined && curScale >= 0.2) {
       dispatch({
         type: ACTIONS.UPDATE_PREVIEW_SCALE,
         payload: curScale - gap
@@ -31,7 +30,7 @@ const ToolkitBar: React.FC = () => {
   }
   const onPlusClick = () => {
     const curScale = store.lowCodeInfo?.scale
-    if (curScale && curScale < 2) {
+    if (curScale !== undefined && curScale < 2) {
       dispatch({
         type: ACTIONS.UPDATE_PREVIEW_SCALE,
         payload: curScale + gap
