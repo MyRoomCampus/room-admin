@@ -12,7 +12,7 @@ const LowCodePlatform: React.FC = () => {
   // initialize schema data
   const { store, dispatch } = useContext(AppContext)
 
-  if (!store.lowCodeInfo) {
+  if (store.lowCodeInfo == null) {
     dispatch({
       type: ACTIONS.INITIAL_LOW_CODE,
       payload: {

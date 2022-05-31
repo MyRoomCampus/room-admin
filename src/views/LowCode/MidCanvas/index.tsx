@@ -20,7 +20,7 @@ const MidCanvas: React.FC = () => {
   const [, dropRef] = useDrop(
     () => ({
       accept: acceptableItems,
-      drop: (item: { compKey: DraggableItemKey; schema: ComponentSchema }, monitor) => {
+      drop: (item: { compKey: DraggableItemKey; schema?: ComponentSchema }, monitor) => {
         console.log('drop')
         const clientOffset = monitor.getClientOffset()
         const initialClientOffset = monitor.getInitialClientOffset()
@@ -31,7 +31,7 @@ const MidCanvas: React.FC = () => {
         const initialX = initialClientOffset?.x ?? 0
         const initialY = initialClientOffset?.y ?? 0
         // 从左边移动到中间和中间的移动分开处理
-        if (item.schema) {
+        if (item.schema != null) {
           const newSchema = _.cloneDeep(item.schema)
           newSchema.style.top = `${-initialY + y + parseInt(newSchema.style.top)}px`
           newSchema.style.left = `${-initialX + x + parseInt(newSchema.style.left)}px`
@@ -44,7 +44,7 @@ const MidCanvas: React.FC = () => {
 
         const schema = getComponentSchema(item.compKey)
 
-        if (schema) {
+        if (schema != null) {
           schema.style.top = `${y - 152 + (scroll?.top ?? 0)}px`
           dispatch({
             type: ACTIONS.UPDATE_SCHEMA,
@@ -59,7 +59,7 @@ const MidCanvas: React.FC = () => {
     <div className={styles['canvas-container']}>
       <div
         className={styles['canvas-image']}
-        style={{ backgroundImage: `url(${iphoneImage})`, transform: `scale(${store.lowCodeInfo?.scale})` }}
+        style={{ backgroundImage: `url(${iphoneImage})`, transform: `scale(${store.lowCodeInfo?.scale ?? 1})` }}
       >
         <div className={styles['canvas-preview']} ref={scrollRef}>
           <div id="canvas-scroll" className={styles['canvas-scroll']} ref={dropRef}>

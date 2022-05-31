@@ -3,7 +3,7 @@ import LoginApi from '../api/login'
 const JWT_ACCESS_TOKEN_KEY = 'room_jwt_access'
 const JWT_REFRESH_TOKEN_KEY = 'room_jwt_refresh'
 
-export type Token = {
+export interface Token {
   value: string
   expire: number
 }
@@ -47,7 +47,7 @@ export const getAccessToken = async (): Promise<string | null> => {
 
     // access token expired, refresh access token by refresh token
     const refreshToken = getRefreshToken()
-    if (refreshToken && refreshToken.expire > Date.now() / 1000) {
+    if (refreshToken != null && refreshToken.expire > Date.now() / 1000) {
       const res = await LoginApi.refreshTokenRequest(refreshToken.value)
       setToken(res.accessToken, 'access')
       res.refreshToken && setToken(res.refreshToken, 'refresh')

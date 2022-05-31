@@ -4,7 +4,11 @@ import { IUserInfo } from '../types/userInfo.types'
 import { findCompFromJson } from '../utils/jsonSchemaUtils'
 import ACTIONS from './actions'
 
-export type InitLowCodeInfo = { projectName: string; author: string; houseCardData: IHouseCardData }
+export interface InitLowCodeInfo {
+  projectName: string
+  author: string
+  houseCardData: IHouseCardData
+}
 
 export type ActionPayLoad = InitLowCodeInfo | ComponentSchema | number | string | IUserInfo
 const lowCodeReducer = {

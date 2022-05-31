@@ -2,7 +2,7 @@ import AppContext from '@//store'
 import React, { CSSProperties, useContext } from 'react'
 import styles from './index.module.less'
 
-type HouseCardProps = {
+interface HouseCardProps {
   style: CSSProperties
 }
 const getCount = (count: number) => {
@@ -12,17 +12,17 @@ const getCount = (count: number) => {
   if (count < 10000) {
     return count
   } else if (Math.floor(count / 10000) < 10000) {
-    return Math.floor(count / 1000) / 10 + '万'
+    return `${Math.floor(count / 1000) / 10}万`
   } else {
-    return Math.floor(count / 10000000) / 10 + '亿'
+    return `${Math.floor(count / 10000000) / 10}亿`
   }
 }
 const HouseCard: React.FC<HouseCardProps> = (props) => {
   const { store } = useContext(AppContext)
   const { lowCodeInfo } = store
-  const cardData = lowCodeInfo && lowCodeInfo.houseCardData
+  const cardData = lowCodeInfo?.houseCardData
   const { style } = props
-  return cardData ? (
+  return cardData != null ? (
     <div className={styles['card-container']} style={style}>
       <img src={cardData.image} alt="加载失败" />
       <div className={styles['content-container']}>

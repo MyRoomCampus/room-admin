@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import styles from './index.module.less'
 import { Button, Table, Avatar, ButtonGroup } from '@douyinfe/semi-ui'
 import AddProject from './AddProject'
+import { getHouseRequest, IHouse } from '@//api/home'
 import { AvatarColor } from '@douyinfe/semi-ui/lib/es/avatar'
 const figmaIconUrl = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png'
-const pageSize = 5
 const columns = [
   {
     title: '项目名称',
@@ -22,10 +22,10 @@ const columns = [
   {
     title: '创建者',
     dataIndex: 'owner',
-    render: (text: string, record: Record<string, unknown>) => {
+    render: (text: string, record: { avatarBg: AvatarColor }) => {
       return (
         <div>
-          <Avatar size="small" color={record.avatarBg as AvatarColor} style={{ marginRight: 4 }}>
+          <Avatar size="small" color={record.avatarBg} style={{ marginRight: 4 }}>
             {typeof text === 'string' && text.slice(0, 1)}
           </Avatar>
           {text}
@@ -36,8 +36,8 @@ const columns = [
   {
     title: '修改日期',
     dataIndex: 'updateTime',
-    sorter: (a: { updateTime: number }, b: { updateTime: number }) => (a.updateTime - b.updateTime > 0 ? 1 : -1),
-    render: (value: unknown) => {
+    // sorter: (a, b) => (a.updateTime - b.updateTime > 0 ? 1 : -1),
+    render: (value: string) => {
       return value
     }
   },
@@ -57,53 +57,28 @@ const columns = [
   }
 ]
 
-const getData = () => {
-  const data = []
-  for (let i = 0; i < 46; i++) {
-    const isSemiDesign = i % 2 === 0
-    const randomNumber = (i * 1000) % 199
-    data.push({
-      key: '' + i,
-      name: isSemiDesign ? `Semi Design 设计稿${i}.fig` : `Semi Pro 设计稿${i}.fig`,
-      owner: isSemiDesign ? '姜鹏志' : '郝宣',
-      size: randomNumber,
-      updateTime: '111',
-      avatarBg: isSemiDesign ? 'grey' : 'red'
-    })
-  }
-  return data
-}
-
-const data = getData()
-
 const HomePage: React.FC = () => {
-  const [dataSource, setData] = useState([])
+  const [dataSource, setData] = useState<IHouse[]>([])
   const [loading, setLoading] = useState(false)
   const [currentPage, setPage] = useState(1)
-  const fetchData = (currentPage = 1) => {
-    setLoading(true)
+
+  const fetchData = async (currentPage = 1) => {
     setPage(currentPage)
-    return new Promise((res) => {
-      setTimeout(() => {
-        const data = getData()
-        const dataSource = data.slice((currentPage - 1) * pageSize, currentPage * pageSize)
-        res(dataSource)
-      }, 300)
-    }).then((dataSource) => {
-      setLoading(false)
-      setData(dataSource as never)
-    })
+    setLoading(true)
+    const data = await getHouseRequest({ currentPage })
+    setData(data)
+    setLoading(false)
   }
 
   const handlePageChange = (page: number) => {
-    void fetchData(page)
+    fetchData(page)
   }
 
   useEffect(() => {
     void fetchData()
   }, [])
   return (
-    <div className="programList-Container">
+    <div className="program-list-Container">
       <div className={styles['program-list-title']}>项目列表</div>
 
       <div className={styles['program-list-addbtn']}>
@@ -118,7 +93,7 @@ const HomePage: React.FC = () => {
             currentPage,
             showQuickJumper: true,
             showSizeChanger: true,
-            total: data.length,
+            total: 46,
             onPageChange: handlePageChange
           }}
           loading={loading}

@@ -7,7 +7,8 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
+    'standard-with-typescript',
+    // 接入 prettier 的规则
     'prettier',
     'plugin:prettier/recommended'
   ],
@@ -18,12 +19,12 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    project: './tsconfig.json',
     ecmaFeatures: {
       jsx: true
     },
     ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json']
+    sourceType: 'module'
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
@@ -37,11 +38,18 @@ module.exports = {
     '@typescript-eslint/no-inferrable-types': 'error',
     '@typescript-eslint/no-misused-new': 'error',
     '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unsafe-assignment': 'warn',
     '@typescript-eslint/await-thenable': 'warn',
-    '@typescript-eslint/no-floating-promises': 'error',
+    '@typescript-eslint/no-floating-promises': 'warn',
     '@typescript-eslint/no-unnecessary-type-assertion': 'error',
     '@typescript-eslint/no-unsafe-argument': 'error',
-    '@typescript-eslint/no-unsafe-assignment': 'error',
-    '@typescript-eslint/no-unsafe-call': 'error'
+    '@typescript-eslint/no-unsafe-call': 'error',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/member-delimiter-style': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/space-before-function-paren': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off',
+    '@typescript-eslint/no-extraneous-class': 'off'
   }
 }

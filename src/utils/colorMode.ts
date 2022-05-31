@@ -1,7 +1,7 @@
 export const getCurColorMode = () => {
   const body = document.body
   const mode = body.getAttribute('theme-mode')
-  return mode || 'light'
+  return mode ?? 'light'
 }
 export const switchMode = () => {
   const body = document.body
