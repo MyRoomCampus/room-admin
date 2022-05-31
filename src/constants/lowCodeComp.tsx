@@ -1,15 +1,16 @@
-import { IconBox, IconImage, IconTextRectangle, IconVideo, IconVolume2 } from '@douyinfe/semi-icons'
+import { IconBox, IconHome, IconImage, IconTextRectangle, IconVideo, IconVolume2 } from '@douyinfe/semi-icons'
 import { ComponentName, ComponentSchema, ILowCodeComp } from '../types/lowCodeComp.type'
 enum DraggableItemKey {
   BOX = 'container',
   TEXT = 'text',
   IMAGE = 'image',
   VIDEO = 'video',
-  AUDIO = 'audio'
+  AUDIO = 'audio',
+  HOUSE = 'house'
 }
 
 const iconStyle = {
-  fontSize: 32
+  fontSize: 28
 }
 
 export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | null => {
@@ -20,7 +21,6 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
         id,
         name: ComponentName.AudioComponent,
         parentid: '',
-        type: '',
         data: 'http://downsc.chinaz.net/Files/DownLoad/sound1/201906/11582.mp3',
         style: {
           position: 'absolute',
@@ -35,10 +35,8 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.BoxComponent,
-        type: '',
         data: '',
         parentid: '',
-        contentHeight: '0',
         style: {
           position: 'absolute',
           left: '0',
@@ -57,7 +55,6 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.ImageComponent,
-        type: '',
         data: 'https://lf3-xfl.bytescm.com/obj/xfl-static/xfl_site/img/608b2b5.jpeg',
         parentid: '',
 
@@ -66,7 +63,7 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
           left: '0',
           top: '0',
           width: '340px',
-          height: '50px',
+          height: '300px',
           border: '1px dashed #e5e5e5',
           backgroundColor: '0',
           padding: '0'
@@ -76,7 +73,6 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
       return {
         id,
         name: ComponentName.TextComponent,
-        type: '',
         data: '文字组件',
         parentid: '',
 
@@ -84,15 +80,15 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
           position: 'absolute',
           left: '0',
           top: '0',
-          width: '340px',
-          height: '20px',
+          width: '100px',
+          height: '30px',
 
           border: '1px dashed #e5e5e5',
           borderRadius: '0%',
           backgroundColor: '0',
           padding: '0',
           color: '0',
-          textAlign: '0',
+          textAlign: 'center',
           fontSize: '14'
         }
       }
@@ -102,7 +98,6 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
         name: ComponentName.VideoComponent,
         parentid: '',
 
-        type: '',
         data: 'https://p1.haoduofangs.com/obj/ttfe/fproject/website/out_1577182578172.mp4',
 
         style: {
@@ -110,10 +105,22 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
           left: '0',
           top: '0',
           width: '340px',
-          height: '100px',
+          height: '300px',
           border: '1px dashed #e5e5e5',
           backgroundColor: '0',
           padding: '0'
+        }
+      }
+    case DraggableItemKey.HOUSE:
+      return {
+        id,
+        name: ComponentName.HouseComponent,
+        data: '',
+        parentid: '',
+        style: {
+          position: 'absolute',
+          left: '0',
+          top: '0'
         }
       }
     default:
@@ -141,11 +148,16 @@ const AudioComponent: ILowCodeComp = {
   text: '音频',
   compKey: DraggableItemKey.AUDIO
 }
+const HouseCardComponent: ILowCodeComp = {
+  icon: <IconHome style={iconStyle} />,
+  text: '房源卡片',
+  compKey: DraggableItemKey.HOUSE
+}
 const BoxComponent: ILowCodeComp = {
   icon: <IconBox style={iconStyle} />,
   text: '容器',
   compKey: DraggableItemKey.BOX
 }
-const BASE_COMPS: ILowCodeComp[] = [TextComponent, ImageComponent, VideoComponent, AudioComponent]
+const BASE_COMPS: ILowCodeComp[] = [TextComponent, ImageComponent, VideoComponent, AudioComponent, HouseCardComponent]
 const HIGHER_COMPS: ILowCodeComp[] = [BoxComponent]
 export { BASE_COMPS, HIGHER_COMPS, DraggableItemKey }

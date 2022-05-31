@@ -1,11 +1,14 @@
-import { BoxComponent, ComponentSchema } from '../types/lowCodeComp.type'
+import { BoxComponent, ComponentName, ComponentSchema, IHouseCardData } from '../types/lowCodeComp.type'
 import { IStore, IAction } from '../types/store.types'
 import { findCompFromJson } from '../utils/jsonSchemaUtils'
 import ACTIONS from './actions'
 
 const lowCodeReducer = {
-  initializeInfo(store: IStore, payload: { projectName: string; author: string }): IStore {
-    const { projectName, author } = payload
+  initializeInfo(
+    store: IStore,
+    payload: { projectName: string; author: string; houseCardData: IHouseCardData }
+  ): IStore {
+    const { projectName, author, houseCardData } = payload
     const JSONSchema = {
       projectId: 'bytetance',
       projectName,
@@ -19,7 +22,8 @@ const lowCodeReducer = {
         scale: 1,
         curTotalHeight: 0,
         curSelectCompId: '',
-        curSelectLayerId: ''
+        curSelectLayerId: '',
+        houseCardData
       }
     }
   },
@@ -36,6 +40,7 @@ const lowCodeReducer = {
     } else {
       JSONSchema.data.push(payload)
     }
+    lowCodeInfo && (lowCodeInfo.curSelectCompId = payload.id)
     return {
       ...store,
       lowCodeInfo
@@ -71,19 +76,20 @@ const lowCodeReducer = {
 
   updateComponent(store: IStore, payload: ComponentSchema): IStore {
     const lowCodeInfo = Object.assign({}, store.lowCodeInfo)
-    const iterateSchema = (schemas: ComponentSchema[] | BoxComponent): ComponentSchema[] => {
-      if (!Array.isArray(schemas)) {
-        return iterateSchema(schemas.children)
-      }
+    const iterateSchema = (schemas: ComponentSchema[]): ComponentSchema[] => {
       return schemas.map((schema) => {
         if (schema.id === payload.id) {
-          schema = payload
+          return payload
+        }
+        if (schema.name === ComponentName.BoxComponent) {
+          schema.children = iterateSchema(schema.children)
+          return schema
         }
         return schema
       })
     }
     lowCodeInfo.JSONSchema.data = iterateSchema(lowCodeInfo.JSONSchema.data)
-    console.log(lowCodeInfo.JSONSchema.data)
+    console.log(lowCodeInfo)
     return {
       ...store,
       lowCodeInfo

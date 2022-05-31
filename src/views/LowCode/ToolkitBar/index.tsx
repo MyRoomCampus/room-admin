@@ -5,6 +5,8 @@ import { Tooltip } from '@douyinfe/semi-ui'
 import { Modal } from '@douyinfe/semi-ui'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
+import ReactJson from 'react-json-view'
+import ModeSwitch from '@//components/ModeSwitch'
 
 type ToolType = {
   el: React.ReactNode
@@ -14,10 +16,10 @@ type ToolType = {
 
 const ToolkitBar: React.FC = () => {
   const { store, dispatch } = useContext(AppContext)
-  const [codeModalVisibel, setCodeModalVisibel] = useState(false)
+  const [codeModalVisible, setCodeModalVisible] = useState(false)
   const gap = 0.1
 
-  const size = 'extra-large'
+  const size = 'large'
   const onMinusClick = () => {
     const curScale = store.lowCodeInfo?.scale
     if (curScale && curScale >= 0.2) {
@@ -37,7 +39,7 @@ const ToolkitBar: React.FC = () => {
     }
   }
   const onCodeClick = () => {
-    !codeModalVisibel && setCodeModalVisibel(true)
+    !codeModalVisible && setCodeModalVisible(true)
   }
 
   const onSaveClick = () => {
@@ -78,19 +80,22 @@ const ToolkitBar: React.FC = () => {
           </Tooltip>
         )
       })}
+      <ModeSwitch />
       <Modal
         title="页面源代码"
-        visible={codeModalVisibel}
+        visible={codeModalVisible}
         footer={null}
+        width={'80vw'}
         height={'80vh'}
-        onCancel={() => setCodeModalVisibel(false)}
+        onCancel={() => setCodeModalVisible(false)}
         maskClosable={false}
         bodyStyle={{
           height: '100%',
-          overflow: 'auto'
+          overflow: 'auto',
+          whiteSpace: 'pre'
         }}
       >
-        {JSON.stringify(store.lowCodeInfo?.JSONSchema)}
+        <ReactJson theme="twilight" src={store.lowCodeInfo?.JSONSchema as object} />
       </Modal>
     </div>
   )
