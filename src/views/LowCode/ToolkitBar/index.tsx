@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react'
 import styles from './index.module.less'
-import { IconCode, IconSave, IconMinusCircle, IconPlusCircle } from '@douyinfe/semi-icons'
+import { IconCode, IconSave, IconMinusCircle, IconPlusCircle, IconArrowLeft } from '@douyinfe/semi-icons'
 import { Tooltip, Modal } from '@douyinfe/semi-ui'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
 import ReactJson from 'react-json-view'
 import ModeSwitch from '@//components/ModeSwitch'
+import { useNavigate } from 'react-router'
 
 interface ToolType {
   el: React.ReactNode
@@ -14,6 +15,7 @@ interface ToolType {
 }
 
 const ToolkitBar: React.FC = () => {
+  const navigate = useNavigate()
   const { store, dispatch } = useContext(AppContext)
   const [codeModalVisible, setCodeModalVisible] = useState(false)
   const gap = 0.1
@@ -70,6 +72,10 @@ const ToolkitBar: React.FC = () => {
 
   return (
     <div className={styles['low-platform-header']}>
+      <div className={styles['low-platform-header-go-back']} onClick={() => navigate('/dashboard')}>
+        <IconArrowLeft size={size} />
+        <span>返回</span>
+      </div>
       {tools.map((item, i) => {
         return (
           <Tooltip content={item.tip} key={i}>

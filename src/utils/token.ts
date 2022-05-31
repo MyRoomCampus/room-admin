@@ -1,7 +1,7 @@
 import LoginApi from '../api/login'
 
-const JWT_ACCESS_TOKEN_KEY = 'room_jwt_access'
-const JWT_REFRESH_TOKEN_KEY = 'room_jwt_refresh'
+export const JWT_ACCESS_TOKEN_KEY = 'room_jwt_access'
+export const JWT_REFRESH_TOKEN_KEY = 'room_jwt_refresh'
 
 export interface Token {
   value: string

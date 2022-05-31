@@ -59,7 +59,12 @@ const MidCanvas: React.FC = () => {
     <div className={styles['canvas-container']}>
       <div
         className={styles['canvas-image']}
-        style={{ backgroundImage: `url(${iphoneImage})`, transform: `scale(${store.lowCodeInfo?.scale ?? 1})` }}
+        style={{
+          backgroundImage: `url(${iphoneImage})`,
+          transform: `scale(${store.lowCodeInfo?.scale ?? 1}) translateY(${
+            ((store.lowCodeInfo?.scale ?? 1) - 0.9) * 400
+          }px)`
+        }}
       >
         <div className={styles['canvas-preview']} ref={scrollRef}>
           <div id="canvas-scroll" className={styles['canvas-scroll']} ref={dropRef}>
