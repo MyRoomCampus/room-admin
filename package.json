@@ -46,6 +46,7 @@
     "@amatlash/vite-plugin-stylelint": "^1.2.0",
     "@commitlint/cli": "^16.2.4",
     "@commitlint/config-conventional": "^16.2.4",
+    "@originjs/vite-plugin-federation": "^1.1.6",
     "@types/lodash": "^4.14.182",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
