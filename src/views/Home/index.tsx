@@ -71,7 +71,7 @@ const HomePage: React.FC = () => {
   }
 
   const handlePageChange = (page: number) => {
-    fetchData(page)
+    void fetchData(page)
   }
 
   useEffect(() => {
