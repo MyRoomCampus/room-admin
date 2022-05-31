@@ -26,7 +26,7 @@ const LayOut: React.FC = () => {
     <Layout>
       <Header className={styles['layout-header-container']}>
         <div>MYROOM麦荣经纪人子系统</div>
-        <ModeSwitch />
+        <ModeSwitch style={{ top: 15 }} />
       </Header>
       <Layout>
         <Sider className={styles['layout-sider-container']}>
