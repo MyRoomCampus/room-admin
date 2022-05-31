@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/return-await */
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { Toast } from '@douyinfe/semi-ui'
 import { getAccessToken } from '../utils/token'
@@ -71,6 +72,14 @@ const baseRequest = {
   // eslint-disable-next-line
   post<T>(url: string, data?: Record<string, any>, config: AxiosRequestConfig = {}) {
     return request.post<T, T>(url, data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      ...config
+    })
+  },
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async put<T>(url: string, data?: Record<string, any>, config: AxiosRequestConfig = {}) {
+    return request.put<T, T>(url, data, {
       headers: { 'Content-Type': 'multipart/form-data' },
       ...config
     })

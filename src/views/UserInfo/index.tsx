@@ -1,34 +1,87 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import styles from './index.module.less'
-import { Input, Button } from '@douyinfe/semi-ui'
+import { Button, Form, Toast } from '@douyinfe/semi-ui'
 import { useNavigate } from 'react-router-dom'
+import AppContext from '@//store'
+import UserInfoApi from '@//api/userInfo'
 
 const UserInfo: React.FC = () => {
   const navigator = useNavigate()
+  const { store } = useContext(AppContext)
+  const [newPassWord, SetNewPassword] = useState('')
+  const [confirmNewPassword, SetConfirmNewPassword] = useState('')
   const returnHome = () => {
     navigator('/dashboard')
+  }
+  const validateNewPassword = () => {
+    if (newPassWord && newPassWord.length < 6) {
+      return '密码长度应大于6位'
+    } else {
+      return ''
+    }
+  }
+  const validateConfirmNewPassword = () => {
+    if (confirmNewPassword && confirmNewPassword !== newPassWord) {
+      return '两次输入的新密码不一致，请重新输入！'
+    } else {
+      return ''
+    }
+  }
+  const changeUserInfo = async () => {
+    console.log(newPassWord)
+    const password = newPassWord
+    const res = await UserInfoApi.changeUserInfoRequest({ password })
+    if (res) {
+      console.log(res)
+      Toast.success('修改成功')
+    } else {
+      Toast.error('修改失败')
+    }
   }
   return (
     <div>
       <div className={styles['user-info-form-title']}>
         <p>个人信息</p>
       </div>
-
-      <div className={styles['user-info-form-input']}>
-        <div className={styles['user-info-form-input-label']}>用户名:</div>
-        <Input type="text" size="default" className={styles['user-info-form-input-textinput']} />
-      </div>
-
-      <div className={styles['user-info-form-input']}>
-        <div className={styles['user-info-form-input-label']}>密码:</div>
-        <Input mode="password" size="default" className={styles['user-info-form-input-textinput']} />
-      </div>
-      <div className={styles['user-info-form-submit']}>
-        <Button theme="solid">更改</Button>
-        <Button theme="solid" onClick={returnHome}>
-          返回
-        </Button>
-      </div>
+      <Form>
+        <Form.Input
+          field="UserName"
+          label="用户名"
+          style={{ width: 300 }}
+          initValue={store.userInfo?.username ? store.userInfo?.username : ''}
+          disabled
+        />
+        <Form.Input
+          field="NewPassword"
+          label="新密码"
+          mode="password"
+          style={{ width: 300 }}
+          placeholder="请输入新密码"
+          initValue={newPassWord}
+          onChange={(e) => SetNewPassword(e)}
+          trigger="blur"
+          validate={validateNewPassword}
+        />
+        <Form.Input
+          field="ConfirmNewPassword"
+          label="确认新密码"
+          mode="password"
+          style={{ width: 300 }}
+          placeholder="请再次输入新密码"
+          initValue={confirmNewPassword}
+          onChange={(e) => SetConfirmNewPassword(e)}
+          trigger="blur"
+          validate={validateConfirmNewPassword}
+        />
+        <div className={styles['user-info-form-submit']}>
+          <Button theme="solid" onClick={changeUserInfo}>
+            更改
+          </Button>
+          <Button theme="solid" onClick={returnHome}>
+            返回
+          </Button>
+        </div>
+      </Form>
     </div>
   )
 }

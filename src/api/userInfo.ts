@@ -1,16 +1,16 @@
 import baseRequest from '.'
 interface IUserInfoParam {
-  username: string
+  userName?: string
   password: string
 }
 
 const USERINFO_URL = {
-  update: '/auth/validate-info'
+  changeUserInfo: '/user/password'
 }
 
 class UserInfoApi {
-  static async loginRequest(data: IUserInfoParam) {
-    return await baseRequest.post<IUserInfoParam>(USERINFO_URL.update, data)
+  static async changeUserInfoRequest(data: IUserInfoParam) {
+    return await baseRequest.put<IUserInfoParam>(USERINFO_URL.changeUserInfo, data)
   }
 }
 
