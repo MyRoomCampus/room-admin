@@ -48,7 +48,7 @@ const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
         }}
         onInput={() => {
           if (canInput) {
-            _.debounce(handleTextInput())
+            _.debounce(handleTextInput)
           }
         }}
         id="component-text"
