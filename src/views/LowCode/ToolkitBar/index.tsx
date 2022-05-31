@@ -6,6 +6,7 @@ import { Modal } from '@douyinfe/semi-ui'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
 import ReactJson from 'react-json-view'
+import { switchMode } from '@//utils/colorMode'
 
 type ToolType = {
   el: React.ReactNode
@@ -68,14 +69,6 @@ const ToolkitBar: React.FC = () => {
     }
   ]
 
-  const switchMode = () => {
-    const body = document.body
-    if (body.hasAttribute('theme-mode')) {
-      body.removeAttribute('theme-mode')
-    } else {
-      body.setAttribute('theme-mode', 'dark')
-    }
-  }
   return (
     <div className={styles['low-platform-header']}>
       {tools.map((item, i) => {
