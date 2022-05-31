@@ -47,7 +47,7 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
           height: '100px',
 
           border: '1px dashed #e5e5e5',
-          borderRadius: '0',
+          borderRadius: '0%',
           backgroundColor: '0',
           padding: '0'
         },
@@ -88,7 +88,7 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
           height: '20px',
 
           border: '1px dashed #e5e5e5',
-          borderRadius: '0',
+          borderRadius: '0%',
           backgroundColor: '0',
           padding: '0',
           color: '0',
