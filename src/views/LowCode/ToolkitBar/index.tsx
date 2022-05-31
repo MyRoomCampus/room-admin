@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react'
 import styles from './index.module.less'
 import { IconCode, IconSave, IconMinusCircle, IconPlusCircle } from '@douyinfe/semi-icons'
-import { Tooltip, Button } from '@douyinfe/semi-ui'
+import { Tooltip } from '@douyinfe/semi-ui'
 import { Modal } from '@douyinfe/semi-ui'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
 import ReactJson from 'react-json-view'
-import { switchMode } from '@//utils/colorMode'
+import ModeSwitch from '@//components/ModeSwitch'
 
 type ToolType = {
   el: React.ReactNode
@@ -16,7 +16,7 @@ type ToolType = {
 
 const ToolkitBar: React.FC = () => {
   const { store, dispatch } = useContext(AppContext)
-  const [codeModalVisibel, setCodeModalVisibel] = useState(false)
+  const [codeModalVisible, setCodeModalVisible] = useState(false)
   const gap = 0.1
 
   const size = 'large'
@@ -39,7 +39,7 @@ const ToolkitBar: React.FC = () => {
     }
   }
   const onCodeClick = () => {
-    !codeModalVisibel && setCodeModalVisibel(true)
+    !codeModalVisible && setCodeModalVisible(true)
   }
 
   const onSaveClick = () => {
@@ -80,16 +80,14 @@ const ToolkitBar: React.FC = () => {
           </Tooltip>
         )
       })}
-      <Button onClick={switchMode} style={{ position: 'fixed', right: 20 }}>
-        Switch Mode
-      </Button>
+      <ModeSwitch />
       <Modal
         title="页面源代码"
-        visible={codeModalVisibel}
+        visible={codeModalVisible}
         footer={null}
         width={'80vw'}
         height={'80vh'}
-        onCancel={() => setCodeModalVisibel(false)}
+        onCancel={() => setCodeModalVisible(false)}
         maskClosable={false}
         bodyStyle={{
           height: '100%',

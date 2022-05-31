@@ -2,7 +2,7 @@ import { DraggableItemKey, getComponentSchema } from '@//constants/lowCodeComp'
 import ACTIONS from '@//reducer/actions'
 import AppContext from '@//store'
 import RenderJsonSchema from '@//utils/renderJson'
-import React, { useContext, useMemo, useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import { useDrop } from 'react-dnd'
 import styles from './index.module.less'
 import { ComponentSchema } from '../../../types/lowCodeComp.type'
@@ -12,13 +12,11 @@ import { useScroll } from 'ahooks'
 
 const MidCanvas: React.FC = () => {
   const { store, dispatch } = useContext(AppContext)
-  // react drop
-  const acceptableItems = useMemo(() => {
-    const items = Object.values(DraggableItemKey)
-    return items
-  }, [])
+  // react scroll
   const scrollRef = useRef(null)
   const scroll = useScroll(scrollRef)
+  // react drop
+  const acceptableItems = Object.values(DraggableItemKey)
   const [, dropRef] = useDrop(
     () => ({
       accept: acceptableItems,
@@ -57,7 +55,6 @@ const MidCanvas: React.FC = () => {
     }),
     [store, scroll]
   )
-
   return (
     <div className={styles['canvas-container']}>
       <div

@@ -23,7 +23,6 @@ const UserInfo: React.FC = () => {
         <div className={styles['user-info-form-input-label']}>密码:</div>
         <Input mode="password" size="default" className={styles['user-info-form-input-textinput']} />
       </div>
-
       <div className={styles['user-info-form-submit']}>
         <Button theme="solid">更改</Button>
         <Button theme="solid" onClick={returnHome}>

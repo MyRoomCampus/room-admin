@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import styles from './index.module.less'
 import { Button, Table, Avatar, ButtonGroup } from '@douyinfe/semi-ui'
 import AddProject from './AddProject'
-import { AvatarColor } from '@douyinfe/semi-ui/lib/es/avatar'
 const figmaIconUrl = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png'
 const pageSize = 5
 const columns = [
@@ -22,7 +21,7 @@ const columns = [
   {
     title: '创建者',
     dataIndex: 'owner',
-    render: (text: string, record: { avatarBg: AvatarColor | undefined }) => {
+    render: (text: string, record: Record<string, unknown>) => {
       return (
         <div>
           <Avatar size="small" color={record.avatarBg} style={{ marginRight: 4 }}>
