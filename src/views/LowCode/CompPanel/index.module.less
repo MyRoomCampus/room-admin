@@ -1,0 +1,24 @@
+@body-height: calc(100vh - 50px);
+
+.left-panel {
+  &-container {
+    display: flex;
+    width: 400px;
+    height: @body-height;
+  }
+
+  &-nav {
+    height: @body-height;
+  }
+
+  &-detail {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 360px;
+    height: @body-height;
+    padding: 12px;
+    overflow-y: auto;
+    background-color: var(--semi-color-tertiary-light-default);
+  }
+}

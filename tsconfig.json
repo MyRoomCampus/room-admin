@@ -24,7 +24,7 @@
       ],
       "@/hooks/*": [
         "./src/hooks/*"
-      ],
+      ]
     },
     "module": "esnext", // 修改 commonjs -- esnext,
     "plugins": [
@@ -34,8 +34,10 @@
     ]
   },
   "include": [
-    "src"
-, "vite-env.d.ts"  ],
+    ".eslintrc.js",
+    "src",
+    "vite-env.d.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

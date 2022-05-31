@@ -1,12 +1,10 @@
 import React from 'react'
 import styles from './index.module.less'
-import { Layout } from '@douyinfe/semi-ui'
-import { Outlet } from 'react-router-dom'
-import { Nav } from '@douyinfe/semi-ui'
+import { Layout, Nav } from '@douyinfe/semi-ui'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { IconUser, IconStar } from '@douyinfe/semi-icons'
 import { NavItemPropsWithItems, NavItems } from '@douyinfe/semi-ui/lib/es/navigation'
-import { useNavigate } from 'react-router-dom'
-
+import ModeSwitch from '../components/ModeSwitch'
 const menuItem: NavItems = [
   {
     itemKey: '/dashboard',
@@ -26,7 +24,10 @@ const LayOut: React.FC = () => {
   const { Header, Sider, Content } = Layout
   return (
     <Layout>
-      <Header className={styles['layout-header-container']}>MYROOM麦荣经纪人子系统</Header>
+      <Header className={styles['layout-header-container']}>
+        <div>MYROOM麦荣经纪人子系统</div>
+        <ModeSwitch style={{ top: 15 }} />
+      </Header>
       <Layout>
         <Sider className={styles['layout-sider-container']}>
           <Nav

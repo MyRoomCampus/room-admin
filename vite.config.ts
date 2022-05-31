@@ -4,6 +4,7 @@ import viteEslint from 'vite-plugin-eslint'
 import viteStylelint from '@amatlash/vite-plugin-stylelint'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import * as path from 'path'
+import federation from '@originjs/vite-plugin-federation'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, path.resolve(__dirname, './src', ''))
@@ -12,6 +13,20 @@ export default defineConfig(({ mode }) => {
       __APP_ENV__: env.APP_ENV
     },
     plugins: [
+      react(),
+      federation({
+        name: 'room-components',
+        filename: 'remoteEntry.js',
+        exposes: {
+          './AudioComponent': './src/views/LowCode/components/AudioComponent/index.tsx',
+          './TextComponent': './src/views/LowCode/components/TextComponent/index.tsx',
+          './VedioComponent': './src/views/LowCode/components/VedioComponent/index.tsx',
+          './ImageComponent': './src/views/LowCode/components/ImageComponent/index.tsx',
+          './HouseComponent': './src/views/LowCode/components/HouseComponent/index.tsx'
+        },
+        remotes:{},
+        shared: ['react']
+      }),
       createHtmlPlugin({
         inject: {
           data: {
@@ -19,7 +34,6 @@ export default defineConfig(({ mode }) => {
           }
         }
       }),
-      react(),
       viteEslint(),
       viteStylelint({ exclude: /windicss|node_modules/ })
     ],
@@ -46,6 +60,9 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true
         }
       }
+    },
+    build: {
+      target: 'esnext'
     }
   }
 })

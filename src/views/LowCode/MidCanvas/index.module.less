@@ -1,0 +1,57 @@
+.canvas {
+  &-container {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-width: 400px;
+    overflow: scroll;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 40px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgb(var(--semi-grey-2) 0.8);
+      border-radius: 12px;
+    }
+  }
+
+  &-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 380px;
+    height: 769px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  &-preview {
+    position: relative;
+    width: 340px;
+    height: 690px;
+    overflow: scroll;
+    overflow-x: hidden;
+    border-radius: 30px;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 40px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgb(var(--semi-grey-2) 0.8);
+      border-radius: 12px;
+    }
+  }
+
+  &-scroll {
+    width: 340px;
+    height: 2000px;
+  }
+}

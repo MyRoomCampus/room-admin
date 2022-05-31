@@ -1,0 +1,27 @@
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 100px;
+  height: 100px;
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: var(--semi-shadow-elevated);
+
+    &:hover {
+      box-shadow: var(--semi-shadow-elevated);
+    }
+  }
+
+  &-text {
+    font-size: 14px;
+  }
+}

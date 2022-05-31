@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input, Button, Toast } from '@douyinfe/semi-ui'
 import { getAccessToken, setToken } from '@//utils/token'
 import LoginApi from '@//api/login'
 import styles from './index.module.less'
 import { useNavigate } from 'react-router'
+import ModeSwitch from '@//components/ModeSwitch'
 
 const LoginPage: React.FC = () => {
   const navigator = useNavigate()
@@ -11,13 +12,14 @@ const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errMsg] = useState('')
-
+  const doAuth = async () => {
+    const res = await getAccessToken()
+    if (res) {
+      navigator('/dashboard')
+    }
+  }
   useEffect(() => {
-    getAccessToken().then((res) => {
-      if (res) {
-        navigator('/dashboard')
-      }
-    })
+    void doAuth()
   }, [])
 
   const onRegister = async () => {
@@ -66,6 +68,7 @@ const LoginPage: React.FC = () => {
           </Button>
         </div>
       </div>
+      <ModeSwitch />
     </div>
   )
 }
