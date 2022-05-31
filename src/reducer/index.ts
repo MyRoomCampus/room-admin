@@ -24,7 +24,7 @@ const lowCodeReducer = {
       ...store,
       lowCodeInfo: {
         JSONSchema,
-        scale: 1,
+        scale: 0.9,
         curTotalHeight: 0,
         curSelectCompId: '',
         curSelectLayerId: '',
