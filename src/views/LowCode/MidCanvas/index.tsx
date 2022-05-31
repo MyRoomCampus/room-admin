@@ -2,12 +2,13 @@ import { DraggableItemKey, getComponentSchema } from '@//constants/lowCodeComp'
 import ACTIONS from '@//reducer/actions'
 import AppContext from '@//store'
 import RenderJsonSchema from '@//utils/renderJson'
-import { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, useRef } from 'react'
 import { useDrop } from 'react-dnd'
 import styles from './index.module.less'
 import { ComponentSchema } from '../../../types/lowCodeComp.type'
 import iphoneImage from '@//assets/images/iPhone.svg'
 import _ from 'lodash'
+import { useScroll } from 'ahooks'
 
 const MidCanvas: React.FC = () => {
   const { store, dispatch } = useContext(AppContext)
@@ -16,8 +17,9 @@ const MidCanvas: React.FC = () => {
     const items = Object.values(DraggableItemKey)
     return items
   }, [])
-
-  const [, drop] = useDrop(
+  const scrollRef = useRef(null)
+  const scroll = useScroll(scrollRef)
+  const [, dropRef] = useDrop(
     () => ({
       accept: acceptableItems,
       drop: (item: { compKey: DraggableItemKey; schema: ComponentSchema }, monitor) => {
@@ -45,7 +47,7 @@ const MidCanvas: React.FC = () => {
         const schema = getComponentSchema(item.compKey)
 
         if (schema) {
-          schema.style.top = `${y - 152}px`
+          schema.style.top = `${y - 152 + (scroll?.top ?? 0)}px`
           dispatch({
             type: ACTIONS.UPDATE_SCHEMA,
             payload: schema
@@ -53,7 +55,7 @@ const MidCanvas: React.FC = () => {
         }
       }
     }),
-    [store]
+    [store, scroll]
   )
 
   return (
@@ -62,8 +64,8 @@ const MidCanvas: React.FC = () => {
         className={styles['canvas-image']}
         style={{ backgroundImage: `url(${iphoneImage})`, transform: `scale(${store.lowCodeInfo?.scale})` }}
       >
-        <div className={styles['canvas-preview']} ref={drop}>
-          <div className={styles['canvas-scroll']}>
+        <div className={styles['canvas-preview']} ref={scrollRef}>
+          <div id="canvas-scroll" className={styles['canvas-scroll']} ref={dropRef}>
             {store.lowCodeInfo?.JSONSchema.data.map((s) => {
               return <RenderJsonSchema schema={s} key={s.id} />
             })}
