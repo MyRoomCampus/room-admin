@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import styles from './index.module.less'
 import { Button, Table, Avatar, ButtonGroup } from '@douyinfe/semi-ui'
 import AddProject from './AddProject'
-import ModeSwitch from '@//components/ModeSwitch'
 const figmaIconUrl = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png'
 const pageSize = 5
 const columns = [
@@ -105,9 +104,9 @@ const HomePage: React.FC = () => {
   }, [])
   return (
     <div className="programList-Container">
-      <div className={styles['programList-title']}>项目列表</div>
+      <div className={styles['program-list-title']}>项目列表</div>
 
-      <div className={styles['programList-addbtn']}>
+      <div className={styles['program-list-addbtn']}>
         <AddProject></AddProject>
       </div>
 
@@ -125,7 +124,6 @@ const HomePage: React.FC = () => {
           loading={loading}
         />
       </div>
-      <ModeSwitch />
     </div>
   )
 }

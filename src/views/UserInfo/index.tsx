@@ -9,22 +9,21 @@ const UserInfo: React.FC = () => {
     navigator('/dashboard')
   }
   return (
-    <div className="userInfo-container">
-      <div className={styles['userInfo-form-title']}>
+    <div>
+      <div className={styles['user-info-form-title']}>
         <p>个人信息</p>
       </div>
 
-      <div className={styles['userInfo-form-input']}>
-        <div className={styles['userInfo-form-input--label']}>用户名:</div>
-        <Input type="text" size="default" className={styles['userInfo-form-input--textinput']} />
+      <div className={styles['user-info-form-input']}>
+        <div className={styles['user-info-form-input-label']}>用户名:</div>
+        <Input type="text" size="default" className={styles['user-info-form-input-textinput']} />
       </div>
 
-      <div className={styles['userInfo-form-input']}>
-        <div className={styles['userInfo-form-input--label']}>密码:</div>
-        <Input mode="password" size="default" className={styles['userInfo-form-input--textinput']} />
+      <div className={styles['user-info-form-input']}>
+        <div className={styles['user-info-form-input-label']}>密码:</div>
+        <Input mode="password" size="default" className={styles['user-info-form-input-textinput']} />
       </div>
-
-      <div className={styles['userInfo-form-submit']}>
+      <div className={styles['user-info-form-submit']}>
         <Button theme="solid">更改</Button>
         <Button theme="solid" onClick={returnHome}>
           返回
