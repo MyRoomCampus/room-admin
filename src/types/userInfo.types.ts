@@ -4,7 +4,5 @@ export interface ILoginParam {
 }
 
 export interface IUserInfo {
-  uid: number
-  account: string
-  nickname: string
+  username: string
 }
