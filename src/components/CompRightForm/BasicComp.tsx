@@ -53,7 +53,7 @@ export const BasicComponent: React.FC<TextProps> = (props) => {
       <Row>
         <Col span={10}>
           <Input
-            prefix="长度:"
+            prefix="宽度:"
             value={comp.style.width}
             onChange={(e) => {
               const newSchema = _.cloneDeep(comp)
@@ -68,7 +68,7 @@ export const BasicComponent: React.FC<TextProps> = (props) => {
         <Col span={1}></Col>
         <Col span={10}>
           <Input
-            prefix="宽度:"
+            prefix="长度:"
             value={comp.style.height}
             onChange={(e) => {
               const newSchema = _.cloneDeep(comp)
