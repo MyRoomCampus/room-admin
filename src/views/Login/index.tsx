@@ -12,14 +12,13 @@ const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errMsg] = useState('')
-
-  useEffect(() => {
-    const doAuth = async () => {
-      const res = await getAccessToken()
-      if (res) {
-        navigator('/dashboard')
-      }
+  const doAuth = async () => {
+    const res = await getAccessToken()
+    if (res) {
+      navigator('/dashboard')
     }
+  }
+  useEffect(() => {
     void doAuth()
   }, [])
 

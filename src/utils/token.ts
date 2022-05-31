@@ -37,6 +37,24 @@ export const getRefreshToken = (): Token | null => {
   return token
 }
 
+export const refreshAccessToken = async (): Promise<string | null> => {
+  const refreshToken = getRefreshToken()
+  if (refreshToken && refreshToken.expire > Date.now() / 1000) {
+    const res = await LoginApi.refreshTokenRequest(refreshToken.value)
+    if (res) {
+      setToken(res.accessToken, 'access')
+      res.refreshToken && setToken(res.refreshToken, 'refresh')
+      return res.accessToken
+    } else {
+      clearToken()
+      return null
+    }
+  } else {
+    clearToken()
+    return null
+  }
+}
+
 export const getAccessToken = async (): Promise<string | null> => {
   const tokenStorage = localStorage.getItem(JWT_ACCESS_TOKEN_KEY)
   if (tokenStorage) {
@@ -46,17 +64,10 @@ export const getAccessToken = async (): Promise<string | null> => {
     }
 
     // access token expired, refresh access token by refresh token
-    const refreshToken = getRefreshToken()
-    if (refreshToken != null && refreshToken.expire > Date.now() / 1000) {
-      const res = await LoginApi.refreshTokenRequest(refreshToken.value)
-      setToken(res.accessToken, 'access')
-      res.refreshToken && setToken(res.refreshToken, 'refresh')
-      return res.accessToken
-    } else {
-      return null
-    }
+    return await refreshAccessToken()
+  } else {
+    return await refreshAccessToken()
   }
-  return null
 }
 
 // 移除token
