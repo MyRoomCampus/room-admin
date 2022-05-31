@@ -33,7 +33,7 @@ const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
       sel.removeAllRanges()
       sel.addRange(range)
     }
-  }, [])
+  }, [schema])
 
   return (
     <div className={styles['component-text']} style={style as CSSProperties} key={id}>
