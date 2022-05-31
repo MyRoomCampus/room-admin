@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input, Button, Toast } from '@douyinfe/semi-ui'
 import { getAccessToken, setToken } from '@//utils/token'
 import LoginApi from '@//api/login'
 import styles from './index.module.less'
 import { useNavigate } from 'react-router'
+import ModeSwitch from '@//components/ModeSwitch'
 
 const LoginPage: React.FC = () => {
   const navigator = useNavigate()
@@ -66,6 +67,7 @@ const LoginPage: React.FC = () => {
           </Button>
         </div>
       </div>
+      <ModeSwitch />
     </div>
   )
 }
