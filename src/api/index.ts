@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { Toast } from '@douyinfe/semi-ui'
 import { getAccessToken } from '../utils/token'
 
-const baseURL = '/api'
+const baseURL = import.meta.env.VITE_BASE_URL as string
 const timeout = 5000
 
 const request = axios.create({
