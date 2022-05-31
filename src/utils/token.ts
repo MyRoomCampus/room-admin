@@ -33,7 +33,7 @@ export const getRefreshToken = (): Token | null => {
   if (!tokenStorage) {
     return null
   }
-  const token = JSON.parse(tokenStorage)
+  const token = JSON.parse(tokenStorage) as Token
   return token
 }
 

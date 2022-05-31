@@ -34,8 +34,10 @@
     ]
   },
   "include": [
-    "src"
-, "vite-env.d.ts"  ],
+    ".eslintrc.js",
+    "src",
+    "vite-env.d.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

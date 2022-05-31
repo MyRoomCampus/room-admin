@@ -8,15 +8,8 @@ const PROGRAMLIST_URL = {
 }
 
 class ProgramListApi {
-  static async AddProgramRequest(accessToken: string, data: IProgramListParam) {
-    return await baseRequest.post<{
-      accessToken: string
-      refreshToken?: string
-    }>(PROGRAMLIST_URL.addProgram, data, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
+  static async AddProgramRequest(data: IProgramListParam) {
+    return await baseRequest.post<unknown>(PROGRAMLIST_URL.addProgram, data)
   }
 }
 

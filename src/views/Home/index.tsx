@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styles from './index.module.less'
 import { Button, Table, Avatar, ButtonGroup } from '@douyinfe/semi-ui'
 import AddProject from './AddProject'
+import { AvatarColor } from '@douyinfe/semi-ui/lib/es/avatar'
 const figmaIconUrl = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png'
 const pageSize = 5
 const columns = [
@@ -24,7 +25,7 @@ const columns = [
     render: (text: string, record: Record<string, unknown>) => {
       return (
         <div>
-          <Avatar size="small" color={record.avatarBg} style={{ marginRight: 4 }}>
+          <Avatar size="small" color={record.avatarBg as AvatarColor} style={{ marginRight: 4 }}>
             {typeof text === 'string' && text.slice(0, 1)}
           </Avatar>
           {text}
@@ -35,8 +36,8 @@ const columns = [
   {
     title: '修改日期',
     dataIndex: 'updateTime',
-    sorter: (a, b) => (a.updateTime - b.updateTime > 0 ? 1 : -1),
-    render: (value) => {
+    sorter: (a: { updateTime: number }, b: { updateTime: number }) => (a.updateTime - b.updateTime > 0 ? 1 : -1),
+    render: (value: unknown) => {
       return value
     }
   },
@@ -79,7 +80,6 @@ const HomePage: React.FC = () => {
   const [dataSource, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const [currentPage, setPage] = useState(1)
-
   const fetchData = (currentPage = 1) => {
     setLoading(true)
     setPage(currentPage)
@@ -91,16 +91,16 @@ const HomePage: React.FC = () => {
       }, 300)
     }).then((dataSource) => {
       setLoading(false)
-      setData(dataSource)
+      setData(dataSource as never)
     })
   }
 
-  const handlePageChange = (page: unknown) => {
-    fetchData(page)
+  const handlePageChange = (page: number) => {
+    void fetchData(page)
   }
 
   useEffect(() => {
-    fetchData()
+    void fetchData()
   }, [])
   return (
     <div className="programList-Container">
@@ -112,7 +112,7 @@ const HomePage: React.FC = () => {
 
       <div>
         <Table
-          columns={columns}
+          columns={columns as []}
           dataSource={dataSource}
           pagination={{
             currentPage,

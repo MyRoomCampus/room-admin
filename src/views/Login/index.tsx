@@ -14,11 +14,13 @@ const LoginPage: React.FC = () => {
   const [errMsg] = useState('')
 
   useEffect(() => {
-    getAccessToken().then((res) => {
+    const doAuth = async () => {
+      const res = await getAccessToken()
       if (res) {
         navigator('/dashboard')
       }
-    })
+    }
+    void doAuth()
   }, [])
 
   const onRegister = async () => {

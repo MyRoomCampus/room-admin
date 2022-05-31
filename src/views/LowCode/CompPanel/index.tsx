@@ -44,7 +44,7 @@ const CompPanel: React.FC = () => {
       return
     }
 
-    const { id, name } = JSON.parse(key)
+    const { id, name } = JSON.parse(key) as { id: string; name: string }
     const { lowCodeInfo } = store
     if (lowCodeInfo) {
       const { JSONSchema, curSelectCompId, curSelectLayerId } = lowCodeInfo
