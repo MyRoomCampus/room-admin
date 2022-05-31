@@ -56,7 +56,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: 'http://180.184.74.73',
+          target: 'http://api.saicem.top',
           changeOrigin: true
         }
       }
