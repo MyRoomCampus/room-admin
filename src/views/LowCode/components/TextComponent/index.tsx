@@ -1,4 +1,4 @@
-import React, { CSSProperties, useContext } from 'react'
+import React, { CSSProperties, useContext, useEffect } from 'react'
 import { ComponentProps } from '@//types/component.type'
 import styles from './index.module.less'
 import AppContext from '@//store'
@@ -14,15 +14,6 @@ const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
   const [canInput, { set }] = useBoolean(true)
   const handleTextInput = () => {
     const content = document.querySelector('#component-text')?.textContent
-    const range = document.createRange()
-    range.selectNodeContents(document.querySelector('#component-text') ?? document.createTextNode(''))
-    range.collapse(false)
-    const sel = window.getSelection()
-    if (sel) {
-      sel.removeAllRanges()
-      sel.addRange(range)
-    }
-
     const newSchema = _.cloneDeep(schema) as TextComponentType
     console.log(content, newSchema)
     newSchema.data = content ?? newSchema?.data
@@ -31,6 +22,18 @@ const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
       payload: newSchema
     })
   }
+
+  useEffect(() => {
+    // 解决每次渲染光标位置总是出现在文字最前面的问题
+    const range = document.createRange()
+    range.selectNodeContents(document.querySelector('#component-text') ?? document.createTextNode(''))
+    range.collapse(false)
+    const sel = window.getSelection()
+    if (sel) {
+      sel.removeAllRanges()
+      sel.addRange(range)
+    }
+  }, [])
 
   return (
     <div className={styles['component-text']} style={style as CSSProperties} key={id}>
@@ -45,7 +48,7 @@ const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
         }}
         onInput={() => {
           if (canInput) {
-            handleTextInput()
+            _.debounce(handleTextInput())
           }
         }}
         id="component-text"
