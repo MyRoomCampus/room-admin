@@ -15,13 +15,13 @@ const UserInfo: React.FC = () => {
       </div>
 
       <div className={styles['userInfo-form-input']}>
-        <div className={styles['userInfo-form-input--label']}>用户名:</div>
-        <Input type="text" size="default" className={styles['userInfo-form-input--textinput']} />
+        <div className={styles['userInfo-form-input-label']}>用户名:</div>
+        <Input type="text" size="default" className={styles['userInfo-form-input-textinput']} />
       </div>
 
       <div className={styles['userInfo-form-input']}>
-        <div className={styles['userInfo-form-input--label']}>密码:</div>
-        <Input mode="password" size="default" className={styles['userInfo-form-input--textinput']} />
+        <div className={styles['userInfo-form-input-label']}>密码:</div>
+        <Input mode="password" size="default" className={styles['userInfo-form-input-textinput']} />
       </div>
 
       <div className={styles['userInfo-form-submit']}>
