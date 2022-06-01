@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  ignorePatterns: ['.eslintrc.js', 'vite.config.ts'],
+  ignorePatterns: ['.eslintrc.js', 'vite.config.ts', 'dist'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',

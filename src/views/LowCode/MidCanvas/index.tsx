@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { DraggableItemKey, getComponentSchema } from '@//constants/lowCodeComp'
 import ACTIONS from '@//reducer/actions'
 import AppContext from '@//store'
@@ -9,14 +10,15 @@ import { ComponentSchema } from '../../../types/lowCodeComp.type'
 import iphoneImage from '@//assets/images/iPhone.svg'
 import {  cloneDeep } from 'lodash-es'
 import { useScroll } from 'ahooks'
-
+  
+const acceptableItems = Object.values(DraggableItemKey)
 const MidCanvas: React.FC = () => {
   const { store, dispatch } = useContext(AppContext)
   // react scroll
   const scrollRef = useRef(null)
   const scroll = useScroll(scrollRef)
   // react drop
-  const acceptableItems = Object.values(DraggableItemKey)
+
   const [, dropRef] = useDrop(
     () => ({
       accept: acceptableItems,

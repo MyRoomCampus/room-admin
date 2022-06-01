@@ -27,7 +27,7 @@ export const getComponentSchema = (name: DraggableItemKey): ComponentSchema | nu
           left: '0',
           top: '0',
           width: '340px',
-          height: '100px',
+          height: '54px',
           padding: '0'
         }
       }

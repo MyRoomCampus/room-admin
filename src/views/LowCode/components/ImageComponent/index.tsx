@@ -3,7 +3,7 @@ import { ComponentProps } from '@//types/component.type'
 
 const ImageComponent: React.FC<ComponentProps> = ({ schema }) => {
   const { data, id, style } = schema
-  return <img src={data} style={style as CSSProperties} key={id} />
+  return <img src={data} style={style as CSSProperties} key={id} loading='lazy' />
 }
 
 export default ImageComponent
