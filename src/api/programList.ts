@@ -1,6 +1,9 @@
 import baseRequest from '.'
 interface IProgramListParam {
-  name: string
+  projectId?:number
+  projectName:string|null
+  createdAt:string
+  data:object
 }
 
 const PROGRAMLIST_URL = {
@@ -9,7 +12,7 @@ const PROGRAMLIST_URL = {
 
 class ProgramListApi {
   static async AddProgramRequest(data: IProgramListParam) {
-    return await baseRequest.post<unknown>(PROGRAMLIST_URL.addProgram, data)
+    return await baseRequest.post<IProgramListParam>(PROGRAMLIST_URL.addProgram, data)
   }
 }
 
