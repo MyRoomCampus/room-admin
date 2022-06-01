@@ -9,8 +9,8 @@ export default function AddProject() {
     try {
       const value = (await api.current?.validate()) as { projectName: string }
       if (value) {
-        const name = value.projectName
-        const res = await ProgramListApi.AddProgramRequest({ name })
+        const projectName = value.projectName
+        const res = await ProgramListApi.AddProgramRequest({projectName})
         if (res) {
           Toast.success('添加成功')
         } else {

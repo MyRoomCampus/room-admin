@@ -8,6 +8,7 @@ import UserInfoApi from '@//api/userInfo'
 const UserInfo: React.FC = () => {
   const navigator = useNavigate()
   const { store } = useContext(AppContext)
+  const [userName] = useState(store.userInfo?.username ? store.userInfo?.username : '')
   const [newPassWord, SetNewPassword] = useState('')
   const [confirmNewPassword, SetConfirmNewPassword] = useState('')
   const returnHome = () => {
@@ -28,14 +29,18 @@ const UserInfo: React.FC = () => {
     }
   }
   const changeUserInfo = async () => {
-    console.log(newPassWord)
-    const password = newPassWord
-    const res = await UserInfoApi.changeUserInfoRequest({ password })
-    if (res) {
-      console.log(res)
-      Toast.success('修改成功')
-    } else {
-      Toast.error('修改失败')
+    if(!userName){
+      Toast.error('未获取到当前登录用户的用户名，请重新登录！')
+    }
+    else{
+      const password = newPassWord
+      const res = await UserInfoApi.changeUserInfoRequest({ password })
+      if (res) {
+        console.log(res)
+        Toast.success('修改成功')
+      } else {
+        Toast.error('修改失败')
+      }
     }
   }
   return (

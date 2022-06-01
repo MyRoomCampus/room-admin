@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styles from './index.module.less'
 import { Button, Table, Avatar, ButtonGroup } from '@douyinfe/semi-ui'
 import AddProject from './AddProject'
-import { getHouseRequest, IHouse } from '@//api/home'
+import { IHouse } from '@//api/home'
 import { AvatarColor } from '@douyinfe/semi-ui/lib/es/avatar'
 const figmaIconUrl = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png'
 const columns = [
@@ -60,18 +60,25 @@ const columns = [
 const HomePage: React.FC = () => {
   const [dataSource, setData] = useState<IHouse[]>([])
   const [loading, setLoading] = useState(false)
-  const [currentPage, setPage] = useState(1)
+  const [page, setPage] = useState(1)
+  const [perpage,setPerpage] = useState(5)
 
-  const fetchData = async (currentPage = 1) => {
-    setPage(currentPage)
+  const fetchData = async (page = 1,perpage=5) => {
+    setPage(page)
     setLoading(true)
-    const data = await getHouseRequest({ currentPage })
-    setData(data)
+    setData([])
+    // const data = await getHouseDataRequest({ page,perpage })
+    // setData(data)
     setLoading(false)
   }
 
   const handlePageChange = (page: number) => {
-    void fetchData(page)
+    setPage(page)
+    void fetchData(page,perpage)
+  }
+  const handlePageSizeChange = (perpage:number) => {
+    setPerpage(perpage)
+    void fetchData(page,perpage)
   }
 
   useEffect(() => {
@@ -90,11 +97,12 @@ const HomePage: React.FC = () => {
           columns={columns as []}
           dataSource={dataSource}
           pagination={{
-            currentPage,
+            currentPage: page ,
             showQuickJumper: true,
             showSizeChanger: true,
-            total: 46,
-            onPageChange: handlePageChange
+            pageSizeOpts:[5,10, 20, 50, 100],
+            onPageChange: handlePageChange,
+            onPageSizeChange:handlePageSizeChange
           }}
           loading={loading}
         />
