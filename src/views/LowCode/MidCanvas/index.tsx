@@ -7,7 +7,7 @@ import { useDrop } from 'react-dnd'
 import styles from './index.module.less'
 import { ComponentSchema } from '../../../types/lowCodeComp.type'
 import iphoneImage from '@//assets/images/iPhone.svg'
-import _ from 'lodash'
+import {  cloneDeep } from 'lodash-es'
 import { useScroll } from 'ahooks'
 
 const MidCanvas: React.FC = () => {
@@ -32,7 +32,7 @@ const MidCanvas: React.FC = () => {
         const initialY = initialClientOffset?.y ?? 0
         // 从左边移动到中间和中间的移动分开处理
         if (item.schema != null) {
-          const newSchema = _.cloneDeep(item.schema)
+          const newSchema = cloneDeep(item.schema)
           newSchema.style.top = `${-initialY + y + parseInt(newSchema.style.top)}px`
           newSchema.style.left = `${-initialX + x + parseInt(newSchema.style.left)}px`
           dispatch({

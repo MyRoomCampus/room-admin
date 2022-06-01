@@ -3,8 +3,8 @@ import { ComponentProps } from '@//types/component.type'
 import styles from './index.module.less'
 import AppContext from '@//store'
 import actions from '@//reducer/actions'
-import _ from 'lodash'
-import { TextComponent as TextComponentType } from '@//types/lowCodeComp.type'
+import {  cloneDeep, debounce } from 'lodash-es'
+import { ComponentSchema } from '@//types/lowCodeComp.type'
 import { useBoolean } from 'ahooks'
 
 const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
@@ -13,7 +13,7 @@ const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
   const { dispatch } = useContext(AppContext)
   const [canInput, { set }] = useBoolean(true)
   const handleTextInput = (content: string) => {
-    const newSchema = _.cloneDeep(schema) as TextComponentType
+    const newSchema: ComponentSchema = cloneDeep(schema)
     newSchema.data = content ?? newSchema?.data
     dispatch({
       type: actions.UPDATE_COMPONENT,
@@ -39,7 +39,7 @@ const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
       onChange={(e) => {
         console.log('onChange', e)
         if (canInput) {
-          handleTextInput(e.target.value)
+          debounce(() => handleTextInput(e.target.value))
         }
       }}
       id="component-text"

@@ -8,6 +8,7 @@ specifiers:
   '@douyinfe/semi-ui': ^2.10.1
   '@originjs/vite-plugin-federation': ^1.1.6
   '@types/lodash': ^4.14.182
+  '@types/lodash-es': ^4.17.6
   '@types/react': ^18.0.0
   '@types/react-dom': ^18.0.0
   '@typescript-eslint/eslint-plugin': ^5.22.0
@@ -27,7 +28,7 @@ specifiers:
   husky: ^8.0.1
   less: ^4.1.2
   lint-staged: ^12.4.1
-  lodash: ^4.17.21
+  lodash-es: ^4.17.21
   moment: ^2.29.3
   plop: ^3.1.0
   postcss: ^8.3.3
@@ -57,14 +58,16 @@ specifiers:
   vite-plugin-eslint: ^1.6.0
   vite-plugin-html: ^3.2.0
   vite-plugin-imagemin: ^0.6.1
+  vite-plugin-top-level-await: ^1.0.0
 
 dependencies:
   '@douyinfe/semi-icons': 2.10.2_react@18.1.0
   '@douyinfe/semi-ui': 2.10.1_b1a17ced497e788bdb88cf18136a6ae2
+  '@types/lodash-es': 4.17.6
   ahooks: 3.4.0_react@18.1.0
   axios: 0.27.2
   eslint-config-standard-with-typescript: 21.0.1_371215f4e00a9b8cc2069150e973daf3
-  lodash: 4.17.21
+  lodash-es: 4.17.21
   moment: 2.29.3
   postcss: 8.4.13
   react: 18.1.0
@@ -117,6 +120,7 @@ devDependencies:
   vite-plugin-eslint: 1.6.0_eslint@8.15.0+vite@2.9.8
   vite-plugin-html: 3.2.0_vite@2.9.8
   vite-plugin-imagemin: 0.6.1_vite@2.9.8
+  vite-plugin-top-level-await: 1.0.0_vite@2.9.8
 
 packages:
 
@@ -815,6 +819,143 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /@swc/core-android-arm-eabi/1.2.196:
+    resolution: {integrity: sha512-rWM909UT01+CWxvOkQ7f6bhtceFz/jBuVhYqtOjkDleMV6UsKVfMOAkAMQBfvQmoQzvqddypCDl5tOZIoj3O0w==}
+    engines: {node: '>=10'}
+    cpu: [arm]
+    os: [android]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-android-arm64/1.2.196:
+    resolution: {integrity: sha512-SPNMBcziCev0B439raRC2KpRrqiw6Jw8Bvw5Swrra34kUHjxxEYbxHeFBdUA0Ka1YoMJ95gCEW9fsqTlPkYBIQ==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [android]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-darwin-arm64/1.2.196:
+    resolution: {integrity: sha512-Sd22WY9frsbUQVay9LTakqFtkOnzkWw+PB1iwcpBzenOVQxbQ8i7JlxcujTkMFc2J/SAKDelq+M4TE6JEdfU6A==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-darwin-x64/1.2.196:
+    resolution: {integrity: sha512-1z0ROEMIKjAqEc/jNdZwcdgWzUqw/mHmhQABm1J6lUf3UEucUAy/4cniWPHXKKRCdj7Eq7kHtU52ynQpB/ii0Q==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-freebsd-x64/1.2.196:
+    resolution: {integrity: sha512-KjUo4Vgs7AuGhLJCE5yeVazTUpoiRNuaLbRxnXIC7Ua7T4JpnO9lc34aWWUhz8Gu7QLEWpLFMM52W+bwVeBi7A==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [freebsd]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-arm-gnueabihf/1.2.196:
+    resolution: {integrity: sha512-n7V9GyPQ7H6UvJKB15K0vHek2WihbPdv866h2LG1Lrw5mxxDs5A4o7hj4scKF355kjyj9LI+4GykT3R9MpIWzw==}
+    engines: {node: '>=10'}
+    cpu: [arm]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-arm64-gnu/1.2.196:
+    resolution: {integrity: sha512-1ToeE8/5Ew8HEa3GQf9znijzpmNf5jnnU39mrO0dpmhiUJVgRU/IBoe45t0I8R84PRDfayqoSfq0vPt7dWSjdQ==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-arm64-musl/1.2.196:
+    resolution: {integrity: sha512-93Pvb0lpgL/B7Em+qAScYsf4QvE4OmuTQ+aXRz4VsKiw/+DQKt5jUmCzkYa4ecSvSur3rlqFLMU8ufPI7EF22g==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-x64-gnu/1.2.196:
+    resolution: {integrity: sha512-JZkQ/ETPCNae8hOOfVOBHJuy9vhSJwdzWFO1Kd8PhyDyCi0caNX8Tu3mgGTZJ0UToP0ot7mC945+1w4lcuQPBA==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-x64-musl/1.2.196:
+    resolution: {integrity: sha512-TJAfEf7l79mceXO3AXaf4Lun8ZjjaHXMlQe/3QrtblxKUFeHgFDbQeabjcgsYyNzAffPXDLsKVvmC4GJTu35DQ==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-win32-arm64-msvc/1.2.196:
+    resolution: {integrity: sha512-WDQ9HZZ8SrInw2kisBPbNg8W0IgA8P9eGijQeigyvT2rT81A/Gj9G57YMq0fQclcodBLr6SJPDIHh4fC8JInFg==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-win32-ia32-msvc/1.2.196:
+    resolution: {integrity: sha512-c355907n5RCeuF99/3nFmJdiw4Ask0BwH7hs+4Y1dcOzC/FYvh2TmYZ+VTJzL78TiIekmvi4buxGqFvHePZ2Pw==}
+    engines: {node: '>=10'}
+    cpu: [ia32]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-win32-x64-msvc/1.2.196:
+    resolution: {integrity: sha512-zQKrvEDmTqMd1lwbQ4KcBVKQ2OVoQlX1I/kZNISZlh/+UhBpKnkqQme/76wtILH9r0Lz+ujumL2ZvwoVAzAJkQ==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core/1.2.196:
+    resolution: {integrity: sha512-395byH+v71OwJpXIvt+FZJZeF20Cs+LwYkURpkkmN5aKImdTuCqnNqapWsh3nfuIgDdC5k8QvrGEQNTmE8+cTw==}
+    engines: {node: '>=10'}
+    hasBin: true
+    optionalDependencies:
+      '@swc/core-android-arm-eabi': 1.2.196
+      '@swc/core-android-arm64': 1.2.196
+      '@swc/core-darwin-arm64': 1.2.196
+      '@swc/core-darwin-x64': 1.2.196
+      '@swc/core-freebsd-x64': 1.2.196
+      '@swc/core-linux-arm-gnueabihf': 1.2.196
+      '@swc/core-linux-arm64-gnu': 1.2.196
+      '@swc/core-linux-arm64-musl': 1.2.196
+      '@swc/core-linux-x64-gnu': 1.2.196
+      '@swc/core-linux-x64-musl': 1.2.196
+      '@swc/core-win32-arm64-msvc': 1.2.196
+      '@swc/core-win32-ia32-msvc': 1.2.196
+      '@swc/core-win32-x64-msvc': 1.2.196
+    dev: true
+
   /@trysound/sax/0.2.0:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
@@ -916,9 +1057,14 @@ packages:
       '@types/node': 17.0.31
     dev: true
 
+  /@types/lodash-es/4.17.6:
+    resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
+    dependencies:
+      '@types/lodash': 4.14.182
+    dev: false
+
   /@types/lodash/4.14.182:
     resolution: {integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==}
-    dev: true
 
   /@types/minimatch/3.0.5:
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
@@ -7569,6 +7715,15 @@ packages:
       vite: 2.9.8_less@4.1.2
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /vite-plugin-top-level-await/1.0.0_vite@2.9.8:
+    resolution: {integrity: sha512-U18r2wD29eVdkfGAf8SbFgI7d/xo4fvZxrxnO9xyd5KKRjejmlxb+m66b1Kp2UANMWEoSi+kFoV49g+tPzbR5A==}
+    peerDependencies:
+      vite: ^2.8
+    dependencies:
+      '@swc/core': 1.2.196
+      vite: 2.9.8_less@4.1.2
     dev: true
 
   /vite/2.9.8_less@4.1.2:

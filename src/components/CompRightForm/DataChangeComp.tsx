@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { ComponentSchema } from '@//types/lowCodeComp.type'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
-import _ from 'lodash'
+import {  cloneDeep } from 'lodash-es'
 import { Button, Form, TextArea, Upload } from '@douyinfe/semi-ui'
 import { IconUpload } from '@douyinfe/semi-icons'
 // import { FileItem } from '@douyinfe/semi-ui/lib/es/upload'
@@ -23,7 +23,7 @@ const TextDataComponent: React.FC<Props> = (props) => {
         style={{ width: '100%', height: 60 }}
         value={comp.data}
         onChange={(e) => {
-          const newSchema = _.cloneDeep(comp)
+          const newSchema = cloneDeep(comp)
           newSchema.data = `${e}`
           dispatch({
             type: ACTIONS.UPDATE_COMPONENT,
@@ -48,7 +48,7 @@ const ImageDataComponent: React.FC<Props> = (props) => {
         // onChange={(e) => updateList(e.fileList.map((value: FileItem) => (value.url ? value.url : '')))}
         onPreviewClick={(e) => {
           console.log(e)
-          const newSchema = _.cloneDeep(comp)
+          const newSchema = cloneDeep(comp)
           newSchema.data = e.url ? e.url : ''
           dispatch({
             type: ACTIONS.UPDATE_COMPONENT,
@@ -77,7 +77,7 @@ const VideoDataComponent: React.FC<Props> = (props) => {
         // onChange={(e) => updateList(e.fileList.map((value: FileItem) => (value.url ? value.url : '')))}
         onPreviewClick={(e) => {
           console.log(e)
-          const newSchema = _.cloneDeep(comp)
+          const newSchema = cloneDeep(comp)
           newSchema.data = e.url ? e.url : ''
           dispatch({
             type: ACTIONS.UPDATE_COMPONENT,
@@ -106,7 +106,7 @@ const AudioDataComponent: React.FC<Props> = (props) => {
         // onChange={(e) => updateList(e.fileList.map((value: FileItem) => (value.url ? value.url : '')))}
         onPreviewClick={(e) => {
           console.log(e)
-          const newSchema = _.cloneDeep(comp)
+          const newSchema = cloneDeep(comp)
           newSchema.data = e.url ? e.url : ''
           dispatch({
             type: ACTIONS.UPDATE_COMPONENT,
