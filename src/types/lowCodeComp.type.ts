@@ -125,7 +125,7 @@ export type ComponentSchema =
   | HouseComponent
 
 export interface IPageSchema {
-  projectId: string
+  houseId: number
   projectName: string
   author: string
   data: ComponentSchema[]

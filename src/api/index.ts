@@ -62,7 +62,7 @@ async function responseFailInterceptors(error: AxiosError) {
 request.interceptors.response.use(responseSuccessInterceptors, responseFailInterceptors)
 
 const baseRequest = {
-  // eslint-disable-next-line
+  // eslint-disable-next-line 
   get<T>(url: string, params?: Record<string, any>, config: AxiosRequestConfig = {}) {
     return request.get<T, T>(url, {
       params,
@@ -74,6 +74,13 @@ const baseRequest = {
   post<T>(url: string, data?: Record<string, any>, config: AxiosRequestConfig = {}) {
     return request.post<T, T>(url, data, {
       headers: { 'Content-Type': 'multipart/form-data' },
+      ...config
+    })
+  },
+  // eslint-disable-next-line
+  postJson<T>(url: string, data?: Record<string, any>, config: AxiosRequestConfig = {}) {
+    return request.post<T, T>(url, data, {
+      headers: { 'Content-Type': 'application/json' },
       ...config
     })
   },

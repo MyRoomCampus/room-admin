@@ -5,6 +5,7 @@ import { findCompFromJson } from '../utils/jsonSchemaUtils'
 import ACTIONS from './actions'
 
 export interface InitLowCodeInfo {
+  houseId:number
   projectName: string
   author: string
   houseCardData: IHouseCardData
@@ -13,9 +14,9 @@ export interface InitLowCodeInfo {
 export type ActionPayLoad = InitLowCodeInfo | ComponentSchema | number | string | IUserInfo
 const lowCodeReducer = {
   initializeInfo(store: IStore, payload: InitLowCodeInfo): IStore {
-    const { projectName, author, houseCardData } = payload
+    const { houseId, projectName, author, houseCardData } = payload
     const JSONSchema = {
-      projectId: 'bytetance',
+      houseId,
       projectName,
       author,
       data: []
