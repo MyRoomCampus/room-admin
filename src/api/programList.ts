@@ -14,7 +14,7 @@ export interface IProgramInfoDataField{
   houseId:number,
   name:string,
   isPublished:boolean,
-  createdAt:string,
+  updateTime:string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?:any
 }

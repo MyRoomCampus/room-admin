@@ -181,10 +181,12 @@ const HomePage: React.FC = () => {
       const houseData: IHouseListEntity[] = res.data.data.map((item) => {
         return {
           ...item,
-          createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm'),
+          owner:store.userInfo?.username,
+          updateTime: moment(item.updateTime).format('YYYY-MM-DD HH:mm'),
           key: item.houseId
         }
       })
+      console.log(houseData);
       setData(houseData)
     } else {
       Toast.error('获取用户项目信息失败')
