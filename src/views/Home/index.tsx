@@ -206,7 +206,7 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     void fetchData(page,perpage)
-  }, [total,page|perpage])
+  }, [total])
   return (
     <div className="program-list-Container">
       <div className={styles['program-list-title']}>项目列表</div>
