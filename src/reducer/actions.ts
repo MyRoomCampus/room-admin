@@ -1,6 +1,7 @@
 const ACTIONS = {
   INITIAL_PROJECT:'Initial_Project',
   INITIAL_USER: 'Initial_UserInfo',
+  LOGOUT_USER: 'Logout_UserInfo',
   UPDATE_USER: 'Update_UserInfo',
   INITIAL_LOW_CODE: 'Initial_Low_Code',
   UPDATE_SCHEMA: 'Update_Schema',

@@ -112,6 +112,11 @@ const reducer = (state: IStore, action: IAction<ActionPayLoad>): IStore => {
         ...state,
         userInfo: action.payload as IUserInfo
       }
+    case ACTIONS.LOGOUT_USER:
+      return {
+        ...state,
+        userInfo: undefined
+      }
     case ACTIONS.INITIAL_LOW_CODE:
       return lowCodeReducer.initializeInfo(state, payload as InitLowCodeInfo)
     case ACTIONS.UPDATE_PREVIEW_SCALE:

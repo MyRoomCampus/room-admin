@@ -56,28 +56,32 @@ const columns = [
     }
   }
 ]
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const tmpList: any[] = []
-  const getHouseInfoData = async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
-    const res = await HouseApi.GetAllHouseInfoOfUserRequest()
-    if(res){
-      for(let i=0;i<res.data.length;i++){
-        const data = {
-          value:res.data[i].houseId,
-          label:res.data[i].listingName,
-          otherKey:i
-        }
-        tmpList.push(data)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const tmpList: any[] = []
+const getHouseInfoData = async () => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
+  const res = await HouseApi.GetAllHouseInfoOfUserRequest()
+  console.log('######');
+  
+  console.log(res)
+
+  if (res) {
+    for (let i = 0; i < res.data.length; i++) {
+      const data = {
+        value: res.data[i].houseId,
+        label: res.data[i].listingName,
+        otherKey: i
       }
+      tmpList.push(data)
     }
   }
+}
 const HomePage: React.FC = () => {
   // const [dataSource, setData] = useState<IHouse[]>([])
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
-  const [perpage,setPerpage] = useState(5)
-  const fetchData = async (page = 1,perpage=5) => {
+  const [perpage, setPerpage] = useState(5)
+  const fetchData = async (page = 1, perpage = 5) => {
     setPage(page)
     setLoading(true)
     // setData([])
@@ -88,11 +92,11 @@ const HomePage: React.FC = () => {
 
   const handlePageChange = (page: number) => {
     setPage(page)
-    void fetchData(page,perpage)
+    void fetchData(page, perpage)
   }
-  const handlePageSizeChange = (perpage:number) => {
+  const handlePageSizeChange = (perpage: number) => {
     setPerpage(perpage)
-    void fetchData(page,perpage)
+    void fetchData(page, perpage)
   }
 
   useEffect(() => {
@@ -112,12 +116,12 @@ const HomePage: React.FC = () => {
           columns={columns as []}
           // dataSource={dataSource}
           pagination={{
-            currentPage: page ,
+            currentPage: page,
             showQuickJumper: true,
             showSizeChanger: true,
-            pageSizeOpts:[5,10, 20, 50, 100],
+            pageSizeOpts: [5, 10, 20, 50, 100],
             onPageChange: handlePageChange,
-            onPageSizeChange:handlePageSizeChange
+            onPageSizeChange: handlePageSizeChange
           }}
           loading={loading}
         />
