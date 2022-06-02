@@ -9,17 +9,19 @@ export interface InitLowCodeInfo {
   projectName: string
   author: string
   houseCardData: IHouseCardData
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?:any
 }
 
 export type ActionPayLoad = InitLowCodeInfo | ComponentSchema | number | string | IUserInfo
 const lowCodeReducer = {
   initializeInfo(store: IStore, payload: InitLowCodeInfo): IStore {
-    const { houseId, projectName, author, houseCardData } = payload
+    const { houseId, projectName, author, houseCardData, data } = payload
     const JSONSchema = {
       houseId,
       projectName,
       author,
-      data: []
+      data
     }
     return {
       ...store,
