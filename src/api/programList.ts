@@ -1,32 +1,32 @@
 import baseRequest from '.'
 interface IAddProgramParam {
-  houseId:number
-  name:string
-  data:string|null
+  houseId: number
+  name: string
+  data: string | null
 }
 
-interface IProgramListParam{
-  page:number
-  perpage:number
+interface IProgramListParam {
+  page: number
+  perpage: number
 }
 
-interface IProgramInfoDataField{
-  houseId:string,
-  name:string,
-  createdAt:string
+export interface IProgramInfoDataField {
+  houseId: string
+  name: string
+  createdAt: string
 }
 
-interface IProgramInfoData{
-  data:IProgramInfoDataField[],
-  count:number
+interface IProgramInfoData {
+  data: IProgramInfoDataField[]
+  count: number
 }
-export interface IProgramInfo{
-  msg:string
-  data:IProgramInfoData
+export interface IProgramInfo {
+  msg: string
+  data: IProgramInfoData
 }
 const PROGRAMLIST_URL = {
   addProgram: '/project',
-  getAllProjectOfUser:'/project'
+  getAllProjectOfUser: '/project'
 }
 
 class ProgramListApi {

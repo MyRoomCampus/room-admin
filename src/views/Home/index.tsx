@@ -4,14 +4,25 @@ import { Button, Table, Avatar, ButtonGroup, Toast } from '@douyinfe/semi-ui'
 import AddProject from './AddProject'
 import { AvatarColor } from '@douyinfe/semi-ui/lib/es/avatar'
 import HouseApi from '@//api/home'
-import ProgramListApi from '@//api/programList'
-import { getUserName } from '@//utils/token'
+import ProgramListApi, { IProgramInfoDataField } from '@//api/programList'
+// import { getUserName } from '@//utils/token'
+import moment from 'moment'
+
+interface IHouseListEntity extends IProgramInfoDataField {
+  key: string
+}
+
 const figmaIconUrl = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png'
 const columns = [
   {
+    title: 'id',
+    dataIndex: 'houseId',
+    width: 100
+  },
+  {
     title: '项目名称',
     dataIndex: 'name',
-    width: 400,
+    width: 300,
     render: (text: string) => {
       return (
         <div>
@@ -37,15 +48,11 @@ const columns = [
   },
   {
     title: '创建日期',
-    dataIndex: 'updateTime',
-    // sorter: (a, b) => (a.updateTime - b.updateTime > 0 ? 1 : -1),
-    render: (value: string) => {
-      return value
-    }
+    dataIndex: 'createdAt',
+    width: 180
   },
   {
-    title: '',
-    dataIndex: 'operate',
+    title: '操作',
     render: () => {
       return (
         <ButtonGroup theme="borderless">
@@ -80,7 +87,7 @@ const getHouseInfoData = async () => {
 }
 const HomePage: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [dataSource, setData] = useState<any[]>([])
+  const [dataSource, setData] = useState<IHouseListEntity[]>([])
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [perpage, setPerpage] = useState(5)
@@ -88,28 +95,20 @@ const HomePage: React.FC = () => {
   const fetchData = async (page = 1, perpage = 5) => {
     setPage(page)
     setLoading(true)
-    const resdata = await ProgramListApi.GetAllProgramOfUserRequest({ page, perpage })
-    const tmpList = []
-    if (resdata) {
-      setTotal(resdata.data.count)
-      for (let i = 0; i < resdata.data.data.length; i++) {
-        const date = resdata.data.data[i].createdAt.split('T')
-        const time = date[1].split('.')
-        const data = {
-          key: i,
-          houseId: resdata.data.data[i].houseId,
-          name: resdata.data.data[i].name,
-          updateTime: date[0] + ' ' + time[0],
-          owner: getUserName()
+    const res = await ProgramListApi.GetAllProgramOfUserRequest({ page, perpage })
+    if (res) {
+      setTotal(res.data.count)
+      const houseData: IHouseListEntity[] = res.data.data.map((item) => {
+        return {
+          ...item,
+          createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm'),
+          key: item.houseId
         }
-        tmpList.push(data)
-      }
-      setData([...tmpList])
+      })
+      setData(houseData)
     } else {
       Toast.error('获取用户项目信息失败')
     }
-    console.log(dataSource)
-
     setLoading(false)
   }
 
