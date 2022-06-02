@@ -1,19 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Input, Button, Toast } from '@douyinfe/semi-ui'
-import { getAccessToken, setToken, setUserName} from '@//utils/token'
+import { getAccessToken, setToken } from '@//utils/token'
 import LoginApi from '@//api/login'
 import styles from './index.module.less'
 import { useNavigate } from 'react-router'
 import ModeSwitch from '@//components/ModeSwitch'
+import AppContext from '@//store'
+import ACTIONS from '@//reducer/actions'
 
 const LoginPage: React.FC = () => {
   const navigator = useNavigate()
+  const { dispatch } = useContext(AppContext)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errMsg] = useState('')
   const doAuth = async () => {
     const res = await getAccessToken()
     if (res) {
+      const { UserName } = JSON.parse(atob(res.split('.')[1]))
+      if (!UserName) {
+        Toast.error('非法Token')
+        return
+      }
+      dispatch({
+        type: ACTIONS.INITIAL_USER,
+        payload: { username: UserName }
+      })
+
       navigator('/dashboard')
     }
   }
@@ -35,7 +48,15 @@ const LoginPage: React.FC = () => {
     if (res) {
       setToken(res.accessToken, 'access')
       setToken(res.refreshToken, 'refresh')
-      setUserName(username)
+      const { UserName } = JSON.parse(atob(res.accessToken.split('.')[1]))
+      if (!UserName) {
+        Toast.error('非法Token')
+        return
+      }
+      dispatch({
+        type: ACTIONS.INITIAL_USER,
+        payload: { username: UserName }
+      })
       navigator('/dashboard')
       Toast.success('登录成功')
     } else {

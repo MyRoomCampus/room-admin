@@ -27,15 +27,6 @@ export const setToken = (value: string, type: TokenType) => {
   localStorage.setItem(itemKey, JSON.stringify(token))
 }
 
-// 设置登录的用户名
-export const setUserName = (value:string) => {
-  localStorage.setItem('userName',value)
-}
-
-// 获取登录的用户名
-export const getUserName = () => {
-  return localStorage.getItem('userName')
-}
 // 获取token
 export const getRefreshToken = (): Token | null => {
   const tokenStorage = localStorage.getItem(JWT_REFRESH_TOKEN_KEY)
@@ -83,5 +74,4 @@ export const getAccessToken = async (): Promise<string | null> => {
 export const clearToken = () => {
   localStorage.removeItem(JWT_ACCESS_TOKEN_KEY)
   localStorage.removeItem(JWT_REFRESH_TOKEN_KEY)
-  localStorage.removeItem('userName')
 }
