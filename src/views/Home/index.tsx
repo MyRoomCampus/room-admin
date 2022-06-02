@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styles from './index.module.less'
-import { Button, Table, Avatar, ButtonGroup } from '@douyinfe/semi-ui'
+import { Button, Table, Avatar, ButtonGroup, Toast } from '@douyinfe/semi-ui'
 import AddProject from './AddProject'
 import { AvatarColor } from '@douyinfe/semi-ui/lib/es/avatar'
 import HouseApi from '@//api/home'
+import ProgramListApi from '@//api/programList'
+import { getUserName } from '@//utils/token'
 const figmaIconUrl = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png'
 const columns = [
   {
@@ -34,7 +36,7 @@ const columns = [
     }
   },
   {
-    title: '修改日期',
+    title: '创建日期',
     dataIndex: 'updateTime',
     // sorter: (a, b) => (a.updateTime - b.updateTime > 0 ? 1 : -1),
     render: (value: string) => {
@@ -61,8 +63,8 @@ const tmpList: any[] = []
 const getHouseInfoData = async () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
   const res = await HouseApi.GetAllHouseInfoOfUserRequest()
-  console.log('######');
-  
+  console.log('######')
+
   console.log(res)
 
   if (res) {
@@ -77,16 +79,37 @@ const getHouseInfoData = async () => {
   }
 }
 const HomePage: React.FC = () => {
-  // const [dataSource, setData] = useState<IHouse[]>([])
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [dataSource, setData] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [perpage, setPerpage] = useState(5)
+  const [total, setTotal] = useState(0)
   const fetchData = async (page = 1, perpage = 5) => {
     setPage(page)
     setLoading(true)
-    // setData([])
-    // const data = await getHouseDataRequest({ page,perpage })
-    // setData(data)
+    const resdata = await ProgramListApi.GetAllProgramOfUserRequest({ page, perpage })
+    const tmpList = []
+    if (resdata) {
+      setTotal(resdata.data.count)
+      for (let i = 0; i < resdata.data.data.length; i++) {
+        const date = resdata.data.data[i].createdAt.split('T')
+        const time = date[1].split('.')
+        const data = {
+          key: i,
+          houseId: resdata.data.data[i].houseId,
+          name: resdata.data.data[i].name,
+          updateTime: date[0] + ' ' + time[0],
+          owner: getUserName()
+        }
+        tmpList.push(data)
+      }
+      setData([...tmpList])
+    } else {
+      Toast.error('获取用户项目信息失败')
+    }
+    console.log(dataSource)
+
     setLoading(false)
   }
 
@@ -114,8 +137,10 @@ const HomePage: React.FC = () => {
       <div>
         <Table
           columns={columns as []}
-          // dataSource={dataSource}
+          dataSource={dataSource}
           pagination={{
+            total: total,
+            pageSize: perpage,
             currentPage: page,
             showQuickJumper: true,
             showSizeChanger: true,
