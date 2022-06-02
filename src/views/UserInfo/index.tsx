@@ -1,14 +1,13 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import styles from './index.module.less'
 import { Button, Form, Toast } from '@douyinfe/semi-ui'
 import { useNavigate } from 'react-router-dom'
-import AppContext from '@//store'
 import UserInfoApi from '@//api/userInfo'
+import { getUserName } from '@//utils/token'
 
 const UserInfo: React.FC = () => {
   const navigator = useNavigate()
-  const { store } = useContext(AppContext)
-  const [userName] = useState(store.userInfo?.username ? store.userInfo?.username : '')
+  const [userName] = useState(getUserName())
   const [newPassWord, SetNewPassword] = useState('')
   const [confirmNewPassword, SetConfirmNewPassword] = useState('')
   const returnHome = () => {
@@ -53,7 +52,7 @@ const UserInfo: React.FC = () => {
           field="UserName"
           label="用户名"
           style={{ width: 300 }}
-          initValue={store.userInfo?.username ? store.userInfo?.username : ''}
+          initValue={getUserName()}
           disabled
         />
         <Form.Input
