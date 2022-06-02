@@ -45,6 +45,7 @@ async function responseFailInterceptors(error: AxiosError) {
   switch (status) {
     case 401:
       Toast.error('Ooops, 未登录')
+      window.history.pushState({}, '', '/')
       break
     case 404:
       Toast.error('Ooops, 404 Not Found')
@@ -62,7 +63,7 @@ async function responseFailInterceptors(error: AxiosError) {
 request.interceptors.response.use(responseSuccessInterceptors, responseFailInterceptors)
 
 const baseRequest = {
-  // eslint-disable-next-line 
+  // eslint-disable-next-line
   get<T>(url: string, params?: Record<string, any>, config: AxiosRequestConfig = {}) {
     return request.get<T, T>(url, {
       params,

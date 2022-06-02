@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styles from './index.module.less'
 import { Button, Table, Avatar, ButtonGroup, Toast } from '@douyinfe/semi-ui'
 import AddProject from './AddProject'
@@ -7,9 +7,11 @@ import HouseApi from '@//api/home'
 import ProgramListApi, { IProgramInfoDataField } from '@//api/programList'
 // import { getUserName } from '@//utils/token'
 import moment from 'moment'
+import AppContext from '@//store'
 
 interface IHouseListEntity extends IProgramInfoDataField {
   key: string
+  owner: string
 }
 
 const figmaIconUrl = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png'
@@ -39,7 +41,7 @@ const columns = [
       return (
         <div>
           <Avatar size="small" color={record.avatarBg} style={{ marginRight: 4 }}>
-            {typeof text === 'string' && text.slice(0, 1)}
+            {}
           </Avatar>
           {text}
         </div>
@@ -87,7 +89,8 @@ const getHouseInfoData = async () => {
 }
 const HomePage: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [dataSource, setData] = useState<IHouseListEntity[]>([])
+  const { store } = useContext(AppContext)
+  const [dataSource, setDataSOurce] = useState<IHouseListEntity[]>([])
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [perpage, setPerpage] = useState(5)
@@ -98,14 +101,17 @@ const HomePage: React.FC = () => {
     const res = await ProgramListApi.GetAllProgramOfUserRequest({ page, perpage })
     if (res) {
       setTotal(res.data.count)
+      console.log(res)
+
       const houseData: IHouseListEntity[] = res.data.data.map((item) => {
         return {
           ...item,
           createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm'),
-          key: item.houseId
+          key: item.houseId,
+          owner: store.userInfo?.username ?? ''
         }
       })
-      setData(houseData)
+      setDataSOurce(houseData)
     } else {
       Toast.error('获取用户项目信息失败')
     }
