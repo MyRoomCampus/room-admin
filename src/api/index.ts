@@ -91,6 +91,13 @@ const baseRequest = {
       headers: { 'Content-Type': 'multipart/form-data' },
       ...config
     })
+  },
+
+  // eslint-disable-next-line
+  del<T>(url: string, data?: Record<string, any>, config: AxiosRequestConfig = {}) {
+    return request.delete<T, T>(url, {
+      ...config
+    })
   }
 }
 export default baseRequest

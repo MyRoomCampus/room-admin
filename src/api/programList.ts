@@ -1,8 +1,8 @@
 import baseRequest from '.'
-interface IAddProgramParam {
-  houseId: number
-  name: string
-  data: string | null
+interface IhandleProgramParam {
+  houseId:number
+  name?:string
+  data?:string|null
 }
 
 interface IProgramListParam {
@@ -10,19 +10,26 @@ interface IProgramListParam {
   perpage: number
 }
 
-export interface IProgramInfoDataField {
-  houseId: string
-  name: string
-  createdAt: string
+export interface IProgramInfoDataField{
+  houseId:number,
+  name:string,
+  isPublished:boolean,
+  createdAt:string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?:any
 }
 
 interface IProgramInfoData {
   data: IProgramInfoDataField[]
   count: number
 }
-export interface IProgramInfo {
-  msg: string
-  data: IProgramInfoData
+interface IAllProgramInfo{
+  msg:string
+  data:IProgramInfoData
+}
+export interface IAProgramInfo{
+  msg:string
+  data:IProgramInfoDataField
 }
 const PROGRAMLIST_URL = {
   addProgram: '/project',
@@ -30,12 +37,12 @@ const PROGRAMLIST_URL = {
 }
 
 class ProgramListApi {
-  static async AddProgramRequest(data: IAddProgramParam) {
-    return await baseRequest.postJson<IAddProgramParam>(PROGRAMLIST_URL.addProgram, data)
+  static async AddProgramRequest(data: IhandleProgramParam) {
+    return await baseRequest.postJson<IhandleProgramParam>(PROGRAMLIST_URL.addProgram, data)
   }
 
   static async GetAllProgramOfUserRequest(data: IProgramListParam) {
-    return await baseRequest.get<IProgramInfo>(PROGRAMLIST_URL.getAllProjectOfUser, data)
+    return await baseRequest.get<IAllProgramInfo>(PROGRAMLIST_URL.getAllProjectOfUser, data)
   }
 }
 
