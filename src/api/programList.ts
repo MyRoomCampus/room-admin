@@ -10,11 +10,11 @@ interface IProgramListParam {
   perpage: number
 }
 
-export interface IProgramInfoDataField{
-  houseId:number,
-  name:string,
-  isPublished:boolean,
-  updateTime:string,
+export interface IProgramInfoDataField {
+  houseId: number
+  name: string
+  isPublished: boolean
+  createdAt: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?:any
 }
