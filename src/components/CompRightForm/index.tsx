@@ -9,7 +9,7 @@ import {
   VideoComponent
 } from '@//types/lowCodeComp.type'
 // import ACTIONS from '@//reducer/actions'
-// import _ from 'lodash'
+// import {  cloneDeep } from 'lodash'
 import { Form, Input, Row } from '@douyinfe/semi-ui'
 import { BorderComponent, ExtraBorderComponent } from './BorderComp'
 import { BasicComponent } from './BasicComp'
@@ -17,7 +17,7 @@ import { BackgroundComponent } from './BackgroundComp'
 import { TextPropsComponent } from './TextpropsComp'
 import { AudioDataComponent, ImageDataComponent, TextDataComponent, VideoDataComponent } from './DataChangeComp'
 import ACTIONS from '@//reducer/actions'
-import _ from 'lodash'
+import {  cloneDeep } from 'lodash-es'
 import AppContext from '@//store'
 interface TextProps {
   comp: TextComponent
@@ -136,7 +136,7 @@ const HouseFormComponent: React.FC<HouseProps> = (props) => {
               prefix="Left:"
               value={comp.style.left}
               onChange={(e) => {
-                const newSchema = _.cloneDeep(comp)
+                const newSchema = cloneDeep(comp)
                 newSchema.style.left = `${e}`
                 dispatch({
                   type: ACTIONS.UPDATE_COMPONENT,
@@ -153,7 +153,7 @@ const HouseFormComponent: React.FC<HouseProps> = (props) => {
               prefix="Top:"
               value={comp.style.top}
               onChange={(e) => {
-                const newSchema = _.cloneDeep(comp)
+                const newSchema = cloneDeep(comp)
                 newSchema.style.top = `${e}`
                 dispatch({
                   type: ACTIONS.UPDATE_COMPONENT,

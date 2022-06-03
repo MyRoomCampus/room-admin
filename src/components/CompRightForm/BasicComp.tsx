@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { AudioComponent, BoxComponent, ImageComponent, TextComponent, VideoComponent } from '@//types/lowCodeComp.type'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
-import _ from 'lodash'
+import {  cloneDeep } from 'lodash-es'
 import { Form, Row, Col, Input } from '@douyinfe/semi-ui'
 
 interface TextProps {
@@ -24,7 +24,7 @@ export const BasicComponent: React.FC<TextProps> = (props) => {
             prefix="Left:"
             value={comp.style.left}
             onChange={(e) => {
-              const newSchema = _.cloneDeep(comp)
+              const newSchema = cloneDeep(comp)
               newSchema.style.left = `${e}`
               dispatch({
                 type: ACTIONS.UPDATE_COMPONENT,
@@ -39,7 +39,7 @@ export const BasicComponent: React.FC<TextProps> = (props) => {
             prefix="Top:"
             value={comp.style.top}
             onChange={(e) => {
-              const newSchema = _.cloneDeep(comp)
+              const newSchema = cloneDeep(comp)
               newSchema.style.top = `${e}`
               dispatch({
                 type: ACTIONS.UPDATE_COMPONENT,
@@ -56,7 +56,7 @@ export const BasicComponent: React.FC<TextProps> = (props) => {
             prefix="宽度:"
             value={comp.style.width}
             onChange={(e) => {
-              const newSchema = _.cloneDeep(comp)
+              const newSchema = cloneDeep(comp)
               newSchema.style.width = `${e}`
               dispatch({
                 type: ACTIONS.UPDATE_COMPONENT,
@@ -71,7 +71,7 @@ export const BasicComponent: React.FC<TextProps> = (props) => {
             prefix="高度:"
             value={comp.style.height}
             onChange={(e) => {
-              const newSchema = _.cloneDeep(comp)
+              const newSchema = cloneDeep(comp)
               newSchema.style.height = `${e}`
               dispatch({
                 type: ACTIONS.UPDATE_COMPONENT,
@@ -88,7 +88,7 @@ export const BasicComponent: React.FC<TextProps> = (props) => {
           style={{ width: '100%' }}
           value={comp.style.padding}
           onChange={(e) => {
-            const newSchema = _.cloneDeep(comp)
+            const newSchema = cloneDeep(comp)
             newSchema.style.padding = `${e}`
             dispatch({
               type: ACTIONS.UPDATE_COMPONENT,

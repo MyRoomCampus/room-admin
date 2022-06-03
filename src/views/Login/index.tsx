@@ -17,6 +17,16 @@ const LoginPage: React.FC = () => {
   const doAuth = async () => {
     const res = await getAccessToken()
     if (res) {
+      const { UserName } = JSON.parse(atob(res.split('.')[1]))
+      if (!UserName) {
+        Toast.error('非法Token')
+        return
+      }
+      dispatch({
+        type: ACTIONS.INITIAL_USER,
+        payload: { username: UserName }
+      })
+
       navigator('/dashboard')
     }
   }
@@ -38,9 +48,14 @@ const LoginPage: React.FC = () => {
     if (res) {
       setToken(res.accessToken, 'access')
       setToken(res.refreshToken, 'refresh')
+      const { UserName } = JSON.parse(atob(res.accessToken.split('.')[1]))
+      if (!UserName) {
+        Toast.error('非法Token')
+        return
+      }
       dispatch({
-        type: ACTIONS.UPDATE_USER,
-        payload: { username: username }
+        type: ACTIONS.INITIAL_USER,
+        payload: { username: UserName }
       })
       navigator('/dashboard')
       Toast.success('登录成功')

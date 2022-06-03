@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react'
 import styles from './index.module.less'
 import { IconCode, IconSave, IconMinusCircle, IconPlusCircle, IconArrowLeft } from '@douyinfe/semi-icons'
-import { Tooltip, Modal } from '@douyinfe/semi-ui'
+import { Tooltip, Modal, Toast } from '@douyinfe/semi-ui'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
 import ReactJson from 'react-json-view'
 import ModeSwitch from '@//components/ModeSwitch'
 import { useNavigate } from 'react-router'
+import ProgramListApi, { IUpadateProgrameParam } from '@//api/programList'
 
 interface ToolType {
   el: React.ReactNode
@@ -43,8 +44,27 @@ const ToolkitBar: React.FC = () => {
     !codeModalVisible && setCodeModalVisible(true)
   }
 
-  const onSaveClick = () => {
-    console.log('onSaveClick')
+  const onSaveClick = async () => {
+    const name = store.lowCodeInfo?.JSONSchema.projectName
+    const houseId = store.lowCodeInfo?.JSONSchema.houseId
+    const data = store.lowCodeInfo?.JSONSchema
+    if (data && houseId && name) {
+      const respParam: IUpadateProgrameParam = {
+        name,
+        houseId: parseInt(store.lowCodeInfo?.JSONSchema.houseId as unknown as string),
+        data: JSON.stringify(data)
+      }
+      const res = await ProgramListApi.UpdateOneProgram(respParam)
+      console.log(res)
+
+      if (res) {
+        Toast.success('保存成功')
+      } else {
+        Toast.error('保存失败')
+      }
+    } else {
+      Toast.error('信息确实')
+    }
   }
 
   const tools: ToolType[] = [

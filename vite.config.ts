@@ -5,6 +5,11 @@ import viteStylelint from '@amatlash/vite-plugin-stylelint'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import * as path from 'path'
 import federation from '@originjs/vite-plugin-federation'
+import viteCompression from 'vite-plugin-compression'
+import { visualizer } from 'rollup-plugin-visualizer'
+import viteImagemin from 'vite-plugin-imagemin'
+import topLevelAwait from 'vite-plugin-top-level-await'
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, path.resolve(__dirname, './src', ''))
@@ -14,6 +19,12 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
+      topLevelAwait({
+        // The export name of top-level await promise for each chunk module
+        promiseExportName: "__tla",
+        // The function to generate import names of top-level await promise in each chunk module
+        promiseImportName: i => `__tla_${i}`
+      }),
       federation({
         name: 'room-components',
         filename: 'remoteEntry.js',
@@ -35,7 +46,34 @@ export default defineConfig(({ mode }) => {
         }
       }),
       viteEslint(),
-      viteStylelint({ exclude: /windicss|node_modules/ })
+      viteStylelint({ exclude: /windicss|node_modules/ }),
+      viteCompression(),
+      visualizer({
+        // 打包完成后自动打开浏览器，显示产物体积报告
+        open: true,
+      }),
+      viteImagemin({
+        // 无损压缩配置，无损压缩下图片质量不会变差
+        optipng: {
+          optimizationLevel: 7
+        },
+        // 有损压缩配置，有损压缩下图片质量可能会变差
+        pngquant: {
+          quality: [0.8, 0.9],
+        },
+        // svg 优化
+        svgo: {
+          plugins: [
+            {
+              name: 'removeViewBox'
+            },
+            {
+              name: 'removeEmptyAttrs',
+              active: false
+            }
+          ]
+        }
+      })
     ],
     css: {
       modules: {
@@ -62,8 +100,5 @@ export default defineConfig(({ mode }) => {
         }
       }
     },
-    build: {
-      target: 'esnext'
-    }
   }
 })

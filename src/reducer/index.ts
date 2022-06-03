@@ -5,20 +5,23 @@ import { findCompFromJson } from '../utils/jsonSchemaUtils'
 import ACTIONS from './actions'
 
 export interface InitLowCodeInfo {
+  houseId:number
   projectName: string
   author: string
   houseCardData: IHouseCardData
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?:any
 }
 
 export type ActionPayLoad = InitLowCodeInfo | ComponentSchema | number | string | IUserInfo
 const lowCodeReducer = {
   initializeInfo(store: IStore, payload: InitLowCodeInfo): IStore {
-    const { projectName, author, houseCardData } = payload
+    const { houseId, projectName, author, houseCardData, data } = payload
     const JSONSchema = {
-      projectId: 'bytetance',
+      houseId,
       projectName,
       author,
-      data: []
+      data
     }
     return {
       ...store,
@@ -110,6 +113,11 @@ const reducer = (state: IStore, action: IAction<ActionPayLoad>): IStore => {
       return {
         ...state,
         userInfo: action.payload as IUserInfo
+      }
+    case ACTIONS.LOGOUT_USER:
+      return {
+        ...state,
+        userInfo: undefined
       }
     case ACTIONS.INITIAL_LOW_CODE:
       return lowCodeReducer.initializeInfo(state, payload as InitLowCodeInfo)

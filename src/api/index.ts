@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/return-await */
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { Toast } from '@douyinfe/semi-ui'
-import { getAccessToken } from '../utils/token'
-
+import { clearToken, getAccessToken } from '../utils/token'
 const baseURL = import.meta.env.VITE_BASE_URL as string
 console.log('base_url', baseURL)
 const timeout = 5000
@@ -45,6 +44,8 @@ async function responseFailInterceptors(error: AxiosError) {
   switch (status) {
     case 401:
       Toast.error('Ooops, 未登录')
+      clearToken()
+      window.location.pathname = '/'
       break
     case 404:
       Toast.error('Ooops, 404 Not Found')
@@ -77,11 +78,25 @@ const baseRequest = {
       ...config
     })
   },
+  // eslint-disable-next-line
+  postJson<T>(url: string, data?: Record<string, any>, config: AxiosRequestConfig = {}) {
+    return request.post<T, T>(url, data, {
+      headers: { 'Content-Type': 'application/json' },
+      ...config
+    })
+  },
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async put<T>(url: string, data?: Record<string, any>, config: AxiosRequestConfig = {}) {
     return request.put<T, T>(url, data, {
       headers: { 'Content-Type': 'multipart/form-data' },
+      ...config
+    })
+  },
+
+  // eslint-disable-next-line
+  del<T>(url: string, data?: Record<string, any>, config: AxiosRequestConfig = {}) {
+    return request.delete<T, T>(url, {
       ...config
     })
   }
