@@ -18,7 +18,6 @@ interface IHouseListEntity extends IProgramInfoDataField {
   key: number
 }
 
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 const HomePage: React.FC = () => {
@@ -51,14 +50,17 @@ const HomePage: React.FC = () => {
       const name = record.name
       const projectData = await baseRequest.get<IAProgramInfo>(`/project/${houseId}`, { id: houseId })
       const houseCardData = await baseRequest.get<IHouseDataOfHouse>(`/house/${houseId}`, { id: houseId })
-      if (projectData) {
+      console.log(projectData)
+      console.log(houseCardData)
+
+      if (projectData && houseCardData) {
         dispatch({
           type: ACTIONS.INITIAL_LOW_CODE,
           payload: {
             houseId: houseId,
             projectName: name,
             author: store.userInfo?.username,
-            data: projectData.data.data || [],
+            data: JSON.parse(projectData.data.data as string).data || [],
             houseCardData: {
               image:
                 'https://p1.haoduofangs.com/f100-image/SZvX8zYCKzbRod~tplv-u148heywkg-default-v3:0:424:0:0.jpeg?sig=YZTrZrfP-RZia8BOtbQnc5Ic_rA=',
