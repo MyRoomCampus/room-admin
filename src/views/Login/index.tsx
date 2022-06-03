@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
   const doAuth = async () => {
     const res = await getAccessToken()
     if (res) {
-      const { UserName } = JSON.parse(atob(res.split('.')[1]))
+      const { UserName } = JSON.parse(Buffer.from(res.split('.')[1], 'base64').toString())
       if (!UserName) {
         Toast.error('非法Token')
         return
