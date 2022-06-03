@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import styles from './index.module.less'
-import { Button, Table, Avatar, ButtonGroup, Toast, Modal, Form, Row, Col } from '@douyinfe/semi-ui'
+import { Button, Table, Avatar, ButtonGroup, Toast, Modal, Form, Row, Col, Tooltip } from '@douyinfe/semi-ui'
 import AddProject from './AddProject'
 import { AvatarColor } from '@douyinfe/semi-ui/lib/es/avatar'
 import { IHouseDataOfHouse } from '@//api/home'
@@ -50,9 +50,6 @@ const HomePage: React.FC = () => {
       const name = record.name
       const projectData = await baseRequest.get<IAProgramInfo>(`/project/${houseId}`, { id: houseId })
       const houseCardData = await baseRequest.get<IHouseDataOfHouse>(`/house/${houseId}`, { id: houseId })
-      console.log(projectData)
-      console.log(houseCardData)
-
       if (projectData && houseCardData) {
         dispatch({
           type: ACTIONS.INITIAL_LOW_CODE,
@@ -130,6 +127,46 @@ const HomePage: React.FC = () => {
       }
     })
   }
+  // 点击发布/取消发布后的回调
+  const editProjectStatusHandler = (record: IHouseListEntity) => {
+    Modal.warning({
+      title: record.isPublished ? '取消发布项目' : '发布项目',
+      content: record.isPublished ? '请问是否确认取消发布该项目？' : '请问是否确认发布该项目？',
+      onOk: () => {
+        if (!record.isPublished) {
+          void publishProject(record)
+        } else {
+          void cancelPublishProject(record)
+        }
+      }
+    })
+  }
+  // 执行项目发布
+  const publishProject = async (record: IHouseListEntity) => {
+    const id = record.houseId
+    const isPublish = true
+    const res = await baseRequest.put(`/project/publish/${id}`, { isPublish })
+    console.log(res)
+    if (res) {
+      Toast.success('发布项目成功！')
+      void fetchData(page, perpage)
+    } else {
+      Toast.error('发布项目失败！')
+    }
+  }
+  // 取消项目发布
+  const cancelPublishProject = async (record: IHouseListEntity) => {
+    const id = record.houseId
+    const isPublish = false
+    const res = await baseRequest.put(`/project/publish/${id}`, { isPublish })
+    console.log(res)
+    if (res) {
+      Toast.success('取消发布项目成功！')
+      void fetchData(page, perpage)
+    } else {
+      Toast.error('取消发布项目失败！')
+    }
+  }
   const columns = [
     {
       title: '项目id',
@@ -165,32 +202,50 @@ const HomePage: React.FC = () => {
     },
     {
       title: '创建日期',
-      dataIndex: 'updateTime'
+      dataIndex: 'createdAt'
+    },
+    {
+      title: '发布状态',
+      dataIndex: 'status',
+      render: (published: boolean) => {
+        console.log(published)
+
+        if (published) {
+          return <div style={{ color: 'rgba(var(--semi-green-5), 1)' }}>已发布</div>
+        }
+        return <div style={{ color: 'rgba(var(--semi-grey-2), 1)' }}>未发布</div>
+      }
     },
     {
       title: '操作',
       render: (text: string, record: IHouseListEntity) => {
         return (
-          <>
-            <ButtonGroup theme="borderless">
-              <Button
-                onClick={() => {
-                  editProjectHandler(record)
-                }}
-              >
-                编辑
-              </Button>
-              <Button
-                onClick={() => {
-                  deleteProjectHandler(record)
-                }}
-              >
-                删除
-              </Button>
-              <Button>发布</Button>
-              <Button>查看在线用户</Button>
-            </ButtonGroup>
-          </>
+          <ButtonGroup theme="borderless">
+            <Button
+              onClick={() => {
+                editProjectHandler(record)
+              }}
+            >
+              编辑
+            </Button>
+            <Button
+              onClick={() => {
+                deleteProjectHandler(record)
+              }}
+            >
+              删除
+            </Button>
+            <Button
+              onClick={() => {
+                editProjectStatusHandler(record)
+              }}
+            >
+              {record.isPublished ? '取消发布' : '发布'}
+            </Button>
+            <Tooltip content={'暂不支持此功能'}>
+              <Button disabled>查看在线用户</Button>
+            </Tooltip>
+          </ButtonGroup>
         )
       }
     }
@@ -207,7 +262,8 @@ const HomePage: React.FC = () => {
         return {
           ...item,
           owner: store.userInfo?.username,
-          updateTime: moment(item.updateTime).format('YYYY-MM-DD HH:mm'),
+          createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm'),
+          status: item.isPublished,
           key: item.houseId
         }
       })
