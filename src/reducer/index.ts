@@ -28,7 +28,6 @@ const lowCodeReducer = {
       lowCodeInfo: {
         JSONSchema,
         scale: 0.9,
-        curTotalHeight: 0,
         curSelectCompId: '',
         curSelectLayerId: '',
         houseCardData
