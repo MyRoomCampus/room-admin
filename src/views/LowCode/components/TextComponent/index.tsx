@@ -3,18 +3,20 @@ import { ComponentProps } from '@//types/component.type'
 import styles from './index.module.less'
 import AppContext from '@//store'
 import actions from '@//reducer/actions'
-import {  cloneDeep, debounce } from 'lodash-es'
+import {  cloneDeep } from 'lodash-es'
 import { ComponentSchema } from '@//types/lowCodeComp.type'
 import { useBoolean } from 'ahooks'
 
 const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
-  console.log(schema)
+  console.log('textschema', schema)
   const { data, id, style } = schema
   const { dispatch } = useContext(AppContext)
   const [canInput, { set }] = useBoolean(true)
   const handleTextInput = (content: string) => {
     const newSchema: ComponentSchema = cloneDeep(schema)
     newSchema.data = content ?? newSchema?.data
+    console.log('newSchema', newSchema)
+    console.log('onChange', content)
     dispatch({
       type: actions.UPDATE_COMPONENT,
       payload: newSchema
@@ -24,6 +26,7 @@ const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
   return (
     <textarea
       className={styles['component-text']}
+      value={data}
       style={style as CSSProperties}
       key={id}
       onCompositionStart={() => {
@@ -37,14 +40,11 @@ const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
         handleTextInput(target.value ?? '')
       }}
       onChange={(e) => {
-        console.log('onChange', e)
+        console.log(e, canInput)
         if (canInput) {
-          debounce(() => handleTextInput(e.target.value))
+          handleTextInput(e.target.value)
         }
       }}
-      id="component-text"
-      contentEditable="true"
-      defaultValue={data}
     ></textarea>
   )
 }
