@@ -10,10 +10,10 @@ const LowCodePlatform = React.lazy(async () => await import('./views/LowCode'))
 
 /** 懒加载loading */
 const lazyLoad = (children: React.ReactNode): React.ReactNode => {
-  return <Suspense fallback={Loading()}>{children}</Suspense>
+  return <Suspense fallback={<Loading />}>{children}</Suspense>
 }
 
-const Loading = (): React.ReactNode => {
+const Loading = () => {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
       <Spin size="large" tip="Loading" />
