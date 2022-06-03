@@ -151,7 +151,6 @@ export interface IHouseCardData {
 export interface ILowCodeInfo {
   JSONSchema: IPageSchema
   scale: number
-  curTotalHeight: number
   curSelectCompId: string
   curSelectLayerId: string
   houseCardData: IHouseCardData

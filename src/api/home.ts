@@ -1,6 +1,6 @@
 import baseRequest from '.'
 interface IHouseInfoDataOfUserField {
-  houseId: string
+  houseId: number
   listingName: string
 }
 interface IHouseInfoOfUser {
