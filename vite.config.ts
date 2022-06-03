@@ -8,7 +8,6 @@ import federation from '@originjs/vite-plugin-federation'
 import viteCompression from 'vite-plugin-compression'
 import { visualizer } from 'rollup-plugin-visualizer'
 import viteImagemin from 'vite-plugin-imagemin'
-import topLevelAwait from 'vite-plugin-top-level-await'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -19,12 +18,6 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
-      topLevelAwait({
-        // The export name of top-level await promise for each chunk module
-        promiseExportName: "__tla",
-        // The function to generate import names of top-level await promise in each chunk module
-        promiseImportName: i => `__tla_${i}`
-      }),
       federation({
         name: 'room-components',
         filename: 'remoteEntry.js',
@@ -100,5 +93,6 @@ export default defineConfig(({ mode }) => {
         }
       }
     },
+    target: 'esnext'
   }
 })

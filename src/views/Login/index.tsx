@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router'
 import ModeSwitch from '@//components/ModeSwitch'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
+import { Buffer } from 'buffer'
 
 const LoginPage: React.FC = () => {
   const navigator = useNavigate()
@@ -17,6 +18,7 @@ const LoginPage: React.FC = () => {
   const doAuth = async () => {
     const res = await getAccessToken()
     if (res) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const { UserName } = JSON.parse(Buffer.from(res.split('.')[1], 'base64').toString())
       if (!UserName) {
         Toast.error('非法Token')
