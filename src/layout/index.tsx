@@ -5,6 +5,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { IconUser, IconStar } from '@douyinfe/semi-icons'
 import { NavItemPropsWithItems, NavItems } from '@douyinfe/semi-ui/lib/es/navigation'
 import ModeSwitch from '../components/ModeSwitch'
+import LogoutBtn from '../components/LogoutBtn'
 const menuItem: NavItems = [
   {
     itemKey: '/dashboard',
@@ -27,6 +28,7 @@ const LayOut: React.FC = () => {
       <Header className={styles['layout-header-container']}>
         <div>MYROOM麦荣经纪人子系统</div>
         <ModeSwitch style={{ top: 15 }} />
+        <LogoutBtn />
       </Header>
       <Layout>
         <Sider className={styles['layout-sider-container']}>

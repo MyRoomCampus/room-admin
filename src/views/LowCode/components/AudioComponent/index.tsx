@@ -3,7 +3,7 @@ import { ComponentProps } from '@//types/component.type'
 
 const AudioComponent: React.FC<ComponentProps> = ({ schema }) => {
   const { data, id, style } = schema
-  return <audio src={data} style={style as CSSProperties} key={id} controls={true} />
+  return <div style={style as CSSProperties}><audio style={{height: '100%', width: '100%'}} src={data}  key={id} controls={true} /></div>
 }
 
 export default AudioComponent

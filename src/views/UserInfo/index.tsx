@@ -2,41 +2,43 @@ import React, { useContext, useState } from 'react'
 import styles from './index.module.less'
 import { Button, Form, Toast } from '@douyinfe/semi-ui'
 import { useNavigate } from 'react-router-dom'
-import AppContext from '@//store'
 import UserInfoApi from '@//api/userInfo'
+import AppContext from '@//store'
 
 const UserInfo: React.FC = () => {
   const navigator = useNavigate()
-  const { store } = useContext(AppContext)
   const [newPassWord, SetNewPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [confirmNewPassword, SetConfirmNewPassword] = useState('')
-  const returnHome = () => {
-    navigator('/dashboard')
-  }
+  const { store } = useContext(AppContext)
   const validateNewPassword = () => {
     if (newPassWord && newPassWord.length < 6) {
       return '密码长度应大于6位'
-    } else {
-      return ''
     }
+    return ''
   }
   const validateConfirmNewPassword = () => {
     if (confirmNewPassword && confirmNewPassword !== newPassWord) {
       return '两次输入的新密码不一致，请重新输入！'
-    } else {
-      return ''
     }
+    return ''
   }
   const changeUserInfo = async () => {
-    console.log(newPassWord)
-    const password = newPassWord
-    const res = await UserInfoApi.changeUserInfoRequest({ password })
-    if (res) {
-      console.log(res)
-      Toast.success('修改成功')
+    setIsLoading(true)
+    if (!store.userInfo?.username) {
+      Toast.error('未获取到当前登录用户的用户名，请重新登录！')
+      navigator('/login')
     } else {
-      Toast.error('修改失败')
+      const password = newPassWord
+      const res = await UserInfoApi.changeUserInfoRequest({ password })
+      if (res) {
+        console.log(res)
+        Toast.success('修改成功')
+      } else {
+        Toast.error('修改失败')
+      }
     }
+    setIsLoading(false)
   }
   return (
     <div>
@@ -48,7 +50,7 @@ const UserInfo: React.FC = () => {
           field="UserName"
           label="用户名"
           style={{ width: 300 }}
-          initValue={store.userInfo?.username ? store.userInfo?.username : ''}
+          initValue={store.userInfo?.username}
           disabled
         />
         <Form.Input
@@ -74,11 +76,8 @@ const UserInfo: React.FC = () => {
           validate={validateConfirmNewPassword}
         />
         <div className={styles['user-info-form-submit']}>
-          <Button theme="solid" onClick={changeUserInfo}>
+          <Button theme="solid" onClick={changeUserInfo} loading={isLoading}>
             更改
-          </Button>
-          <Button theme="solid" onClick={returnHome}>
-            返回
           </Button>
         </div>
       </Form>

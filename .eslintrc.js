@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  ignorePatterns: ['.eslintrc.js', 'vite.config.ts'],
+  ignorePatterns: ['.eslintrc.js', 'vite.config.ts', 'dist'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -38,12 +38,12 @@ module.exports = {
     '@typescript-eslint/no-inferrable-types': 'error',
     '@typescript-eslint/no-misused-new': 'error',
     '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/no-unsafe-assignment': 'warn',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/await-thenable': 'warn',
     '@typescript-eslint/no-floating-promises': 'warn',
     '@typescript-eslint/no-unnecessary-type-assertion': 'error',
     '@typescript-eslint/no-unsafe-argument': 'error',
-    '@typescript-eslint/no-unsafe-call': 'error',
+    '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/member-delimiter-style': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { DraggableItemKey, getComponentSchema } from '@//constants/lowCodeComp'
 import ACTIONS from '@//reducer/actions'
 import AppContext from '@//store'
@@ -7,16 +8,17 @@ import { useDrop } from 'react-dnd'
 import styles from './index.module.less'
 import { ComponentSchema } from '../../../types/lowCodeComp.type'
 import iphoneImage from '@//assets/images/iPhone.svg'
-import _ from 'lodash'
+import {  cloneDeep } from 'lodash-es'
 import { useScroll } from 'ahooks'
-
+  
+const acceptableItems = Object.values(DraggableItemKey)
 const MidCanvas: React.FC = () => {
   const { store, dispatch } = useContext(AppContext)
   // react scroll
   const scrollRef = useRef(null)
   const scroll = useScroll(scrollRef)
   // react drop
-  const acceptableItems = Object.values(DraggableItemKey)
+
   const [, dropRef] = useDrop(
     () => ({
       accept: acceptableItems,
@@ -32,7 +34,7 @@ const MidCanvas: React.FC = () => {
         const initialY = initialClientOffset?.y ?? 0
         // 从左边移动到中间和中间的移动分开处理
         if (item.schema != null) {
-          const newSchema = _.cloneDeep(item.schema)
+          const newSchema = cloneDeep(item.schema)
           newSchema.style.top = `${-initialY + y + parseInt(newSchema.style.top)}px`
           newSchema.style.left = `${-initialX + x + parseInt(newSchema.style.left)}px`
           dispatch({

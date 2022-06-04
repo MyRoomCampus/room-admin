@@ -12,7 +12,7 @@ const App = () => {
   const navigate = useNavigate()
   useEffect(() => {
     if (!location.pathname.match(/login | \//)) {
-      !localStorage.getItem(JWT_ACCESS_TOKEN_KEY) && navigate('/login')
+      (!localStorage.getItem(JWT_ACCESS_TOKEN_KEY) || !store.userInfo?.username) && navigate('/login')
     }
   }, [location.pathname])
   return <AppContext.Provider value={{ store, dispatch }}>{useRoutes(router)}</AppContext.Provider>

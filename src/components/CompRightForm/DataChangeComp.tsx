@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { ComponentSchema } from '@//types/lowCodeComp.type'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
-import _ from 'lodash'
+import { cloneDeep } from 'lodash-es'
 import { Button, Form, TextArea, Upload } from '@douyinfe/semi-ui'
 import { IconUpload } from '@douyinfe/semi-icons'
 import MediaApi from '@//api/media'
@@ -23,7 +23,9 @@ const TextDataComponent: React.FC<Props> = (props) => {
         style={{ width: '100%', height: 60 }}
         value={comp.data}
         onChange={(e) => {
-          const newSchema = _.cloneDeep(comp)
+          console.log(e)
+
+          const newSchema = cloneDeep(comp)
           newSchema.data = `${e}`
           dispatch({
             type: ACTIONS.UPDATE_COMPONENT,
@@ -68,9 +70,15 @@ const ImageDataComponent: React.FC<Props> = (props) => {
           }
         }}
         onPreviewClick={(e) => {
+// <<<<<<< HEAD
           console.log('e:', e)
-          const newSchema = _.cloneDeep(comp)
-          newSchema.data = e.response?`https://x.saicem.top/${e.response.key}`:''
+          const newSchema = cloneDeep(comp)
+          newSchema.data = e.response ? `https://x.saicem.top/${e.response.key}` : ''
+// =======
+//           console.log(e)
+//           const newSchema = cloneDeep(comp)
+//           newSchema.data = e.url ? e.url : ''
+// >>>>>>> 22eab523f45297a09a117175eeaf24efb13b0820
           dispatch({
             type: ACTIONS.UPDATE_COMPONENT,
             payload: newSchema
@@ -105,6 +113,7 @@ const VideoDataComponent: React.FC<Props> = (props) => {
   return (
     <Section text={'视频内容'}>
       <Upload
+// <<<<<<< HEAD
        action='https://upload-z2.qiniup.com/'
        data={(file:File)=>{
          return {
@@ -116,13 +125,26 @@ const VideoDataComponent: React.FC<Props> = (props) => {
        }}
        onPreviewClick={(e) => {
          console.log('e:', e)
-         const newSchema = _.cloneDeep(comp)
-         newSchema.data = e.response?`https://x.saicem.top/${e.response.key}`:''
+         const newSchema = cloneDeep(comp)
+         newSchema.data = e.response ? `https://x.saicem.top/${e.response.key}` : ''
          dispatch({
            type: ACTIONS.UPDATE_COMPONENT,
            payload: newSchema
          })
        }}
+// =======
+//         action="http://127.0.0.1:4523/mock/956583/resource?ContentType=multipart/form-data"
+//         // onChange={(e) => updateList(e.fileList.map((value: FileItem) => (value.url ? value.url : '')))}
+//         onPreviewClick={(e) => {
+//           console.log(e)
+//           const newSchema = cloneDeep(comp)
+//           newSchema.data = e.url ? e.url : ''
+//           dispatch({
+//             type: ACTIONS.UPDATE_COMPONENT,
+//             payload: newSchema
+//           })
+//         }}
+// >>>>>>> 22eab523f45297a09a117175eeaf24efb13b0820
       >
         <Button icon={<IconUpload />} theme="light">
           点击上传
@@ -162,9 +184,15 @@ const AudioDataComponent: React.FC<Props> = (props) => {
           }
         }}
         onPreviewClick={(e) => {
+// <<<<<<< HEAD
           console.log('e:', e)
-          const newSchema = _.cloneDeep(comp)
+          const newSchema = cloneDeep(comp)
           newSchema.data = e.response?`https://x.saicem.top/${e.response.key}`:''
+// =======
+//           console.log(e)
+//           const newSchema = cloneDeep(comp)
+//           newSchema.data = e.url ? e.url : ''
+// >>>>>>> 22eab523f45297a09a117175eeaf24efb13b0820
           dispatch({
             type: ACTIONS.UPDATE_COMPONENT,
             payload: newSchema

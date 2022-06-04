@@ -3,7 +3,7 @@ import styles from './index.module.less'
 import { BoxComponent, ImageComponent, TextComponent, VideoComponent } from '@//types/lowCodeComp.type'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
-import _ from 'lodash'
+import {  cloneDeep } from 'lodash-es'
 import { Form, Row, Col, Slider } from '@douyinfe/semi-ui'
 
 interface Props {
@@ -55,7 +55,7 @@ export const BorderComponent: React.FC<Props> = (props) => {
                     console.log('changed:', color)
                     arr[arr.length - 1] = value
                     console.log('arr:', arr)
-                    const newSchema = _.cloneDeep(comp)
+                    const newSchema = cloneDeep(comp)
                     newSchema.style.border = arr.join(' ')
                     console.log(newSchema)
                     dispatch({
@@ -75,7 +75,7 @@ export const BorderComponent: React.FC<Props> = (props) => {
           step={1}
           value={parseInt(redius.substring(0, redius.length - 1))}
           onChange={(value) => {
-            const newSchema = _.cloneDeep(comp)
+            const newSchema = cloneDeep(comp)
             newSchema.style.borderRadius = `${value}px`
             console.log(value)
             dispatch({
@@ -118,7 +118,7 @@ export const ExtraBorderComponent: React.FC<extraProps> = (props) => {
                     console.log('changed:', color)
                     arr[arr.length - 1] = value
                     console.log('arr:', arr)
-                    const newSchema = _.cloneDeep(comp)
+                    const newSchema = cloneDeep(comp)
                     newSchema.style.border = arr.join(' ')
                     console.log(newSchema)
                     dispatch({
@@ -138,7 +138,7 @@ export const ExtraBorderComponent: React.FC<extraProps> = (props) => {
             step={1}
             value={parseInt(redius.substring(0, redius.length - 1))}
             onChange={(value) => {
-              const newSchema = _.cloneDeep(comp)
+              const newSchema = cloneDeep(comp)
               newSchema.style.borderRadius = `${value}px`
               console.log(value)
               dispatch({

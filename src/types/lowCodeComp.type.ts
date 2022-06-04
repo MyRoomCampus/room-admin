@@ -125,7 +125,7 @@ export type ComponentSchema =
   | HouseComponent
 
 export interface IPageSchema {
-  projectId: string
+  houseId: number
   projectName: string
   author: string
   data: ComponentSchema[]
@@ -151,7 +151,6 @@ export interface IHouseCardData {
 export interface ILowCodeInfo {
   JSONSchema: IPageSchema
   scale: number
-  curTotalHeight: number
   curSelectCompId: string
   curSelectLayerId: string
   houseCardData: IHouseCardData

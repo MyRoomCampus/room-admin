@@ -3,7 +3,7 @@ import styles from './index.module.less'
 import { TextComponent } from '@//types/lowCodeComp.type'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
-import _ from 'lodash'
+import {  cloneDeep } from 'lodash-es'
 import { Form, Row, Col, Slider, RadioGroup, Radio } from '@douyinfe/semi-ui'
 
 interface Props {
@@ -51,7 +51,7 @@ export const TextPropsComponent: React.FC<Props> = (props) => {
                   onClick={() => {
                     setColor(value)
 
-                    const newSchema = _.cloneDeep(comp)
+                    const newSchema = cloneDeep(comp)
                     newSchema.style.color = value
                     console.log(newSchema)
                     dispatch({
@@ -72,7 +72,7 @@ export const TextPropsComponent: React.FC<Props> = (props) => {
             step={1}
             value={parseInt(textsize.substring(0, textsize.length - 2))}
             onChange={(value) => {
-              const newSchema = _.cloneDeep(comp)
+              const newSchema = cloneDeep(comp)
               newSchema.style.fontSize = `${value}px`
               console.log(value)
               dispatch({
@@ -90,7 +90,7 @@ export const TextPropsComponent: React.FC<Props> = (props) => {
           buttonSize="middle"
           defaultValue={'center'}
           onChange={(e) => {
-            const newSchema = _.cloneDeep(comp)
+            const newSchema = cloneDeep(comp)
             newSchema.style.textAlign = `${e.target.value}`
             console.log('textAlign:', e)
             dispatch({
