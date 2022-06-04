@@ -1,27 +1,54 @@
 .login {
   &-page-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     width: 100vw;
     height: 100vh;
-    background-color: #fc9;
+    background-image: url('https://lf3-xfl.bytescm.com/obj/xfl-static/xfl_site/img/1ca7632.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  &-intro {
+    &-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 500px;
+      height: 300px;
+    }
+
+    &-img {
+      width: 47px;
+      height: 47px;
+      margin-bottom: 4px;
+    }
+
+    &-title {
+      margin-bottom: 10px;
+      font-size: 30px;
+      font-weight: 800;
+    }
+
+    &-content {
+      width: 500px;
+      font-size: 16px;
+      line-height: 28px;
+      color: rgb(var(--semi-grey-9) 0.35);
+    }
   }
 
   &-form-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
     display: flex;
     flex-direction: column;
-    width: 400px;
-    height: 400px;
+    min-width: 400px;
     padding: 50px 35px;
+    margin: 20px;
     border: 2px solid rgb(255 255 255 / 10%);
     border-radius: 10px;
     box-shadow: 0 0 40px rgb(8 7 16 / 60%);
-    transform: translate(-50%, -50%);
+    backdrop-filter: blur(10px);
   }
 
   &-form-title {
@@ -57,5 +84,13 @@
     &--btn {
       font-size: 18px;
     }
+  }
+
+  &-img-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-width: 500px;
+    height: 100vh;
   }
 }

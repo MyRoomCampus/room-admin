@@ -4,7 +4,6 @@ import { getAccessToken, setToken } from '@//utils/token'
 import LoginApi from '@//api/login'
 import styles from './index.module.less'
 import { useNavigate } from 'react-router'
-import ModeSwitch from '@//components/ModeSwitch'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
 import { Buffer } from 'buffer'
@@ -67,7 +66,9 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <div className={styles['login-page-container']}>
+    <div className={`${styles['login-page-container']} semi-always-light`}>
+      <div className={styles['login-img-container']}></div>
+
       <div className={styles['login-form-container']}>
         <div className={styles['login-form-title']}>欢迎进入MYROOM麦荣系统</div>
 
@@ -91,7 +92,19 @@ const LoginPage: React.FC = () => {
           </Button>
         </div>
       </div>
-      <ModeSwitch />
+      <div className={styles['login-intro-container']}>
+        <img
+          className={styles['login-intro-img']}
+          src="https://lf3-xfl.bytescm.com/obj/xfl-static/xfl_site/img/d757545.png"
+          alt="House"
+        />
+        <div className={styles['login-intro-title']}>麦荣房源落地页</div>
+        <div className={styles['login-intro-content']}>
+          <div>房产经纪人的落地页编辑平台</div>
+          <div>服务于品质房源推广落地页，操作简单，直观易用</div>
+          <div>意向房源，一键编辑与发布，为您和您的房源提供专享推广服务</div>
+        </div>
+      </div>
     </div>
   )
 }
