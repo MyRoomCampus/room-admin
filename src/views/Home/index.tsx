@@ -244,7 +244,7 @@ const HomePage: React.FC = () => {
               {record.isPublished ? '取消发布' : '发布'}
             </Button>
             <Button onClick={() => {
-              navigator('/dashboard/online-user')
+              navigator(`/dashboard/online-user/${record.id}`)
             }}>查看在线用户</Button>
           </ButtonGroup>
         );

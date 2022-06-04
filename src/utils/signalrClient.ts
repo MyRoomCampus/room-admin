@@ -24,7 +24,7 @@ type AnswerFunction = (offerKey: string, answer: RTCSessionDescription) => void
 
 // ------------------------------------------------------------------
 export class SignalRClient {
-  private readonly baseUrl = 'https://localhost:5000';
+  private readonly baseUrl = import.meta.env.VITE_BASE_URL as string;
   private readonly url = `${this.baseUrl}/hub/project`;
   private readonly connection: HubConnection;
 

@@ -4,29 +4,32 @@ import { ClientInfo, SignalRClient } from '@//utils/signalrClient';
 import { JWT_ACCESS_TOKEN_KEY } from '@//utils/token';
 import React, { useEffect, useState } from 'react';
 import Header from '@douyinfe/semi-ui/lib/es/navigation/Header';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const OnlineUser: React.FC = () => {
   // TODO: get house id
-  const navigator = useNavigate();
-  const accessToken = localStorage.getItem(JWT_ACCESS_TOKEN_KEY);
-  const [dataSource, setDataSource] = useState<ClientInfo[]>([]);
+  const navigator = useNavigate()
+  const params = useParams()
+  const accessToken = localStorage.getItem(JWT_ACCESS_TOKEN_KEY)
+  const [dataSource, setDataSource] = useState<ClientInfo[]>([])
   if (accessToken === null) {
-    navigator('/login');
-    return <div>未登录</div>;
+    navigator('/login')
+    return <div>未登录</div>
   }
 
   const receiveVisit = (clientInfos: ClientInfo[]) => {
-    setDataSource(clientInfos);
-  };
+    setDataSource(clientInfos)
+  }
 
-  const client = new SignalRClient(accessToken);
+  const client = new SignalRClient(accessToken)
 
   const buildConnection = async () => {
-    await client.startUp();
-    client.onReceiveVisit = receiveVisit;
-    client.sendObserve(103612);
-  };
+    console.log('connection begin')
+    await client.startUp()
+    client.onReceiveVisit = receiveVisit
+    console.log('houseid', params.houseId)
+    client.sendObserve(parseInt(params.houseId ?? '103612'))
+  }
 
   useEffect(() => {
     void buildConnection();
@@ -48,10 +51,10 @@ const OnlineUser: React.FC = () => {
           <Tooltip content={'尚未实现'}>
             <Button>发起通话</Button>
           </Tooltip>
-        );
+        )
       }
     }
-  ];
+  ]
 
   return (
     <div className={styles['online-user-box']}>
