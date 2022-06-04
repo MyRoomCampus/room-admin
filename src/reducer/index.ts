@@ -1,16 +1,17 @@
+import _ from 'lodash-es'
 import { BoxComponent, ComponentName, ComponentSchema, IHouseCardData } from '../types/lowCodeComp.type'
 import { IStore, IAction } from '../types/store.types'
 import { IUserInfo } from '../types/userInfo.types'
-import { findCompFromJson } from '../utils/jsonSchemaUtils'
+import { deleteCompFromJson, findCompFromJson } from '../utils/jsonSchemaUtils'
 import ACTIONS from './actions'
 
 export interface InitLowCodeInfo {
-  houseId:number
+  houseId: number
   projectName: string
   author: string
   houseCardData: IHouseCardData
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data?:any
+  data?: any
 }
 
 export type ActionPayLoad = InitLowCodeInfo | ComponentSchema | number | string | IUserInfo
@@ -101,6 +102,20 @@ const lowCodeReducer = {
       ...store,
       lowCodeInfo
     }
+  },
+
+  deleteComponent(store: IStore, payload: string): IStore {
+    const lowCodeInfo = _.cloneDeep(store.lowCodeInfo)
+
+    const data = deleteCompFromJson(payload, lowCodeInfo?.JSONSchema.data)
+    if (data && lowCodeInfo) {
+      lowCodeInfo.JSONSchema.data = data
+    }
+
+    return {
+      ...store,
+      lowCodeInfo
+    }
   }
 }
 
@@ -130,6 +145,8 @@ const reducer = (state: IStore, action: IAction<ActionPayLoad>): IStore => {
       return lowCodeReducer.updateCurSelectedLayer(state, payload as string)
     case ACTIONS.UPDATE_COMPONENT:
       return lowCodeReducer.updateComponent(state, payload as ComponentSchema)
+    case ACTIONS.DELETE_COMPONENT:
+      return lowCodeReducer.deleteComponent(state, payload as string)
     default:
       return state
   }
