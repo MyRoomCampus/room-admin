@@ -1,7 +1,7 @@
 import styles from './index.module.less';
 import { Button, Table, Tooltip } from '@douyinfe/semi-ui';
 import { ClientInfo, SignalRClient } from '@//utils/signalrClient';
-import { JWT_ACCESS_TOKEN_KEY } from '@//utils/token';
+import { getAccessToken } from '@//utils/token';
 import React, { useEffect, useState } from 'react';
 import Header from '@douyinfe/semi-ui/lib/es/navigation/Header';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,20 +10,20 @@ const OnlineUser: React.FC = () => {
   // TODO: get house id
   const navigator = useNavigate()
   const params = useParams()
-  const accessToken = localStorage.getItem(JWT_ACCESS_TOKEN_KEY)
+
   const [dataSource, setDataSource] = useState<ClientInfo[]>([])
-  if (accessToken === null) {
-    navigator('/login')
-    return <div>未登录</div>
-  }
 
   const receiveVisit = (clientInfos: ClientInfo[]) => {
     setDataSource(clientInfos)
   }
 
-  const client = new SignalRClient(accessToken)
-
   const buildConnection = async () => {
+    const accessToken =  await getAccessToken()
+    if (!accessToken) {
+      navigator('/login')
+      return
+    }
+    const client = new SignalRClient(accessToken)
     console.log('connection begin')
     await client.startUp()
     client.onReceiveVisit = receiveVisit
