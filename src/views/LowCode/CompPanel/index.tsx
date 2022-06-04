@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import styles from './index.module.less'
-import { Nav, Tree } from '@douyinfe/semi-ui'
+import { Modal, Nav, Tree } from '@douyinfe/semi-ui'
 import { IconAppCenter, IconAscend, IconComponent } from '@douyinfe/semi-icons'
 import { NavItems, NavItemPropsWithItems } from '@douyinfe/semi-ui/lib/es/navigation'
 import { BASE_COMPS, HIGHER_COMPS } from '@//constants/lowCodeComp'
@@ -97,6 +97,31 @@ const CompPanel: React.FC = () => {
     )
   }
 
+  const deleteCompHandler = (id: string) => {
+    // 删除组件直接清空当前选择的层级和组件，偷懒的方法，有待优化
+    const deleteComp = (id: string) => {
+      dispatch({
+        type: ACTIONS.DELETE_COMPONENT,
+        payload: id
+      })
+      dispatch({
+        type: ACTIONS.UPDATE_SELECTED_LAYWER,
+        payload: ''
+      })
+      dispatch({
+        type: ACTIONS.UPDATE_SELECTED_COMP,
+        payload: ''
+      })
+    }
+
+    Modal.warning({
+      title: '删除组件',
+      content: '确认删除该组件？',
+      onOk: () => {
+        deleteComp(id)
+      }
+    })
+  }
   const renderLayerContent = () => {
     const { lowCodeInfo } = store
     if (lowCodeInfo != null) {
@@ -106,7 +131,7 @@ const CompPanel: React.FC = () => {
           label: 'root',
           key: 'root',
           value: 'root',
-          children: genTreeFromJson(data)
+          children: genTreeFromJson(data, deleteCompHandler)
         }
       ]
 
