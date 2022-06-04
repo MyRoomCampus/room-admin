@@ -17,8 +17,8 @@ export const createObserveBox = async (houseId: number) => {
   document.body.appendChild(observeBox);
   const root = ReactDOM.createRoot(observeBox);
 
-  const unmount = () => {
-    client.stop()
+  const unmount = async () => {
+    await client.stop()
     root.unmount();
     observeBox?.remove();
   };
