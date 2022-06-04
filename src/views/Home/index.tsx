@@ -4,7 +4,7 @@ import { Button, Table, Avatar, ButtonGroup, Toast, Modal, Form, Row, Col, Toolt
 import AddProject from './AddProject'
 import { AvatarColor } from '@douyinfe/semi-ui/lib/es/avatar'
 import { IHouseDataOfHouse } from '@//api/home'
-import ProgramListApi, { IAProgramInfo, IProgramInfoDataField } from '@//api/programList'
+import ProgramListApi, { IProgramInfoDataField } from '@//api/programList'
 import baseRequest from '@//api'
 import AppContext from '@//store'
 import ACTIONS from '@//reducer/actions'
