@@ -7,12 +7,15 @@ import { useEffect, useReducer } from 'react'
 import reducer from './reducer'
 import { JWT_ACCESS_TOKEN_KEY } from './utils/token'
 const App = () => {
+  useEffect(() => {
+    document.body.setAttribute('theme-mode', 'light')
+  }, [])
   const [store, dispatch] = useReducer(reducer, initialStore)
   const location = useLocation()
   const navigate = useNavigate()
   useEffect(() => {
     if (!location.pathname.match(/login | \//)) {
-      (!localStorage.getItem(JWT_ACCESS_TOKEN_KEY) || !store.userInfo?.username) && navigate('/login')
+      ;(!localStorage.getItem(JWT_ACCESS_TOKEN_KEY) || !store.userInfo?.username) && navigate('/login')
     }
   }, [location.pathname])
   return <AppContext.Provider value={{ store, dispatch }}>{useRoutes(router)}</AppContext.Provider>
