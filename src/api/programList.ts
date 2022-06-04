@@ -11,9 +11,11 @@ interface IProgramListParam {
 }
 
 export interface IProgramInfoDataField {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [x: string]: any
   houseId: number
   name: string
-  isPublished: boolean
+  isPublished?: boolean
   createdAt: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any
