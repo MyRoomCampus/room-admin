@@ -1,57 +1,67 @@
 import styles from './index.module.less';
-import ReactDOM from 'react-dom/client';
 import { Button, Table, Tooltip } from '@douyinfe/semi-ui';
 import { ClientInfo, SignalRClient } from '@//utils/signalrClient';
-import { getAccessToken } from '@//utils/token';
+import { JWT_ACCESS_TOKEN_KEY } from '@//utils/token';
 import React, { useEffect, useState } from 'react';
 import Header from '@douyinfe/semi-ui/lib/es/navigation/Header';
+import { useNavigate } from 'react-router-dom';
 
-const createObserveBox = async (houseId: number): React.ReactElement => {
-  let observeBox = document.getElementById('observe-box');
-  if (observeBox != null) {
-    console.log('observe box has already exist, please exit the current observe box');
-    return <div>observe box has already exist, please exit the current observe box</div>
-  }
-  observeBox = document.createElement('div');
-  observeBox.id = 'observe-box';
-  document.body.appendChild(observeBox);
-  const root = ReactDOM.createRoot(observeBox);
+// export const createObserveBox = async (houseId: number) => {
+// let observeBox = document.getElementById('observe-box');
+// if (observeBox != null) {
+//   console.log('observe box has already exist, please exit the current observe box');
+//   return;
+// }
+// observeBox = document.createElement('div');
+// observeBox.id = 'observe-box';
+// document.body.appendChild(observeBox);
+// const root = ReactDOM.createRoot(observeBox);
 
-  const unmount = async () => {
-    await client.stop()
-    root.unmount();
-    observeBox?.remove();
-  };
+// const unmount = async () => {
+//   await client.stop()
+//   root.unmount();
+//   observeBox?.remove();
+// };
 
-  const accessToken = await getAccessToken();
+// const accessToken = await getAccessToken();
+// if (accessToken === null) {
+//   return console.error('Can\'t get accessToken.');
+// }
+// const client = new SignalRClient(accessToken);
+//
+// root.render(
+//   <OnlineUser client={client} houseId={houseId} unmount={unmount}></OnlineUser>
+// );
+// };
+
+const OnlineUser: React.FC = () => {
+  // todo get house id
+  const navigator = useNavigate();
+  const accessToken = localStorage.getItem(JWT_ACCESS_TOKEN_KEY);
+
   if (accessToken === null) {
-    console.error('Can\'t get accessToken.');
-    return <div>error</div>
+    navigator('/login');
+    return <div>未登录</div>;
   }
-  const client = new SignalRClient(accessToken);
-
-  return (
-    <OnlineUser client={client} houseId={houseId} unmount={unmount}></OnlineUser>
-  );
-};
-
-const OnlineUser = (props: { client: SignalRClient, houseId: number, unmount: () => void }) => {
-
-  const [dataSource, setDataSource] = useState<ClientInfo[]>([]);
 
   const receiveVisit = (clientInfos: ClientInfo[]) => {
     setDataSource(clientInfos);
   };
 
-  const connect = async () => {
-    await props.client.startUp();
-    props.client.onReceiveVisit = receiveVisit;
-    props.client.sendObserve(props.houseId);
+  const client = new SignalRClient(accessToken);
+
+  const buildConnection = async () => {
+    await client.startUp();
+    client.onReceiveVisit = receiveVisit;
+    client.sendObserve(103612);
   };
 
   useEffect(() => {
-    void connect();
+    void buildConnection();
   });
+
+
+  const [dataSource, setDataSource] = useState<ClientInfo[]>([]);
 
   const columns = [
     {
@@ -78,8 +88,7 @@ const OnlineUser = (props: { client: SignalRClient, houseId: number, unmount: ()
     <div className={styles['online-user-box']}>
       <Header style={{ display: 'flex', flexDirection: 'row' }}>
         <p>用户列表</p>
-        <Button style={{ right: '30px' }} onClick={() => props.unmount()
-        }>退出</Button>
+        <Button style={{ right: '30px' }}>退出</Button>
       </Header>
 
       <div>
@@ -90,4 +99,4 @@ const OnlineUser = (props: { client: SignalRClient, houseId: number, unmount: ()
   );
 };
 
-export default createObserveBox
+export default OnlineUser;
