@@ -10,7 +10,6 @@ import AppContext from '@//store';
 import ACTIONS from '@//reducer/actions';
 import { useNavigate } from 'react-router';
 import moment from 'moment';
-import { createObserveBox } from '@//views/OnlineUser';
 
 interface DataforEditProject {
   houseId: number;
@@ -19,6 +18,7 @@ interface DataforEditProject {
 
 interface IHouseListEntity extends IProgramInfoDataField {
   key: number;
+  isPublished?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -244,7 +244,7 @@ const HomePage: React.FC = () => {
               {record.isPublished ? '取消发布' : '发布'}
             </Button>
             <Button onClick={() => {
-              void createObserveBox(record.houseId)
+              navigator(`/dashboard/online-user/${record.id}`)
             }}>查看在线用户</Button>
           </ButtonGroup>
         );

@@ -42,7 +42,7 @@ const router: RouteObject[] = [
         element: lazyLoad(<UserInfo />)
       },
       {
-        path: '/dashboard/online-user',
+        path: '/dashboard/online-user/:houseId',
         element: lazyLoad(<OnlineUser />)
       }
     ]
