@@ -6,39 +6,11 @@ import React, { useEffect, useState } from 'react';
 import Header from '@douyinfe/semi-ui/lib/es/navigation/Header';
 import { useNavigate } from 'react-router-dom';
 
-// export const createObserveBox = async (houseId: number) => {
-// let observeBox = document.getElementById('observe-box');
-// if (observeBox != null) {
-//   console.log('observe box has already exist, please exit the current observe box');
-//   return;
-// }
-// observeBox = document.createElement('div');
-// observeBox.id = 'observe-box';
-// document.body.appendChild(observeBox);
-// const root = ReactDOM.createRoot(observeBox);
-
-// const unmount = async () => {
-//   await client.stop()
-//   root.unmount();
-//   observeBox?.remove();
-// };
-
-// const accessToken = await getAccessToken();
-// if (accessToken === null) {
-//   return console.error('Can\'t get accessToken.');
-// }
-// const client = new SignalRClient(accessToken);
-//
-// root.render(
-//   <OnlineUser client={client} houseId={houseId} unmount={unmount}></OnlineUser>
-// );
-// };
-
 const OnlineUser: React.FC = () => {
-  // todo get house id
+  // TODO: get house id
   const navigator = useNavigate();
   const accessToken = localStorage.getItem(JWT_ACCESS_TOKEN_KEY);
-
+  const [dataSource, setDataSource] = useState<ClientInfo[]>([]);
   if (accessToken === null) {
     navigator('/login');
     return <div>未登录</div>;
@@ -59,9 +31,6 @@ const OnlineUser: React.FC = () => {
   useEffect(() => {
     void buildConnection();
   });
-
-
-  const [dataSource, setDataSource] = useState<ClientInfo[]>([]);
 
   const columns = [
     {
