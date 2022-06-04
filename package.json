@@ -25,6 +25,7 @@
   "dependencies": {
     "@douyinfe/semi-icons": "^2.10.2",
     "@douyinfe/semi-ui": "^2.10.1",
+    "@microsoft/signalr": "^6.0.5",
     "@types/lodash-es": "^4.17.6",
     "ahooks": "^3.4.0",
     "axios": "^0.27.2",
