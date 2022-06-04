@@ -1,55 +1,58 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
-import styles from './index.module.less'
-import { Button, Table, Avatar, ButtonGroup, Toast, Modal, Form, Row, Col, Tooltip } from '@douyinfe/semi-ui'
-import AddProject from './AddProject'
-import { AvatarColor } from '@douyinfe/semi-ui/lib/es/avatar'
-import { IHouseDataOfHouse } from '@//api/home'
-import ProgramListApi, { IAProgramInfo, IProgramInfoDataField } from '@//api/programList'
-import baseRequest from '@//api'
-import AppContext from '@//store'
-import ACTIONS from '@//reducer/actions'
-import { useNavigate } from 'react-router'
-import moment from 'moment'
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import styles from './index.module.less';
+import { Avatar, Button, ButtonGroup, Col, Form, Modal, Row, Table, Toast } from '@douyinfe/semi-ui';
+import AddProject from './AddProject';
+import { AvatarColor } from '@douyinfe/semi-ui/lib/es/avatar';
+import { IHouseDataOfHouse } from '@//api/home';
+import ProgramListApi, { IAProgramInfo, IProgramInfoDataField } from '@//api/programList';
+import baseRequest from '@//api';
+import AppContext from '@//store';
+import ACTIONS from '@//reducer/actions';
+import { useNavigate } from 'react-router';
+import moment from 'moment';
+import { createObserveBox } from '@//views/OnlineUser';
+
 interface DataforEditProject {
-  houseId: number
-  projectName: string
+  houseId: number;
+  projectName: string;
 }
+
 interface IHouseListEntity extends IProgramInfoDataField {
-  key: number
+  key: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 const HomePage: React.FC = () => {
-  const navigator = useNavigate()
-  const [dataSource, setDataSOurce] = useState<IHouseListEntity[]>([])
-  const [loading, setLoading] = useState(false)
-  const [page, setPage] = useState(1)
-  const [perpage, setPerpage] = useState(5)
-  const [total, setTotal] = useState(0)
-  const { store, dispatch } = useContext(AppContext)
-  const api = useRef<{ validate: () => Promise<DataforEditProject> }>()
+  const navigator = useNavigate();
+  const [dataSource, setDataSOurce] = useState<IHouseListEntity[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [perpage, setPerpage] = useState(5);
+  const [total, setTotal] = useState(0);
+  const { store, dispatch } = useContext(AppContext);
+  const api = useRef<{ validate: () => Promise<DataforEditProject> }>();
 
-  const figmaIconUrl = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png'
+  const figmaIconUrl = 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png';
 
   // 执行删除
   const deleteProject = async (record: IHouseListEntity) => {
-    const id = record.houseId
-    const res = await baseRequest.del(`/project/${id}`, { id })
+    const id = record.houseId;
+    const res = await baseRequest.del(`/project/${id}`, { id });
     if (res) {
-      Toast.success('删除成功！')
-      void fetchData(page, perpage)
+      Toast.success('删除成功！');
+      void fetchData(page, perpage);
     } else {
-      Toast.error('删除失败！')
+      Toast.error('删除失败！');
     }
-  }
+  };
   // 执行编辑
   const handleEditProject = (record: IHouseListEntity) => {
     void api.current?.validate().then(async () => {
-      const houseId = record.houseId
-      const name = record.name
-      const projectData = await baseRequest.get<IAProgramInfo>(`/project/${houseId}`, { id: houseId })
-      const houseCardData = await baseRequest.get<IHouseDataOfHouse>(`/house/${houseId}`, { id: houseId })
+      const houseId = record.houseId;
+      const name = record.name;
+      const projectData = await baseRequest.get<IAProgramInfo>(`/project/${houseId}`, { id: houseId });
+      const houseCardData = await baseRequest.get<IHouseDataOfHouse>(`/house/${houseId}`, { id: houseId });
       if (projectData && houseCardData) {
         dispatch({
           type: ACTIONS.INITIAL_LOW_CODE,
@@ -69,13 +72,13 @@ const HomePage: React.FC = () => {
               pricing: houseCardData.data.pricing
             }
           }
-        })
-        navigator('/low-code-platform')
+        });
+        navigator('/low-code-platform');
       } else {
-        Toast.error('编辑失败')
+        Toast.error('编辑失败');
       }
-    })
-  }
+    });
+  };
   // 点击编辑的回调
   const editProjectHandler = (record: IHouseListEntity) => {
     Modal.info({
@@ -84,7 +87,7 @@ const HomePage: React.FC = () => {
         <>
           <Form
             getFormApi={(formApi: { validate: () => Promise<DataforEditProject> }) => {
-              api.current = formApi
+              api.current = formApi;
             }}
           >
             <Row>
@@ -113,20 +116,20 @@ const HomePage: React.FC = () => {
         </>
       ),
       onOk: () => {
-        handleEditProject(record)
+        handleEditProject(record);
       }
-    })
-  }
+    });
+  };
   // 点击删除的回调
   const deleteProjectHandler = (record: IHouseListEntity) => {
     Modal.warning({
       title: '删除项目',
       content: '确认是否删除项目',
       onOk: () => {
-        void deleteProject(record)
+        void deleteProject(record);
       }
-    })
-  }
+    });
+  };
   // 点击发布/取消发布后的回调
   const editProjectStatusHandler = (record: IHouseListEntity) => {
     Modal.warning({
@@ -134,39 +137,39 @@ const HomePage: React.FC = () => {
       content: record.isPublished ? '请问是否确认取消发布该项目？' : '请问是否确认发布该项目？',
       onOk: () => {
         if (!record.isPublished) {
-          void publishProject(record)
+          void publishProject(record);
         } else {
-          void cancelPublishProject(record)
+          void cancelPublishProject(record);
         }
       }
-    })
-  }
+    });
+  };
   // 执行项目发布
   const publishProject = async (record: IHouseListEntity) => {
-    const id = record.houseId
-    const isPublish = true
-    const res = await baseRequest.put(`/project/publish/${id}`, { isPublish })
-    console.log(res)
+    const id = record.houseId;
+    const isPublish = true;
+    const res = await baseRequest.put(`/project/publish/${id}`, { isPublish });
+    console.log(res);
     if (res) {
-      Toast.success('发布项目成功！')
-      void fetchData(page, perpage)
+      Toast.success('发布项目成功！');
+      void fetchData(page, perpage);
     } else {
-      Toast.error('发布项目失败！')
+      Toast.error('发布项目失败！');
     }
-  }
+  };
   // 取消项目发布
   const cancelPublishProject = async (record: IHouseListEntity) => {
-    const id = record.houseId
-    const isPublish = false
-    const res = await baseRequest.put(`/project/publish/${id}`, { isPublish })
-    console.log(res)
+    const id = record.houseId;
+    const isPublish = false;
+    const res = await baseRequest.put(`/project/publish/${id}`, { isPublish });
+    console.log(res);
     if (res) {
-      Toast.success('取消发布项目成功！')
-      void fetchData(page, perpage)
+      Toast.success('取消发布项目成功！');
+      void fetchData(page, perpage);
     } else {
-      Toast.error('取消发布项目失败！')
+      Toast.error('取消发布项目失败！');
     }
-  }
+  };
   const columns = [
     {
       title: '项目id',
@@ -183,7 +186,7 @@ const HomePage: React.FC = () => {
             <Avatar size="small" shape="square" src={figmaIconUrl} style={{ marginRight: 12 }}></Avatar>
             {text}
           </div>
-        )
+        );
       }
     },
     {
@@ -193,11 +196,11 @@ const HomePage: React.FC = () => {
         return (
           <div>
             <Avatar size="small" color={record.avatarBg} style={{ marginRight: 4 }}>
-              {typeof text === 'string' && text.slice(0, 1)}
+              {text.slice(0, 1)}
             </Avatar>
             {text}
           </div>
-        )
+        );
       }
     },
     {
@@ -208,12 +211,10 @@ const HomePage: React.FC = () => {
       title: '发布状态',
       dataIndex: 'status',
       render: (published: boolean) => {
-        console.log(published)
-
         if (published) {
-          return <div style={{ color: 'rgba(var(--semi-green-5), 1)' }}>已发布</div>
+          return <div style={{ color: 'rgba(var(--semi-green-5), 1)' }}>已发布</div>;
         }
-        return <div style={{ color: 'rgba(var(--semi-grey-2), 1)' }}>未发布</div>
+        return <div style={{ color: 'rgba(var(--semi-grey-2), 1)' }}>未发布</div>;
       }
     },
     {
@@ -223,41 +224,41 @@ const HomePage: React.FC = () => {
           <ButtonGroup theme="borderless">
             <Button
               onClick={() => {
-                editProjectHandler(record)
+                editProjectHandler(record);
               }}
             >
               编辑
             </Button>
             <Button
               onClick={() => {
-                deleteProjectHandler(record)
+                deleteProjectHandler(record);
               }}
             >
               删除
             </Button>
             <Button
               onClick={() => {
-                editProjectStatusHandler(record)
+                editProjectStatusHandler(record);
               }}
             >
               {record.isPublished ? '取消发布' : '发布'}
             </Button>
-            <Tooltip content={'暂不支持此功能'}>
-              <Button disabled>查看在线用户</Button>
-            </Tooltip>
+            <Button onClick={() => {
+              void createObserveBox(record.houseId)
+            }}>查看在线用户</Button>
           </ButtonGroup>
-        )
+        );
       }
     }
-  ]
+  ];
 
   // 获取列表项目
   const fetchData = async (page = 1, perpage = 5) => {
-    setPage(page)
-    setLoading(true)
-    const res = await ProgramListApi.GetAllProgramOfUserRequest({ page, perpage })
+    setPage(page);
+    setLoading(true);
+    const res = await ProgramListApi.GetAllProgramOfUserRequest({ page, perpage });
     if (res) {
-      setTotal(res.data.count)
+      setTotal(res.data.count);
       const houseData: IHouseListEntity[] = res.data.data.map((item) => {
         return {
           ...item,
@@ -265,18 +266,18 @@ const HomePage: React.FC = () => {
           createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm'),
           status: item.isPublished,
           key: item.houseId
-        }
-      })
-      setDataSOurce(houseData)
+        };
+      });
+      setDataSOurce(houseData);
     } else {
-      Toast.error('获取用户项目信息失败')
+      Toast.error('获取用户项目信息失败');
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    void fetchData(page, perpage)
-  }, [page, perpage, total])
+    void fetchData(page, perpage);
+  }, [page, perpage, total]);
   return (
     <div className="program-list-Container">
       <div className={styles['program-list-title']}>项目列表</div>
@@ -296,16 +297,16 @@ const HomePage: React.FC = () => {
           showSizeChanger: true,
           pageSizeOpts: [5, 10, 20, 50, 100],
           onPageChange: (page: number) => {
-            setPage(page)
+            setPage(page);
           },
           onPageSizeChange: (perpage: number) => {
-            setPerpage(perpage)
+            setPerpage(perpage);
           }
         }}
         loading={loading}
       />
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
