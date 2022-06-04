@@ -67,8 +67,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className={`${styles['login-page-container']} semi-always-light`}>
-      <div className={styles['login-img-container']}></div>
-
+      <div className={`${styles['login-img']}`} />
       <div className={styles['login-form-container']}>
         <div className={styles['login-form-title']}>欢迎进入MYROOM麦荣系统</div>
 
