@@ -8,7 +8,8 @@ const ACTIONS = {
   UPDATE_SELECTED_COMP: 'Update_Selected_Comp',
   UPDATE_SELECTED_LAYWER: 'Update_Selected_Lawyer',
   UPDATE_PREVIEW_SCALE: 'Update_Preview_Scale',
-  UPDATE_COMPONENT: 'Update_Component'
+  UPDATE_COMPONENT: 'Update_Component',
+  DELETE_COMPONENT: 'Delete_Component'
 }
 
 export default ACTIONS
