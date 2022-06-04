@@ -2,8 +2,8 @@
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
 
 export interface ClientInfo {
-  connectionId: string;
   userName: string;
+  connectionId: string;
 }
 
 // ------------------------------------------------------------------
@@ -91,22 +91,22 @@ export class SignalRClient {
 
   // ------------------------------------------------------------------
 
-  sendVisit(projectId: string) {
+  sendVisit(houseId: string) {
     if (!this.isConnected()) {
       return console.error('not connected');
     }
 
-    this.connection.invoke('SendVisit', projectId).catch(err => {
+    this.connection.invoke('SendVisit', houseId).catch(err => {
       return console.error(err.toString());
     });
   }
 
-  sendObserve(projectId: number) {
+  sendObserve(houseId: number) {
     if (!this.isConnected()) {
       return console.error('not connected');
     }
 
-    this.connection.invoke('SendObserve', projectId).catch(err => {
+    this.connection.invoke('SendObserve', houseId).catch(err => {
       return console.error(err.toString());
     });
   }
