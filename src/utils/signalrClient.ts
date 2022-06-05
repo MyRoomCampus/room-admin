@@ -51,6 +51,9 @@ export class SignalRClient {
   }
 
   async startUp() {
+    if (this.isConnected()){
+      return console.error('already connected')
+    }
     await this.connection.start();
     console.log('connection')
     if (!this.isConnected()) {

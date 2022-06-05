@@ -1,41 +1,37 @@
 import { Button, Table, Tooltip } from '@douyinfe/semi-ui';
 import { ClientInfo, SignalRClient } from '@//utils/signalrClient';
 import { getAccessToken } from '@//utils/token';
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const OnlineUser: React.FC = () => {
   const navigator = useNavigate()
   const params = useParams()
-  const [isBuildConnection, setIsBuildConnection] = useState(false)
+  const houseId = params.houseId;
 
   const [dataSource, setDataSource] = useState<ClientInfo[]>([])
 
-  const buildConnection = async () => {
-    if(isBuildConnection){
-      return;
+  useEffect(() => {
+    const buildConnection = async () => {
+      const accessToken =  await getAccessToken()
+      if (!accessToken) {
+        navigator('/login')
+        return
+      }
+
+      const client = new SignalRClient(accessToken)
+
+      client.onReceiveVisit = receiveVisit
+      await client.startUp()
+      client.sendObserve(parseInt(houseId ?? '103612'))
     }
-    setIsBuildConnection(true);
 
-    const accessToken =  await getAccessToken()
-    if (!accessToken) {
-      navigator('/login')
-      return
+    const receiveVisit = (clientInfos: ClientInfo[]) => {
+      setDataSource(clientInfos)
     }
-    const client = new SignalRClient(accessToken)
-    console.log('connection begin')
+    void buildConnection();
+  }, [houseId])
 
-    client.onReceiveVisit = receiveVisit
-    console.log('houseid', params.houseId)
-    await client.startUp()
-    client.sendObserve(parseInt(params.houseId ?? '103612'))
-  }
-
-  const receiveVisit = (clientInfos: ClientInfo[]) => {
-    setDataSource(clientInfos)
-  }
-
-  void buildConnection();
 
   const columns = [
     {
@@ -60,7 +56,7 @@ const OnlineUser: React.FC = () => {
 
   return (
     <div className={'online-user-container'}>
-      <div style={{marginBottom: '20px'}}>项目列表</div>
+      <div style={{marginBottom: '20px'}}>用户列表</div>
       <Table columns={columns} dataSource={dataSource} />
     </div>
   );
