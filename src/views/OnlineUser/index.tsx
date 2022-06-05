@@ -2,22 +2,23 @@ import styles from './index.module.less';
 import { Button, Table, Tooltip } from '@douyinfe/semi-ui';
 import { ClientInfo, SignalRClient } from '@//utils/signalrClient';
 import { getAccessToken } from '@//utils/token';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Header from '@douyinfe/semi-ui/lib/es/navigation/Header';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const OnlineUser: React.FC = () => {
-  // TODO: get house id
   const navigator = useNavigate()
   const params = useParams()
+  const [isBuildConnection, setIsBuildConnection] = useState(false)
 
   const [dataSource, setDataSource] = useState<ClientInfo[]>([])
 
-  const receiveVisit = (clientInfos: ClientInfo[]) => {
-    setDataSource(clientInfos)
-  }
-
   const buildConnection = async () => {
+    if(isBuildConnection){
+      return;
+    }
+    setIsBuildConnection(true);
+
     const accessToken =  await getAccessToken()
     if (!accessToken) {
       navigator('/login')
@@ -25,15 +26,18 @@ const OnlineUser: React.FC = () => {
     }
     const client = new SignalRClient(accessToken)
     console.log('connection begin')
-    await client.startUp()
+
     client.onReceiveVisit = receiveVisit
     console.log('houseid', params.houseId)
+    await client.startUp()
     client.sendObserve(parseInt(params.houseId ?? '103612'))
   }
 
-  useEffect(() => {
-    void buildConnection();
-  });
+  const receiveVisit = (clientInfos: ClientInfo[]) => {
+    setDataSource(clientInfos)
+  }
+
+  void buildConnection();
 
   const columns = [
     {
@@ -58,7 +62,7 @@ const OnlineUser: React.FC = () => {
 
   return (
     <div className={styles['online-user-box']}>
-      <Header style={{ display: 'flex', flexDirection: 'row' }}>
+      <Header style={{ display: 'flex', flexDirection: 'row' ,top: '60px'}}>
         <p>用户列表</p>
         <Button style={{ right: '30px' }}>退出</Button>
       </Header>
