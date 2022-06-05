@@ -1,19 +1,16 @@
 # MyRoom
 MyRoom经纪人子系统仓库
-
 ## ✨ Features
-待补充．．．
+- 支持HTTP2
+- 支持暗黑模式
+- 极致的性能优化（代码压缩，产物tree-shaking等）
 ## :rocket: Technologies
-- React
-- Typescript
-- [Vite](https://cn.vitejs.dev/)
-- ESlint + prettier
-- husky + lint-staged
-- [less](https://lesscss.org)
-- [semi ui](https://semi.design/zh-CN/start/getting-started)
-- plop
-- GitHub actions
-- nginx
+- 框架：React 18 + Typescript + less + semi ui
+- 打包工具：Vite
+- 代码规范：ESlint + prettier + stylelint + husky + lint-staged
+- 项目部署：基于Github actions的CI/CD，服务端采用nginx
+- 包管理：pnpm
+- 其他工具：plop实现代码模板生成
 ## 📦 Quick start
 本项目使用 pnpm 作为包管理工具，需要先全局安装 pnpm:
 ```bash
@@ -46,7 +43,7 @@ npm run plop
 │   ├── utils			工具函数
 │   │   └── token.ts
 │   ├── views			页面
-│   ├── components 	    通用组件
+│   ├── components
 │   └── vite-env.d.ts
 ├── tsconfig.json
 ├── tsconfig.node.json
