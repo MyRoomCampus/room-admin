@@ -24,7 +24,7 @@ jobs:
       - name: npm install and build
         run: |
           npm install -g pnpm
-          pnpm install
+          pnpm install --config.strict-peer-dependencies=false
           npm run build
         env:
           CI: true
