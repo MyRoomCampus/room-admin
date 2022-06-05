@@ -67,9 +67,22 @@ const MidCanvas: React.FC = () => {
             ((store.lowCodeInfo?.scale ?? 1) - 0.9) * 400
           }px)`
         }}
+        onKeyUp={(e) => {
+          if (e.key === 'Delete' || e.key === 'Backspace') {
+            console.log('delete')
+            dispatch({
+              type: ACTIONS.DELETE_COMPONENT,
+              payload: store.lowCodeInfo?.curSelectCompId
+            })
+          }
+        }}
       >
         <div className={styles['canvas-preview']} ref={scrollRef}>
-          <div id="canvas-scroll" className={styles['canvas-scroll']} ref={dropRef}>
+          <div
+            id="canvas-scroll"
+            className={styles['canvas-scroll']}
+            ref={dropRef}
+          >
             {store.lowCodeInfo?.JSONSchema.data.map((s) => {
               return <RenderJsonSchema schema={s} key={s.id} />
             })}
