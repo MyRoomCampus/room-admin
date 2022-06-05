@@ -1,9 +1,7 @@
-import styles from './index.module.less';
 import { Button, Table, Tooltip } from '@douyinfe/semi-ui';
 import { ClientInfo, SignalRClient } from '@//utils/signalrClient';
 import { getAccessToken } from '@//utils/token';
 import React, { useState } from 'react';
-import Header from '@douyinfe/semi-ui/lib/es/navigation/Header';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const OnlineUser: React.FC = () => {
@@ -61,15 +59,8 @@ const OnlineUser: React.FC = () => {
   ]
 
   return (
-    <div className={styles['online-user-box']}>
-      <Header style={{ display: 'flex', flexDirection: 'row' ,top: '60px'}}>
-        <p>用户列表</p>
-        <Button style={{ right: '30px' }}>退出</Button>
-      </Header>
-
-      <div>
-
-      </div>
+    <div className={'online-user-container'}>
+      <div style={{marginBottom: '20px'}}>项目列表</div>
       <Table columns={columns} dataSource={dataSource} />
     </div>
   );
