@@ -29,12 +29,14 @@ const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
       value={data}
       style={style as CSSProperties}
       key={id}
-      onCompositionStart={() => {
+      // onKeyUp={(e) => e.stopPropagation()}
+      onCompositionStart={(e) => {
+        console.log(e)
         set(false)
       }}
+      onCompositionUpdate={() => set(true)}
       onCompositionEnd={(e) => {
-        console.log('compositionend')
-        console.log(e)
+        console.log(e, canInput)
         set(true)
         const target = e.target as HTMLTextAreaElement
         handleTextInput(target.value ?? '')
@@ -45,6 +47,7 @@ const TextComponent: React.FC<ComponentProps> = ({ schema }) => {
           handleTextInput(e.target.value)
         }
       }}
+      onKeyUp={(e) => e.stopPropagation()}
     ></textarea>
   )
 }

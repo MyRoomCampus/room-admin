@@ -44,16 +44,6 @@ const RenderJsonSchema: React.FC<{ schema: ComponentSchema }> = ({ schema }) => 
           e.stopPropagation()
           handleComponentClick(id)
         }}
-        onKeyDown={(e) => {
-          e.stopPropagation()
-          if (e.key === 'Delete' || e.key === 'Backspace') {
-            console.log('delete')
-            dispatch({
-              type: actions.DELETE_COMPONENT,
-              payload: id
-            })
-          }
-        }}
         ref={drag}
         style={style as CSSProperties}
         key={id}
@@ -73,16 +63,6 @@ const RenderJsonSchema: React.FC<{ schema: ComponentSchema }> = ({ schema }) => 
       onMouseDown={(e) => {
         e.stopPropagation()
         handleComponentClick(id)
-      }}
-      onKeyDown={(e) => {
-        e.stopPropagation()
-        if (e.key === 'Delete' || e.key === 'Backspace') {
-          console.log('delete')
-          dispatch({
-            type: actions.DELETE_COMPONENT,
-            payload: id
-          })
-        }
       }}
     >
       <RenderComponent schema={schema} />
