@@ -1,28 +1,29 @@
-import { Button, Table, Tooltip } from '@douyinfe/semi-ui';
-import { ClientInfo, SignalRClient } from '@//utils/signalrClient';
-import { getAccessToken } from '@//utils/token';
+import {Button, Table} from '@douyinfe/semi-ui';
+import {ClientInfo, SignalRClient} from '@//utils/signalrClient';
+import {getAccessToken} from '@//utils/token';
 import React, {useEffect, useState} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
+import {randomString} from '@//utils/randomStr';
 
 const OnlineUser: React.FC = () => {
-  const navigator = useNavigate()
+  const pageNavigator = useNavigate()
   const params = useParams()
   const houseId = params.houseId;
 
   const [dataSource, setDataSource] = useState<ClientInfo[]>([])
+  // const [localOfferKey, setLocalOfferKey] = useState('')
+  const [client] = useState<SignalRClient>(new SignalRClient());
 
   useEffect(() => {
     const buildConnection = async () => {
-      const accessToken =  await getAccessToken()
+      const accessToken = await getAccessToken()
       if (!accessToken) {
-        navigator('/login')
+        pageNavigator('/login')
         return
       }
 
-      const client = new SignalRClient(accessToken)
-
       client.onReceiveVisit = receiveVisit
-      await client.startUp()
+      await client.startUp(accessToken)
       client.sendObserve(parseInt(houseId ?? '103612'))
     }
 
@@ -32,6 +33,68 @@ const OnlineUser: React.FC = () => {
     void buildConnection();
   }, [houseId])
 
+  const audioRequest = async (clientInfo: ClientInfo) => {
+    const localOfferKey = randomString(32);
+
+    const pc = new RTCPeerConnection();
+
+    // todo 放入某个组件
+    let audio: MediaStream[]
+
+    const localStream = await navigator.mediaDevices.getUserMedia({
+      audio: true
+    })
+
+    for (const track of localStream.getTracks()) {
+      pc.addTrack(track, localStream);
+    }
+
+    pc.ontrack = e => {
+      if (e?.streams) {
+        // 获取音频
+        audio.push(e.streams[0])
+        console.log(e);
+        console.log(`pc 收到视频/音频流 ${e.streams}`);
+      }
+    }
+
+    pc.onicecandidate = (e) => {
+      if (e.candidate) {
+        client.sendIceCandidateOffer(localOfferKey, e.candidate);
+      }
+    }
+
+    client.onReceiveIceCandidateAnswer = (offerKey: string, candidate: RTCIceCandidate) => {
+      if (localOfferKey !== offerKey) {
+        return console.warn(`localOfferKey:${localOfferKey} != offerKey:${offerKey}`)
+      }
+      if(candidate){
+        void pc.addIceCandidate(candidate);
+      }
+      else{
+        console.warn('Receive null candidate.')
+      }
+    }
+    client.onReceivePreAnswer = async (offerKey, answer) => {
+      if (localOfferKey !== offerKey) {
+        return console.warn(`localOfferKey:${localOfferKey} != offerKey:${offerKey}`)
+      }
+      if (!answer) {
+        return console.info('user refused the audio offer.')
+      }
+      const offer = await pc.createOffer()
+      await pc.setLocalDescription(offer);
+      client.sendOffer(offerKey, offer as RTCSessionDescription);
+    }
+    client.onReceiveAnswer = async (offerKey, answer) => {
+      if (localOfferKey !== offerKey) {
+        return console.warn(`localOfferKey:${localOfferKey} != offerKey:${offerKey}`)
+      }
+      await pc.setRemoteDescription(answer)
+    }
+
+    client.sendPreOffer(localOfferKey, clientInfo.connectionId);
+  }
 
   const columns = [
     {
@@ -44,11 +107,11 @@ const OnlineUser: React.FC = () => {
     },
     {
       title: '语言通话',
-      render: () => {
+      render: (clientInfo: ClientInfo) => {
         return (
-          <Tooltip content={'尚未实现'}>
-            <Button>发起通话</Button>
-          </Tooltip>
+          <Button onClick={() => {
+            void audioRequest(clientInfo)
+          }}>发起通话</Button>
         )
       }
     }
@@ -57,7 +120,7 @@ const OnlineUser: React.FC = () => {
   return (
     <div className={'online-user-container'}>
       <div style={{marginBottom: '20px'}}>用户列表</div>
-      <Table columns={columns} dataSource={dataSource} />
+      <Table columns={columns} dataSource={dataSource}/>
     </div>
   );
 };

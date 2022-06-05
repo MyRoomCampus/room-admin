@@ -26,31 +26,29 @@ type AnswerFunction = (offerKey: string, answer: RTCSessionDescription) => void
 export class SignalRClient {
   private readonly baseUrl = import.meta.env.VITE_BASE_URL as string;
   private readonly url = `${this.baseUrl}/hub/project`;
-  private readonly connection: HubConnection;
+  private connection: HubConnection | undefined;
 
   onReceiveVisit: VisitFunction = () => console.warn('onReceiveVisit not implemented');
   onReceiveMessage: MessageFunction = () => console.warn('onReceiveMessage not implemented');
   onReceivePreOffer: PreOfferFunction = () => console.warn('onReceivePreOffer not implemented');
   onReceivePreAnswer: PreAnswerFunction = () => console.warn('onReceivePreAnswer not implemented');
-  onReceiveIceCandidate: IceCandidateFunction = () => console.warn('onReceiveIceCandidate not implemented');
+  onReceiveIceCandidateAnswer: IceCandidateFunction = () => console.warn('onReceiveIceCandidate not implemented');
   onReceiveOffer: OfferFunction = async () => console.warn('onReceiveOffer not implemented');
   onReceiveAnswer: AnswerFunction = () => console.warn('onReceiveAnswer not implemented');
 
-  constructor(token: string) {
-    this.connection = new HubConnectionBuilder()
-      .withUrl(this.url, { accessTokenFactory: () => token })
-      .build();
-  }
-
   isConnected() {
-    return this.connection.state === HubConnectionState.Connected;
+    return this.connection?.state === HubConnectionState.Connected;
   }
 
   async stop() {
-    await this.connection.stop();
+    await this.connection?.stop();
   }
 
-  async startUp() {
+  async startUp(token: string) {
+    this.connection = new HubConnectionBuilder()
+      .withUrl(this.url, { accessTokenFactory: () => token })
+      .build();
+
     if (this.isConnected()){
       return console.error('already connected')
     }
@@ -68,16 +66,16 @@ export class SignalRClient {
       this.onReceiveMessage(user, message);
     });
 
-    this.connection.on('receivePreOffer', (offerKey: string) => {
+    this.connection.on('ReceivePreOffer', (offerKey: string) => {
       this.onReceivePreOffer(offerKey);
     });
 
-    this.connection.on('receivePreAnswer', (offerKey: string, answer: boolean) => {
+    this.connection.on('ReceivePreAnswer', (offerKey: string, answer: boolean) => {
       this.onReceivePreAnswer(offerKey, answer);
     });
 
-    this.connection.on('ReceiveIceCandidate', (user: string, candidate: RTCIceCandidate) => {
-      this.onReceiveIceCandidate(user, candidate);
+    this.connection.on('ReceiveIceCandidateAnswer', (user: string, candidate: RTCIceCandidate) => {
+      this.onReceiveIceCandidateAnswer(user, candidate);
     });
 
     this.connection.on('ReceiveOffer', (user: string, offer: string) => {
@@ -100,7 +98,7 @@ export class SignalRClient {
       return console.error('not connected');
     }
 
-    this.connection.invoke('SendVisit', houseId).catch(err => {
+    this.connection?.invoke('SendVisit', houseId).catch(err => {
       return console.error(err.toString());
     });
   }
@@ -110,7 +108,7 @@ export class SignalRClient {
       return console.error('not connected');
     }
 
-    this.connection.invoke('SendObserve', houseId).catch(err => {
+    this.connection?.invoke('SendObserve', houseId).catch(err => {
       return console.error(err.toString());
     });
   }
@@ -120,37 +118,68 @@ export class SignalRClient {
       return console.error('not connected');
     }
 
-    this.connection.invoke('SendMessage', msg).catch(err => {
+    this.connection?.invoke('SendMessage', msg).catch(err => {
       return console.error(err.toString());
     });
   }
 
-  sendIceCandidate(user: string, candidate: RTCIceCandidate) {
+  sendIceCandidateOffer(offerKey: string, candidate: RTCIceCandidate) {
     if (!this.isConnected()) {
       return console.error('not connected');
     }
 
-    this.connection.invoke('SendIceCandidate', user, JSON.stringify(candidate)).catch(err => {
+    this.connection?.invoke('SendIceCandidateOffer', offerKey, JSON.stringify(candidate)).catch(err => {
       return console.error(err.toString());
     });
   }
 
-  sendOffer(user: string, offer: RTCSessionDescription) {
+  sendIceCandidateAnser(offerKey: string, candidate: RTCIceCandidate) {
     if (!this.isConnected()) {
       return console.error('not connected');
     }
 
-    this.connection.invoke('SendVideoOffer', user, JSON.stringify(offer)).catch(err => {
+    this.connection?.invoke('SendIceCandidateAnser', offerKey, JSON.stringify(candidate)).catch(err => {
       return console.error(err.toString());
     });
   }
 
-  sendAnswer(user: string, answer: RTCSessionDescription) {
+
+  sendPreOffer(offerKey: string, connectionId: string){
+    if (!this.isConnected()){
+      return console.error('not connected');
+    }
+
+    this.connection?.invoke('SendPreOffer', offerKey, connectionId).catch(err => {
+      return console.error(err.toString());
+    })
+  }
+
+  sendPreAnswer(offerKey: string, agree: boolean){
+    if (!this.isConnected()){
+      return console.error('not connected');
+    }
+
+    this.connection?.invoke('SendPreAnswer', offerKey, agree).catch(err => {
+      return console.error(err.toString());
+    })
+  }
+
+  sendOffer(offerKey: string, offer: RTCSessionDescription) {
     if (!this.isConnected()) {
       return console.error('not connected');
     }
 
-    this.connection.invoke('SendVideoOffer', user, JSON.stringify(answer)).catch(err => {
+    this.connection?.invoke('SendOffer', offerKey, JSON.stringify(offer)).catch(err => {
+      return console.error(err.toString());
+    });
+  }
+
+  sendAnswer(offerKey: string, answer: RTCSessionDescription) {
+    if (!this.isConnected()) {
+      return console.error('not connected');
+    }
+
+    this.connection?.invoke('SendAnswer', offerKey, JSON.stringify(answer)).catch(err => {
       return console.error(err.toString());
     });
   }
