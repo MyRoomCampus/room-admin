@@ -13,7 +13,7 @@ const LoginPage: React.FC = () => {
   const { dispatch } = useContext(AppContext)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [errMsg] = useState('')
+  const [errMsg, setErrMsg] = useState('')
   const doAuth = async () => {
     const res = await getAccessToken()
     if (res) {
@@ -35,16 +35,31 @@ const LoginPage: React.FC = () => {
     void doAuth()
   }, [])
 
+  const doValidate = () => {
+    return username.length >= 6 && password.length >= 6
+  }
+
   const onRegister = async () => {
+    if (!doValidate()) {
+      Toast.info('用户名和密码必须长于6个字符')
+      setErrMsg('用户名和密码必须长于6个字符')
+      return
+    }
     const res = await LoginApi.registerRequest({ username, password })
     if (res) {
       Toast.success(res.msg)
+      setErrMsg('')
     } else {
       Toast.error('注册失败')
     }
   }
 
   const onLogin = async () => {
+    if (!doValidate()) {
+      Toast.info('用户名和密码必须长于6个字符')
+      setErrMsg('用户名和密码必须长于6个字符')
+      return
+    }
     const res = await LoginApi.loginRequest({ username, password })
     if (res) {
       setToken(res.accessToken, 'access')
