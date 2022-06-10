@@ -19,6 +19,7 @@ specifiers:
   axios: ^0.27.2
   buffer: ^6.0.3
   commitlint: ^16.2.4
+  dayjs: ^1.11.3
   eslint: ^8.15.0
   eslint-config-prettier: ^8.5.0
   eslint-config-standard-with-typescript: ^21.0.1
@@ -31,7 +32,6 @@ specifiers:
   less: ^4.1.2
   lint-staged: ^12.4.1
   lodash-es: ^4.17.21
-  moment: ^2.29.3
   plop: ^3.1.0
   postcss: ^8.3.3
   postcss-less: ^6.0.0
@@ -70,9 +70,9 @@ dependencies:
   ahooks: 3.4.1_react@18.1.0
   axios: 0.27.2
   buffer: 6.0.3
+  dayjs: 1.11.3
   eslint-config-standard-with-typescript: 21.0.1_93dfa2c073fc74c86c264982753c2867
   lodash-es: 4.17.21
-  moment: 2.29.3
   postcss: 8.4.14
   react: 18.1.0
   react-color: 2.19.3_react@18.1.0
@@ -1424,7 +1424,7 @@ packages:
     dependencies:
       '@types/js-cookie': 2.2.7
       ahooks-v3-count: 1.0.0
-      dayjs: 1.11.2
+      dayjs: 1.11.3
       intersection-observer: 0.12.0
       js-cookie: 2.2.1
       lodash: 4.17.21
@@ -2364,8 +2364,8 @@ packages:
     engines: {node: '>=0.11'}
     dev: false
 
-  /dayjs/1.11.2:
-    resolution: {integrity: sha512-F4LXf1OeU9hrSYRPTTj/6FbO4HTjPKXvEIC1P2kcnFurViINCVk3ZV0xAS3XVx9MkMsXbbqlK6hjseaYbgKEHw==}
+  /dayjs/1.11.3:
+    resolution: {integrity: sha512-xxwlswWOlGhzgQ4TKzASQkUhqERI3egRNqgV4ScR8wlANA/A9tZ7miXa44vTTKEq5l7vWoL5G57bG3zA+Kow0A==}
     dev: false
 
   /debug/2.6.9:
@@ -5276,10 +5276,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dev: true
-
-  /moment/2.29.3:
-    resolution: {integrity: sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==}
-    dev: false
 
   /mozjpeg/7.1.1:
     resolution: {integrity: sha512-iIDxWvzhWvLC9mcRJ1uSkiKaj4drF58oCqK2bITm5c2Jt6cJ8qQjSSru2PCaysG+hLIinryj8mgz5ZJzOYTv1A==}

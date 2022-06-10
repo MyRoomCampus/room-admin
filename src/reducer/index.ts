@@ -1,4 +1,4 @@
-import _ from 'lodash-es'
+import { cloneDeep } from 'lodash-es'
 import { BoxComponent, ComponentName, ComponentSchema, IHouseCardData } from '../types/lowCodeComp.type'
 import { IStore, IAction } from '../types/store.types'
 import { IUserInfo } from '../types/userInfo.types'
@@ -105,7 +105,7 @@ const lowCodeReducer = {
   },
 
   deleteComponent(store: IStore, payload: string): IStore {
-    const lowCodeInfo = _.cloneDeep(store.lowCodeInfo)
+    const lowCodeInfo = cloneDeep(store.lowCodeInfo)
 
     const data = deleteCompFromJson(payload, lowCodeInfo?.JSONSchema.data)
     if (data && lowCodeInfo) {

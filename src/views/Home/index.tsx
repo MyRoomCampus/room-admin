@@ -9,7 +9,7 @@ import baseRequest from '@//api';
 import AppContext from '@//store';
 import ACTIONS from '@//reducer/actions';
 import { useNavigate } from 'react-router';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 interface DataforEditProject {
   houseId: number;
@@ -263,7 +263,7 @@ const HomePage: React.FC = () => {
         return {
           ...item,
           owner: store.userInfo?.username,
-          createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm'),
+          createdAt: dayjs(item.createdAt).format('YYYY-MM-DD HH:mm'),
           status: item.isPublished,
           key: item.houseId
         };
